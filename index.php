@@ -10,6 +10,6 @@
     <link href="theme/main.css" rel="stylesheet">
   </head>
   <body>
-    <p>This is not a drill, I repeat, this is not a drill. Get-a-working!</p>
+    <h1>This is not a drill, I repeat, this is not a drill. Get-a-working!</h1>
   </body>
 </html>

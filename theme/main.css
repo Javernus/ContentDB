@@ -11,12 +11,14 @@
   font-weight: bold;
   font-style: normal;
 }
+
 @font-face {
   font-family: 'Courier New', Courier, monospace;
   src: url(Courier\ New\ Italic.ttf);
   font-weight: normal;
   font-style: italic;
 }
+
 @font-face {
   font-family: 'Courier New', Courier, monospace;
   src: url(Courier\ New\ Bold\ Italic.ttf);
@@ -27,8 +29,5 @@
 body {
   background-color: var(--neutral-main);
   font-family: 'Courier New', Courier, monospace;
-}
-
-p {
   color: var(--text-colour);
 }
