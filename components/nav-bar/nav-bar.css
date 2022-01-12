@@ -1,0 +1,35 @@
+.nav-bar {
+  width: 3rem;
+  height: 100vh;
+
+  background-color: var(--neutral-3);
+  border-right: 0.0625rem solid var(--neutral-1);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  transition: width cubic-bezier(.6, .01, .4, .99) 0.5s;
+
+  box-shadow: 0 0 0.75rem 0.25rem var(--neutral-3);
+}
+
+.nav-bar__icon-space {
+  width: 4rem;
+  margin-right: 1rem;
+}
+
+.nav-bar:hover {
+  width: 20rem;
+
+}
+
+.nav-bar__items {
+   position: relative;
+   display: flex;
+   flex-direction: column;
+}
+
+.nav-bar__bottom-items {
+  margin-top: auto;
+}
