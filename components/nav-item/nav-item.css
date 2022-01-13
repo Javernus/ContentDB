@@ -1,3 +1,7 @@
+.nav-anchor {
+  text-decoration: none;
+}
+
 .nav-item {
   width: 20rem;
   height: 3rem;
@@ -12,7 +16,7 @@
   cursor: pointer;
 }
 
-.nav-item--active>.nav-item__label>p {
+.nav-item--active > .nav-item__label > p {
   color: var(--text-colour-active);
 }
 
@@ -35,4 +39,5 @@
   margin: 0 0 0 1rem;
   font-size: 1.25rem;
   color: var(--text-colour);
+  text-decoration: none;
 }

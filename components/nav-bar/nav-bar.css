@@ -15,13 +15,13 @@
 }
 
 .nav-bar__icon-space {
-  width: 4rem;
+  width: 3rem;
   margin-right: 1rem;
 }
 
 .nav-bar:hover {
   width: 20rem;
-
+  transition-delay: 0.65s;
 }
 
 .nav-bar__items {

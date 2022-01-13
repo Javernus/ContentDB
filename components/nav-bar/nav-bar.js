@@ -39,7 +39,7 @@ class NavigationBar extends HTMLElement {
     const { logoSrc } = this;
 
     this.shadow.innerHTML = `
-            <link href="./components/nav-bar/nav-bar.css" rel="stylesheet">
+            <link href="../components/nav-bar/nav-bar.css" rel="stylesheet">
             <div class="nav-bar__icon-space">
               <div class="nav-bar">
                 ${
