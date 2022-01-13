@@ -30,4 +30,7 @@ body {
   background-color: var(--neutral-main);
   font-family: 'Courier New', Courier, monospace;
   color: var(--text-colour);
+  margin: 0;
+  display: flex;
+  flex-direction: row;
 }
