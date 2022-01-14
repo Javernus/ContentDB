@@ -14,11 +14,32 @@ class Icon extends HTMLElement {
     this.src = "";
     this.colour = "#000000";
     this.size = 3;
+
+    /* The svg element. */
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttributeNS("null", "viewPort", "0 0 24 24");
+    svg.setAttribute("width", this.size + "rem");
+    svg.setAttribute("height", this.size + "rem");
+    this.shadow.appendChild(svg);
+
+    /* Save a reference of the svg for dynamic state change. */
+    this.svgElement = svg;
+
+    /* The div holding the icon and label. */
+    const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+    use.setAttributeNS("http://www.w3.org/1999/xlink", "href", this.src);
+    use.setAttribute("width", this.size + "rem");
+    use.setAttribute("height", this.size + "rem");
+    use.style.fill = this.colour;
+    svg.appendChild(use);
+
+    /* Save a reference of the use for dynamic state change. */
+    this.useElement = use;
   }
 
   /* Returns the attributes which should be observed. */
   static get observedAttributes() {
-    return ["src", "colour", "size"];
+    return ["colour", "size", "src"];
   }
 
   /* Handles attributes changing. */
@@ -27,25 +48,25 @@ class Icon extends HTMLElement {
       return;
     }
 
-    this[name] = newValue;
+    /* Updates only the necessary parts of the component on update. */
+    if (name === "colour") {
+      this.useElement.style.fill = newValue ? newValue : "#000000";
+    }
 
-    this.render();
-  }
+    if (name === "size") {
+      if (!newValue) {
+        this.size = 3;
+      }
 
-  /* Runs code when the component instance first appears on a page. */
-  connectedCallback() {
-    this.render();
-  }
+      this.svgElement.setAttribute("width", newValue + "rem");
+      this.svgElement.setAttribute("height", newValue + "rem");
+      this.useElement.setAttribute("width", newValue + "rem");
+      this.useElement.setAttribute("height", newValue + "rem");
+    }
 
-  /* Renders the component based on the given attributes. */
-  render() {
-    const { colour, size, src } = this;
-
-    this.shadow.innerHTML = `
-            <svg viewPort="0 0 24 24" width="${size}rem" height="${size}rem">
-              <use href="${src}" fill="${colour}" width="${size}rem" height="${size}rem" />
-            </svg>
-          `;
+    if (name === "src") {
+      this.useElement.setAttribute("href", newValue);
+    }
   }
 }
 

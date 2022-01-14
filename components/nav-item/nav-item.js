@@ -7,6 +7,52 @@ class NavigationItem extends HTMLElement {
     this.active = false;
     this.href = "";
     this.label = "Label missing...";
+
+    /* The link component for the css. */
+    const link = document.createElement("link");
+    link.href = "../components/nav-item/nav-item.css";
+    link.rel = "stylesheet";
+    this.shadow.appendChild(link);
+
+    /* The anchor element for linking to other pages. */
+    const anchor = document.createElement("a");
+    anchor.classList.add("nav-anchor");
+    anchor.href = this.href;
+    this.shadow.appendChild(anchor);
+
+    /* Save a reference of the anchor for dynamic state change. */
+    this.anchorElement = anchor;
+
+    /* The div holding the icon and label. */
+    const navItem = document.createElement("div");
+    navItem.classList.add("nav-item");
+    this.active && navItem.classList.add("nav-item--active");
+    anchor.appendChild(navItem);
+
+    /* Save a reference of the navItem for dynamic state change. */
+    this.navItemElement = navItem;
+
+    /* The div with the slot for the icon. */
+    const navIcon = document.createElement("div");
+    navIcon.classList.add("nav-item__icon");
+    navItem.appendChild(navIcon);
+
+    const slot = document.createElement("slot");
+    slot.name = "icon";
+    navIcon.appendChild(slot);
+
+    /* The div with the label. */
+    const navLabel = document.createElement("div");
+    navLabel.classList.add("nav-item__label");
+    navItem.appendChild(navLabel);
+
+    const paragraph = document.createElement("p");
+    paragraph.classList.add("nav-item--label");
+    paragraph.textContent = this.label;
+    navLabel.appendChild(paragraph);
+
+    /* Save a reference of the paragraph for dynamic state change. */
+    this.paragraphElement = paragraph;
   }
 
   /* Returns the attributes which should be observed. */
@@ -20,29 +66,22 @@ class NavigationItem extends HTMLElement {
       return;
     }
 
-    this[name] = newValue;
+    /* Updates only the necessary parts of the component on update. */
+    if (name === "active") {
+      if (newValue) {
+        this.navItemElement.classList.add("nav-item--active");
+      } else {
+        this.navItemElement.classList.remove("nav-item--active");
+      }
+    }
 
-    this.render();
-  }
+    if (name === "label") {
+      this.paragraphElement.textContent = newValue;
+    }
 
-  /* Runs code when the component instance first appears on a page. */
-  connectedCallback() {
-    this.render();
-  }
-
-  /* Renders the component based on the given attributes. */
-  render() {
-    const { active, href, label } = this;
-
-    this.shadow.innerHTML = `
-            <link href="../components/nav-item/nav-item.css" rel="stylesheet">
-            <a class="nav-anchor" href="${href}">
-              <div class="nav-item ${active ? "nav-item--active" : ""}">
-                <div class="nav-item__icon"><slot name="icon"></slot></div>
-                <div class="nav-item__label"><p class="nav-item--label">${label}</p></div>
-              </div>
-            </a>
-          `;
+    if (name === "href") {
+      this.anchorElement.href = newValue;
+    }
   }
 }
 

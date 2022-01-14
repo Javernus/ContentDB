@@ -1,5 +1,11 @@
 .nav-bar {
   width: 3rem;
+  margin-right: 1rem;
+  position: relative;
+}
+
+.nav-bar__expander {
+  width: 3rem;
   height: 100vh;
 
   background-color: var(--neutral-3);
@@ -14,12 +20,11 @@
   box-shadow: 0 0 0.75rem 0.25rem var(--neutral-3);
 }
 
-.nav-bar__icon-space {
-  width: 3rem;
-  margin-right: 1rem;
+.nav-bar__logo--invisible {
+  display: none;
 }
 
-.nav-bar:hover {
+.nav-bar__expander:hover {
   width: 20rem;
   transition-delay: 0.65s;
 }
