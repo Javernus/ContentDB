@@ -14,6 +14,7 @@ class Icon extends HTMLElement {
     this.src = "";
     this.colour = "#000000";
     this.size = 3;
+    this.stroke = false;
 
     /* The svg element. */
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -30,7 +31,8 @@ class Icon extends HTMLElement {
     use.setAttributeNS("http://www.w3.org/1999/xlink", "href", this.src);
     use.setAttribute("width", this.size + "rem");
     use.setAttribute("height", this.size + "rem");
-    use.style.fill = this.colour;
+    !this.stroke && (use.style.fill = this.colour);
+    this.stroke && (use.style.stroke = this.colour);
     svg.appendChild(use);
 
     /* Save a reference of the use for dynamic state change. */
@@ -39,7 +41,7 @@ class Icon extends HTMLElement {
 
   /* Returns the attributes which should be observed. */
   static get observedAttributes() {
-    return ["colour", "size", "src"];
+    return ["colour", "size", "src", "stroke"];
   }
 
   /* Handles attributes changing. */
@@ -48,9 +50,15 @@ class Icon extends HTMLElement {
       return;
     }
 
+    this[name] = newValue;
+
     /* Updates only the necessary parts of the component on update. */
     if (name === "colour") {
-      this.useElement.style.fill = newValue ? newValue : "#000000";
+      if (this.stroke) {
+        this.useElement.style.stroke = newValue ? newValue : "#000000";
+      } else {
+        this.useElement.style.fill = newValue ? newValue : "#000000";
+      }
     }
 
     if (name === "size") {
@@ -66,6 +74,16 @@ class Icon extends HTMLElement {
 
     if (name === "src") {
       this.useElement.setAttribute("href", newValue);
+    }
+
+    if (name === "stroke") {
+      if (newValue) {
+        this.useElement.style.stroke = this.colour;
+        this.useElement.style.fill = "#00000000";
+      } else {
+        this.useElement.style.fill = this.colour;
+        this.useElement.style.stroke = "#00000000";
+      }
     }
   }
 }
