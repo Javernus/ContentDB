@@ -74,6 +74,8 @@ class NavigationBar extends HTMLElement {
       return;
     }
 
+    this[name] = newValue;
+
     /* Updates only the necessary parts of the component on update. */
     if (name === "logoSrc") {
       if (newValue) {

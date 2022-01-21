@@ -1,0 +1,29 @@
+:host(.dialog) {
+  width: 24rem;
+  height: fit-content;
+
+  z-index: 2;
+
+  background-color: var(--neutral-3);
+  position: fixed;
+  display: none;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 2rem;
+
+  border: var(--neutral-1) solid 0.0625rem;
+  border-radius: 1rem;
+
+  box-shadow: 0.25rem 0.25rem 0.75rem 0.125rem var(--neutral-3);
+}
+
+:host(.dialog--open) {
+  display: flex;
+}
+
+.dialog__exit {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  cursor: pointer;
+}

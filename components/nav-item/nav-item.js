@@ -17,7 +17,7 @@ class NavigationItem extends HTMLElement {
     /* The anchor element for linking to other pages. */
     const anchor = document.createElement("a");
     anchor.classList.add("nav-anchor");
-    anchor.href = this.href;
+    this.href && anchor.setAttribute("href", this.href);
     this.shadow.appendChild(anchor);
 
     /* Save a reference of the anchor for dynamic state change. */
@@ -66,6 +66,8 @@ class NavigationItem extends HTMLElement {
       return;
     }
 
+    this[name] = newValue;
+
     /* Updates only the necessary parts of the component on update. */
     if (name === "active") {
       if (newValue) {
@@ -80,7 +82,11 @@ class NavigationItem extends HTMLElement {
     }
 
     if (name === "href") {
-      this.anchorElement.href = newValue;
+      if (!!newValue) {
+        this.anchorElement.href = newValue;
+      } else {
+        this.anchorElement.removeAttribute("href");
+      }
     }
   }
 }
