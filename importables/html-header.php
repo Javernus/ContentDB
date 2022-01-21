@@ -29,11 +29,12 @@
       <cdb-navigation-item slot="bottom-items" label="Settings" href="/settings/"><cdb-icon slot="icon" src="../src/settings.svg#nav-settings" size="2" colour="var(--primary-main)"></cdb-icon></cdb-navigation-item>
 
       <?php
-        const logged_in = false;
+        const logged_in = true;
 
         if (logged_in) {
           echo "<cdb-navigation-item slot=\"bottom-items\" label=\"Profile\" href=\"/profile/\"><cdb-icon slot=\"icon\" src=\"../src/profile.svg#nav-profile\" size=\"2\" colour=\"var(--primary-main)\"></cdb-icon></cdb-navigation-item>";
           echo "<cdb-navigation-item slot=\"bottom-items\" label=\"Sign Out\" href=\"/sign-out/\"><cdb-icon slot=\"icon\" src=\"../src/sign-out.svg#nav-sign-out\" size=\"2\" colour=\"var(--primary-main)\"></cdb-icon></cdb-navigation-item>";
+          echo "<cdb-navigation-item slot=\"bottom-items\" label=\"Sign In\" onclick=\"toggleSignInDialog()\"><cdb-icon slot=\"icon\" src=\"../src/sign-in.svg#nav-sign-in\" size=\"2\" colour=\"var(--primary-main)\"></cdb-icon></cdb-navigation-item>";
         } else {
           echo "<cdb-navigation-item slot=\"bottom-items\" label=\"Sign In\" onclick=\"toggleSignInDialog()\"><cdb-icon slot=\"icon\" src=\"../src/sign-in.svg#nav-sign-in\" size=\"2\" colour=\"var(--primary-main)\"></cdb-icon></cdb-navigation-item>";
         }
