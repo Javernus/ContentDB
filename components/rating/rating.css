@@ -1,0 +1,9 @@
+:host {
+  height: 2rem;
+}
+
+.rating {
+  display: flex;
+  flex-direction: row;
+  height: 2rem;
+}
