@@ -1,0 +1,15 @@
+:host {
+  display: block;
+}
+
+.genre__cards {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  overflow: scroll;
+}
+
+.genre__heading {
+  margin: 0;
+}

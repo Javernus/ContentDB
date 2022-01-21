@@ -18,6 +18,7 @@
   transition: width cubic-bezier(.6, .01, .4, .99) 0.5s;
 
   box-shadow: 0 0 0.75rem 0.25rem var(--neutral-3);
+  z-index: 1;
 }
 
 .nav-bar__logo--invisible {

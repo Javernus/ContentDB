@@ -11,6 +11,8 @@
     <script type="text/javascript" src="../components/nav-bar/nav-bar.js"></script>
     <script type="text/javascript" src="../components/nav-item/nav-item.js"></script>
     <script type="text/javascript" src="../components/icon/icon.js"></script>
+    <script type="text/javascript" src="../components/genre-card/genre-card.js"></script>
+    <script type="text/javascript" src="../components/genre-row/genre-row.js"></script>
   </head>
   <body>
     <cdb-navigation-bar>
