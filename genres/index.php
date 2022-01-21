@@ -1,8 +1,6 @@
     <?php
         include '../importables/html-header.php';
     ?>
-    <link href="genres.css" rel="stylesheet">
-    <link href="../components/item-card/itemcard.css" rel="stylesheet">
 
     <script type="text/javascript" src="scripts.js"></script>
 
