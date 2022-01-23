@@ -97,7 +97,7 @@
         this.ratingElement.setAttribute("public_rating", newValue);
       }
 
-      if (name === "public_rating" && this.ratingElement) {
+      if (name === "private_rating" && this.ratingElement) {
         this.ratingElement.setAttribute("private_rating", newValue);
       }
   
