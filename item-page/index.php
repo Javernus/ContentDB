@@ -13,7 +13,7 @@
             /* Scripts by Timo */
 
             const item_element = document.createElement('div');
-            item_element.innerHTML = '<item-view title="" scr="" public-rating="" private-rating="">test</item-view>';
+            item_element.innerHTML = '<item-view title="Spoder" scr="./image/Spiderman.png" public-rating="" private-rating="">test</item-view>';
             document.getElementById('itemlist').appendChild(item_element);
             // for (let i = 0; i < 10; i++) {
             //     const list_element = document.createElement('div');
