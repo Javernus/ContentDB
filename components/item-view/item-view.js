@@ -65,18 +65,18 @@
       this.titleElement = title;
   
       /* The cdb-rating component for the rating of the film or series. */
-    //   const rating = document.createElement("cdb-rating");
-    //   rating.setAttribute("rating", this.rating);
-    //   heading.appendChild(rating);
-    //   this.ratingElement = rating;
+      const rating = document.createElement("cdb-rating");
+      rating.setAttribute("rating", this.rating);
+      heading.appendChild(rating);
+      this.ratingElement = rating;
   
       /* The div slotting the description of the film or series. */
-    //   const description = document.createElement("div");
-    //   description.classList.add("watch-item__description");
-    //   textualInfo.appendChild(description);
+      const description = document.createElement("div");
+      description.classList.add("watch-item__description");
+      textualInfo.appendChild(description);
   
     //   const slot = document.createElement("slot");
-    //   description.appendChild(slot);
+      description.appendChild(slot);
     }
   
     /* Returns the attributes which should be observed. */
