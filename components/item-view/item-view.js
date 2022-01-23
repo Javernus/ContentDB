@@ -95,22 +95,18 @@
       /* Updates only the necessary parts of the component on update. */
       if (name === "public_rating" && this.ratingElement) {
         this.ratingElement.setAttribute("public_rating", newValue);
-        return;
       }
 
       if (name === "public_rating" && this.ratingElement) {
         this.ratingElement.setAttribute("private_rating", newValue);
-        return;
       }
   
       if (name === "src" && this.imageElement) {
         this.imageElement.style.backgroundImage = `url(${newValue})`;
-        return;
       }
   
       if (name === "title" && this.titleElement) {
         this.titleElement.textContent = newValue;
-        return;
       }
     }
   }
