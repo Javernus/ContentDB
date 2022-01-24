@@ -2,6 +2,8 @@
  * A dialog component. Styles a click-away box in which to show content like a login page.
  * Attributes
  *  - open: determines whether the dialog is visible.
+ *
+ * Made by Jake.
  */
 class Dialog extends HTMLElement {
   constructor() {
@@ -16,8 +18,8 @@ class Dialog extends HTMLElement {
   connectedCallback() {
     /* The link component for the css. */
     const link = document.createElement("link");
-    link.href = "../components/dialog/dialog.css";
-    link.rel = "stylesheet";
+    link.setAttribute("href", "../components/dialog/dialog.css");
+    link.setAttribute("rel", "stylesheet");
     this.shadow.appendChild(link);
 
     /* The dialog container that hovers in the middle of the screen. */

@@ -58,7 +58,7 @@ class NavigationBar extends HTMLElement {
     navBarExpander.appendChild(navBottomItem);
 
     const bottomSlot = document.createElement("slot");
-    bottomSlot.name = "bottom-items";
+    bottomSlot.setAttribute("name", "bottom-items");
     navBottomItem.appendChild(bottomSlot);
   }
 

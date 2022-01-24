@@ -9,13 +9,14 @@
   height: 100vh;
 
   background-color: var(--neutral-3);
-  border-right: 0.0625rem solid var(--neutral-1);
+  border-right: 0.0625rem solid var(--primary-1);
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
 
-  transition: width cubic-bezier(.6, .01, .4, .99) 0.5s;
+  transition: width cubic-bezier(.6, .01, .4, .99);
+  transition-duration: 0.05s;
 
   box-shadow: 0 0 0.75rem 0.25rem var(--neutral-3);
   z-index: 1;
@@ -28,7 +29,9 @@
 .nav-bar__expander:hover {
   width: 20rem;
   transition-delay: 0.65s;
+  transition-duration: 0.5s;
 }
+
 
 .nav-bar__items {
    position: relative;

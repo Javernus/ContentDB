@@ -24,7 +24,7 @@
   position: absolute;
   content: " ";
   bottom: 0;
-  border: var(--neutral-1) solid 0.0625rem;
+  border: var(--primary-1) solid 0.0625rem;
   border-radius: 0.5rem;
 }
 
@@ -42,12 +42,12 @@
   content: " ";
   bottom: -0.5625rem;
   left: -5%;
-  border: var(--neutral-1) solid 0.125rem;
+  border: var(--primary-1) solid 0.125rem;
   border-radius: 0.5rem;
 }
 
 .tab:hover {
-  color: var(--text-colour-active);
+  font-weight: bold;
 }
 
 .title {

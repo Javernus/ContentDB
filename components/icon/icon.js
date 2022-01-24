@@ -4,6 +4,8 @@
  *  - src: the id to an svg.
  *  - colour: the colour to apply to the svg.
  *  - size: the size of the svg in rem.
+ *
+ * Made by Jake.
  */
 class Icon extends HTMLElement {
   constructor() {
@@ -15,7 +17,9 @@ class Icon extends HTMLElement {
     this.colour = "#000000";
     this.size = 3;
     this.stroke = false;
+  }
 
+  connectedCallback() {
     /* The svg element. */
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttributeNS("null", "viewPort", "0 0 24 24");

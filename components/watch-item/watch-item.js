@@ -85,6 +85,7 @@ class WatchItem extends HTMLElement {
     /* Updates only the necessary parts of the component on update. */
     if (name === "rating" && this.ratingElement) {
       this.ratingElement.setAttribute("rating", newValue);
+      return;
     }
 
     if (name === "src" && this.imageElement) {
