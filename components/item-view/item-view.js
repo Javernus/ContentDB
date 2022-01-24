@@ -6,13 +6,6 @@
  *  - private-rating: the private rating of the film or series.
  *  - src: the src for the image.
  *  - title: the title of the movie.
- *
- * 
- * 
- * Slots
- *  - default: the description.
- *
- * 
  * 
  * 
  * Made by Timo.
@@ -64,19 +57,19 @@
       heading.appendChild(title);
       this.titleElement = title;
   
-      /* The cdb-rating component for the rating of the film or series. */
-      const rating = document.createElement("cdb-rating");
-      rating.setAttribute("rating", this.rating);
+      /* The cdb-rating component for the private rating of the film or series. */
+      const rating = document.createElement("cdb-private-rating");
+      rating.setAttribute("rating", this.private_rating);
       heading.appendChild(rating);
       this.ratingElement = rating;
   
-      /* The div slotting the description of the film or series. */
-      const description = document.createElement("div");
-      description.classList.add("watch-item__description");
-      textualInfo.appendChild(description);
+    //   /* The div slotting the description of the film or series. */
+    //   const description = document.createElement("div");
+    //   description.classList.add("watch-item__description");
+    //   textualInfo.appendChild(description);
   
-    //   const slot = document.createElement("slot");
-      description.appendChild(slot);
+    // //   const slot = document.createElement("slot");
+    //   description.appendChild(slot);
     }
   
     /* Returns the attributes which should be observed. */
@@ -98,7 +91,7 @@
       }
 
       if (name === "private_rating" && this.ratingElement) {
-        this.ratingElement.setAttribute("private_rating", newValue);
+        this.ratingElement.setAttribute("rating", newValue);
       }
   
       if (name === "src" && this.imageElement) {
@@ -108,6 +101,7 @@
       if (name === "title" && this.titleElement) {
         this.titleElement.textContent = newValue;
       }
+      
     }
   }
   window.customElements.define("item-view", ItemView);
