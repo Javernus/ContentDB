@@ -14,6 +14,8 @@
     <script type="text/javascript" src="../components/nav-item/nav-item.js"></script>
     <script type="text/javascript" src="../components/icon/icon.js"></script>
     <script type="text/javascript" src="../components/item-view/item-view.js"></script>
+    <script type="text/javascript" src="../components/rating/private-rating.js"></script>
+    <script type="text/javascript" src="../components/rating/rating-functions.js"></script>
     <script type="text/javascript" src="../components/icon/responsive-icon.js"></script>
     <script type="text/javascript" src="../components/carousel/carousel.js"></script>
     <script type="text/javascript" src="../components/carousel-item/carousel-item.js"></script>
