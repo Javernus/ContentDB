@@ -11,8 +11,6 @@
     $password = $_ENV['MYSQL_PASSWORD'];
     $database = $_ENV['MYSQL_DATABASE'];
 
-    echo "$username$password@$host\n";
-
     // Create connection
     $conn = new mysqli($host, $username, $password, $database);
 
@@ -20,7 +18,6 @@
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-    echo "Connected successfully";
 
     // Turn autocommit off
     $conn -> autocommit(FALSE);
