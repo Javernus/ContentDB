@@ -84,7 +84,7 @@
       const buttoncontainer = document.createElement("div");
       const addButton = document.createElement("button");
       addButton.classList.add("item-view__button");
-      addButton.setAttribute("onclick", toggleDropdown());
+      addButton.setAttribute("onclick", this.toggleDropdown());
       addButton.innerText = "Add item";
       buttoncontainer.appendChild(addButton);
       heading.appendChild(buttoncontainer);
@@ -166,6 +166,9 @@
       }
 
       
+    }
+    toggleDropdown() {
+      document.getElementById("dropdown").classList.toggle("item-view__show");
     }
   }
   window.customElements.define("item-view", ItemView);
