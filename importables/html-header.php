@@ -14,6 +14,7 @@
     <script type="text/javascript" src="../components/item-view/item-view.js"></script>
     <script type="text/javascript" src="../components/rating/private-rating.js"></script>
     <script type="text/javascript" src="../components/rating/rating-functions.js"></script>
+    <script type="text/javascript" src="../components/item-view/functions.js"></script>
 
   </head>
   <body>
