@@ -95,6 +95,8 @@
       dropdown.id = "dropdown";
       buttoncontainer.appendChild(dropdown);
       
+
+
       const toWatch = document.createElement("a");
       toWatch.innerText = "To Watch";
       dropdown.appendChild(toWatch);
@@ -119,6 +121,7 @@
       this.publicratingElement = public_rating;
 
       /* The */
+
     }
   
     /* Returns the attributes which should be observed. */
