@@ -49,3 +49,26 @@ h3 {
     color: var(--text-colour);
     padding: 0 5rem 0 0;
 }
+
+.item-view__dropdown {
+    display: flex;
+    flex-direction: column;
+}
+
+.item-view__show {
+    display: block;
+}
+
+.item-view__button {
+    cursor: pointer;
+    border-radius: 1rem;
+    left: 15em;
+    color: var(--neutal-4);
+    border: var(--neutral-5);
+    padding: 16px;
+    background-color: var(--primary-1);
+}
+
+.item-view__button:hover {
+    background-color: var(--primary-3);
+}

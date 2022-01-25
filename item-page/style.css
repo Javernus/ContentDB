@@ -92,7 +92,6 @@
     color: var(--text-colour);
 }
 
-
 button {
     cursor: pointer;
     color: var(--neutal-4);
@@ -108,4 +107,10 @@ button:hover {
 h1 {
     color: var(--text-colour);
     font-size: 300%;
+}
+
+.comment {
+  display: flex;
+  flex-direction: column;
+  padding: 2em;
 }
