@@ -37,7 +37,6 @@
                 }
 
             ?>
-
         </div>
 <?php
   include '../importables/html-footer.php';

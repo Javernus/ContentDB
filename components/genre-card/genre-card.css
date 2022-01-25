@@ -1,7 +1,7 @@
 .genre__card {
     display: inline-block;
-    height: 15em;
-    width: 10em;
+    height: 30vh;
+    width: 20vh;
     border-radius: 0.5em;
     margin: 2em 0.5em;
     transition: all .5s ease;
