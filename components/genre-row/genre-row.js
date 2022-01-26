@@ -3,7 +3,7 @@ class GenreRow extends HTMLElement {
     super();
     this.shadow = this.attachShadow({ mode: "open" });
 
-    // this.title = "";
+    this.label = "";
   }
 
   connectedCallback() {
@@ -16,7 +16,7 @@ class GenreRow extends HTMLElement {
     /* The div showing the icons always and text on hover. */
     const heading = document.createElement("h2");
     heading.classList.add("genre__heading");
-    heading.textContent = this.title;
+    heading.textContent = this.label;
     this.shadow.appendChild(heading);
     this.headingElement = heading;
 
@@ -31,7 +31,7 @@ class GenreRow extends HTMLElement {
 
   /* Returns the attributes which should be observed. */
   static get observedAttributes() {
-    return ["title"];
+    return ["label"];
   }
 
   /* Handles attributes changing. */
@@ -43,7 +43,7 @@ class GenreRow extends HTMLElement {
     this[name] = newValue;
 
     /* Updates only the necessary parts of the component on update. */
-    if (name === "title" && this.headingElement) {
+    if (name === "label" && this.headingElement) {
       this.headingElement.textContent = newValue;
     }
   }
