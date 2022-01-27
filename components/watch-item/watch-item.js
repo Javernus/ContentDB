@@ -16,7 +16,7 @@ class WatchItem extends HTMLElement {
     this.shadow = this.attachShadow({ mode: "open" });
 
     /* The defaults for the attributes. */
-    this.rating = 0;
+    this.rating = 1;
     this.src = "";
     this.title = "";
   }

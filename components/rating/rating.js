@@ -11,7 +11,7 @@ class Rating extends HTMLElement {
     this.shadow = this.attachShadow({ mode: "open" });
 
     /* Setting the defaults of the attributes. */
-    this.setAttribute("rating", "0");
+    this.rating = 1;
   }
 
   /* Returns the attributes which should be observed. */

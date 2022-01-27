@@ -57,7 +57,7 @@ class Icon extends HTMLElement {
     this[name] = newValue;
 
     /* Updates only the necessary parts of the component on update. */
-    if (name === "colour") {
+    if (name === "colour" && this.useElement) {
       if (this.stroke) {
         this.useElement.style.stroke = newValue ? newValue : "#000000";
       } else {
@@ -65,7 +65,7 @@ class Icon extends HTMLElement {
       }
     }
 
-    if (name === "size") {
+    if (name === "size" && this.useElement && this.svgElement) {
       if (!newValue) {
         this.size = 3;
       }
@@ -76,11 +76,11 @@ class Icon extends HTMLElement {
       this.useElement.setAttribute("height", newValue + "rem");
     }
 
-    if (name === "src") {
+    if (name === "src" && this.useElement) {
       this.useElement.setAttribute("href", newValue);
     }
 
-    if (name === "stroke") {
+    if (name === "stroke" && this.useElement) {
       if (newValue) {
         this.useElement.style.stroke = this.colour;
         this.useElement.style.fill = "#00000000";

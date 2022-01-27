@@ -3,7 +3,7 @@ class GenreCard extends HTMLElement {
     super();
     this.shadow = this.attachShadow({ mode: "open" });
 
-    this.setAttribute("url", "../images/placeholder.png");
+    this.url = "../images/placeholder.png";
     this.src = "";
   }
 
