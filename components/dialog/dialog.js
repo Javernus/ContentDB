@@ -23,8 +23,13 @@ class Dialog extends HTMLElement {
     this.shadow.appendChild(link);
 
     /* The dialog container that hovers in the middle of the screen. */
-    this.classList.add("dialog");
-    this.open && this.classList.add("dialog--open");
+    this.classList.add("dialog-centrer");
+    this.open && this.classList.add("dialog-centrer--open");
+
+    /* The div showing the icons always and text on hover. */
+    const dialog = document.createElement("div");
+    dialog.classList.add("dialog");
+    this.shadow.appendChild(dialog);
 
     /* The x icon to close the dialog. */
     const closingIcon = document.createElement("cdb-icon");
@@ -34,15 +39,15 @@ class Dialog extends HTMLElement {
     closingIcon.setAttribute("size", 1.5);
     closingIcon.setAttribute("colour", "var(--primary-main)");
     closingIcon.addEventListener("click", this.close.bind(this));
-    this.shadow.appendChild(closingIcon);
+    dialog.appendChild(closingIcon);
 
     const slot = document.createElement("slot");
-    this.shadow.appendChild(slot);
+    dialog.appendChild(slot);
   }
 
   /* Closes the dialog. */
   close() {
-    this.setAttribute("open", false);
+    this.removeAttribute("open");
   }
 
   /* Returns the attributes which should be observed. */
@@ -61,9 +66,9 @@ class Dialog extends HTMLElement {
     /* Updates only the necessary parts of the component on update. */
     if (name === "open") {
       if (newValue == "true" || newValue == "") {
-        this.classList.add("dialog--open");
+        this.classList.add("dialog-centrer--open");
       } else {
-        this.classList.remove("dialog--open");
+        this.classList.remove("dialog-centrer--open");
       }
     }
   }

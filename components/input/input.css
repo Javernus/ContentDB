@@ -1,0 +1,29 @@
+:host {
+  width: 100%;
+  margin: 0.25rem;
+  display: block;
+}
+
+.input {
+  background-color: var(--neutral-3);
+  border: var(--primary-1) solid 0.0625rem;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  padding: 0.5rem;
+  width: 100%;
+  color: var(--text-colour);
+  outline: none;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.input--error {
+  border-color: var(--signal);
+}
+
+.input::placeholder {
+  color: var(--text-colour-muted);
+}
+
+.input:focus {
+  box-shadow: 0.125rem 0.125rem 0.5rem 0 var(--neutral-2);
+}

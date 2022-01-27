@@ -10,8 +10,8 @@ class NavigationItem extends HTMLElement {
 
     /* The link component for the css. */
     const link = document.createElement("link");
-    link.href = "../components/nav-item/nav-item.css";
-    link.rel = "stylesheet";
+    link.setAttribute("href", "../components/nav-item/nav-item.css");
+    link.setAttribute("rel", "stylesheet");
     this.shadow.appendChild(link);
 
     /* The anchor element for linking to other pages. */
@@ -38,7 +38,7 @@ class NavigationItem extends HTMLElement {
     navItem.appendChild(navIcon);
 
     const slot = document.createElement("slot");
-    slot.name = "icon";
+    slot.setAttribute("name", "icon");
     navIcon.appendChild(slot);
 
     /* The div with the label. */

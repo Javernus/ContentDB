@@ -44,18 +44,6 @@ body .content {
   scrollbar-color: var(--text-colour) transparent;
 }
 
-.dialog-centrer {
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-  width: 100vw;
-  height: 100vh;
-  flex-direction: column;
-  pointer-events: none;
-}
-
-.dialog-centrer * {
-  pointer-events: auto;
+.nav-item--hidden {
+  display: none;
 }

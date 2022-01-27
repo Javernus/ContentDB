@@ -14,8 +14,8 @@ class Login extends HTMLElement {
 
     /* The link component for the css. */
     const link = document.createElement("link");
-    link.href = "../components/login/login.css";
-    link.rel = "stylesheet";
+    link.setAttribute("href", "../components/login/login.css");
+    link.setAttribute("rel", "stylesheet");
     this.shadow.appendChild(link);
 
     /* The div containing the tabs. */
@@ -55,36 +55,27 @@ class Login extends HTMLElement {
     this.signInInputsElement = signInInputs;
 
     /* The email input. */
-    const signInEmailInput = document.createElement("input");
-    signInEmailInput.classList.add("login__input");
-    signInEmailInput.id = "email";
-    signInEmailInput.placeholder = "Enter your email...";
+    const signInEmailInput = document.createElement("cdb-input");
+    signInEmailInput.setAttribute("placeholder", "Enter your email...");
     signInInputs.appendChild(signInEmailInput);
 
     /* Save a reference of the signInEmailInput for dynamic state change. */
     this.signInEmailElement = signInEmailInput;
 
     /* The password input. */
-    const signInPasswordInput = document.createElement("input");
-    signInPasswordInput.classList.add("login__input");
-    signInPasswordInput.open = true;
-    signInPasswordInput.id = "password";
-    signInPasswordInput.type = "password";
-    signInPasswordInput.placeholder = "Enter your password...";
+    const signInPasswordInput = document.createElement("cdb-input");
+    signInPasswordInput.setAttribute("type", "password");
+    signInPasswordInput.setAttribute("placeholder", "Enter your password...");
     signInInputs.appendChild(signInPasswordInput);
 
     /* Save a reference of the signInPasswordInput for dynamic state change. */
     this.signInPasswordElement = signInPasswordInput;
 
     /* The submit button. */
-    const signInSubmitButton = document.createElement("button");
-    signInSubmitButton.classList.add("login__submit");
-    signInSubmitButton.type = "submit";
-    signInSubmitButton.textContent = "Log in";
+    const signInSubmitButton = document.createElement("cdb-button");
+    signInSubmitButton.setAttribute("label", "Log in");
+    signInSubmitButton.addEventListener("click", this.signIn.bind(this));
     signInInputs.appendChild(signInSubmitButton);
-
-    /* Save a reference of the signInSubmitButton for dynamic state change. */
-    this.signInSubmitButtonElement = signInSubmitButton;
 
     /* The div containing the inputs for sign up. */
     const signUpInputs = document.createElement("div");
@@ -96,55 +87,47 @@ class Login extends HTMLElement {
     this.signUpInputsElement = signUpInputs;
 
     /* The username input. */
-    const signUpUsernameInput = document.createElement("input");
-    signUpUsernameInput.classList.add("login__input");
-    signUpUsernameInput.classList.add("login__input--error");
-    signUpUsernameInput.id = "text";
-    signUpUsernameInput.placeholder = "Enter a username...";
+    const signUpUsernameInput = document.createElement("cdb-input");
+    signUpUsernameInput.setAttribute("placeholder", "Enter a username...");
+    signUpUsernameInput.addEventListener("change", this.handleUsername.bind(this));
     signUpInputs.appendChild(signUpUsernameInput);
 
     /* Save a reference of the signUpUsernameInput for dynamic state change. */
     this.signUpUsernameElement = signUpUsernameInput;
 
     /* The email input. */
-    const signUpEmailInput = document.createElement("input");
-    signUpEmailInput.classList.add("login__input");
-    signUpEmailInput.id = "email";
-    signUpEmailInput.placeholder = "Enter your email...";
+    const signUpEmailInput = document.createElement("cdb-input");
+    signUpEmailInput.setAttribute("placeholder", "Enter your email...");
+    signUpEmailInput.addEventListener("change", this.handleEmail.bind(this));
     signUpInputs.appendChild(signUpEmailInput);
 
     /* Save a reference of the signUpEmailInput for dynamic state change. */
     this.signUpEmailElement = signUpEmailInput;
 
     /* The passwerd input. */
-    const signUpPasswordInput = document.createElement("input");
-    signUpPasswordInput.classList.add("login__input");
-    signUpPasswordInput.open = true;
-    signUpPasswordInput.id = "password";
-    signUpPasswordInput.type = "password";
-    signUpPasswordInput.placeholder = "Enter a password...";
+    const signUpPasswordInput = document.createElement("cdb-input");
+    signUpPasswordInput.setAttribute("type", "password");
+    signUpPasswordInput.setAttribute("placeholder", "Enter a password...");
+    signUpPasswordInput.addEventListener("input", this.handlePassword.bind(this));
     signUpInputs.appendChild(signUpPasswordInput);
 
     /* Save a reference of the signUpPasswordInput for dynamic state change. */
     this.signUpPasswordElement = signUpPasswordInput;
 
     /* The second password input. */
-    const signUpPasswordTwoInput = document.createElement("input");
-    signUpPasswordTwoInput.classList.add("login__input");
-    signUpPasswordTwoInput.open = true;
-    signUpPasswordTwoInput.id = "password";
-    signUpPasswordTwoInput.type = "password";
-    signUpPasswordTwoInput.placeholder = "Enter the password again...";
+    const signUpPasswordTwoInput = document.createElement("cdb-input");
+    signUpPasswordTwoInput.setAttribute("type", "password");
+    signUpPasswordTwoInput.setAttribute("placeholder", "Enter the password again...");
+    signUpPasswordTwoInput.addEventListener("input", this.handlePassword.bind(this));
     signUpInputs.appendChild(signUpPasswordTwoInput);
 
     /* Save a reference of the signUpPasswordTwoInput for dynamic state change. */
     this.signUpPasswordTwoElement = signUpPasswordTwoInput;
 
     /* The submit button. */
-    const signUpSubmitButton = document.createElement("button");
-    signUpSubmitButton.classList.add("login__submit");
-    signUpSubmitButton.type = "submit";
-    signUpSubmitButton.textContent = "Sign up";
+    const signUpSubmitButton = document.createElement("cdb-button");
+    signUpSubmitButton.setAttribute("label", "Sign up");
+    signUpSubmitButton.addEventListener("click", this.signUp.bind(this));
     signUpInputs.appendChild(signUpSubmitButton);
 
     /* Save a reference of the signUpSubmitButton for dynamic state change. */
@@ -159,6 +142,145 @@ class Login extends HTMLElement {
   /* Shows the sign up inputs in the login component. */
   showSignUp() {
     this.setAttribute("signup", true);
+  }
+
+  handleEmail() {
+    const email = this.signUpEmailElement.value;
+
+    const data = { email: email };
+
+    fetch("../php/emailExists.php", {
+      method: "post",
+      body: JSON.stringify(data),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        return response.text();
+      })
+      .then((res) => {
+        if (res === "true") {
+          this.signUpEmailElement.setAttribute("error", true);
+        } else if (res === "false") {
+          this.signUpEmailElement.removeAttribute("error");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  handleUsername() {
+    const username = this.signUpUsernameElement.value;
+
+    const data = { username: username };
+
+    fetch("../php/usernameExists.php", {
+      method: "post",
+      body: JSON.stringify(data),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        return response.text();
+      })
+      .then((res) => {
+        if (res === "true") {
+          this.signUpUsernameElement.setAttribute("error", true);
+        } else if (res === "false") {
+          this.signUpUsernameElement.removeAttribute("error");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  handlePassword() {
+    const password = this.signUpPasswordElement.value;
+    const passwordTwo = this.signUpPasswordTwoElement.value;
+
+    if (password !== passwordTwo && passwordTwo !== "") {
+      this.signUpPasswordTwoElement.setAttribute("error", true);
+    } else {
+      this.signUpPasswordTwoElement.removeAttribute("error");
+    }
+  }
+
+  signUp() {
+    const username = this.signUpUsernameElement.value;
+    const email = this.signUpEmailElement.value;
+    const password = this.signUpPasswordElement.value;
+    const passwordTwo = this.signUpPasswordTwoElement.value;
+
+    if (password != passwordTwo) {
+      return;
+    }
+
+    // const hashedPassword = hash();
+
+    const data = { username: username, email: email, password: password };
+
+    fetch("../php/signUp.php", {
+      method: "post",
+      body: JSON.stringify(data),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        return response;
+      })
+      .then((res) => {
+        const event = new CustomEvent("signup", {
+          detail: {
+            successful: res,
+          },
+        });
+
+        this.dispatchEvent(event);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  signIn() {
+    const email = this.signInEmailElement.value;
+    const password = this.signInPasswordElement.value;
+
+    // const hashedPassword = hash();
+
+    const data = { email: email, password: password };
+
+    fetch("../php/login.php", {
+      method: "post",
+      body: JSON.stringify(data),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        return response.text();
+      })
+      .then((res) => {
+        const event = new CustomEvent("login", {
+          detail: {
+            successful: res,
+          },
+        });
+
+        this.dispatchEvent(event);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   /* Returns the attributes which should be observed. */

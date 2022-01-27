@@ -13,8 +13,8 @@ class NavigationBar extends HTMLElement {
 
     /* The link component for the css. */
     const link = document.createElement("link");
-    link.href = "../components/nav-bar/nav-bar.css";
-    link.rel = "stylesheet";
+    link.setAttribute("href", "../components/nav-bar/nav-bar.css");
+    link.setAttribute("rel", "stylesheet");
     this.shadow.appendChild(link);
 
     /* The div showing the icons always and text on hover. */
@@ -49,7 +49,7 @@ class NavigationBar extends HTMLElement {
     navBarExpander.appendChild(navItem);
 
     const slot = document.createElement("slot");
-    slot.name = "items";
+    slot.setAttribute("name", "items");
     navItem.appendChild(slot);
 
     /* The div with the slot containing the bottom items. */

@@ -9,8 +9,8 @@ class GenreRow extends HTMLElement {
   connectedCallback() {
     /* The link component for the css. */
     const link = document.createElement("link");
-    link.href = "../components/genre-row/genre-row.css";
-    link.rel = "stylesheet";
+    link.setAttribute("href", "../components/genre-row/genre-row.css");
+    link.setAttribute("rel", "stylesheet");
     this.shadow.appendChild(link);
 
     /* The div showing the icons always and text on hover. */

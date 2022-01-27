@@ -11,7 +11,7 @@ class Rating extends HTMLElement {
     this.shadow = this.attachShadow({ mode: "open" });
 
     /* Setting the defaults of the attributes. */
-    this.rating = "0";
+    this.setAttribute("rating", "0");
   }
 
   /* Returns the attributes which should be observed. */
@@ -41,8 +41,8 @@ class Rating extends HTMLElement {
   /* Renders the component based on the given attributes. */
   connectedCallback() {
     const link = document.createElement("link");
-    link.href = "../components/rating/rating.css";
-    link.rel = "stylesheet";
+    link.setAttribute("href", "../components/rating/rating.css");
+    link.setAttribute("rel", "stylesheet");
     this.shadow.appendChild(link);
 
     const container = document.createElement("div");
