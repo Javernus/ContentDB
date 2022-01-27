@@ -15,7 +15,7 @@
 
             genres.forEach(genre => {
                 const genreRow = document.createElement('cdb-genre-row');
-                genreRow.setAttribute("title", genre);
+                genreRow.setAttribute("label", genre);
                 document.getElementById('genres').appendChild(genreRow);
 
                 const backgroundArray = ["../images/placeholder.jpg", "../images/pulpfiction.jpg"];
