@@ -4,7 +4,7 @@
     width: 10em;
     border-radius: 0.5em;
     margin: 2em 0.5em;
-    transition: all .5s ease;
+    transition: transform .5s ease;
     box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.5);
     background-size: contain;
     background-position: center;

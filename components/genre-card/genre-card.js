@@ -3,21 +3,20 @@ class GenreCard extends HTMLElement {
     super();
     this.shadow = this.attachShadow({ mode: "open" });
 
-    this.url = "../images/placeholder.png";
+    this.setAttribute("url", "../images/placeholder.png");
     this.src = "";
   }
 
   connectedCallback() {
     /* The link component for the css. */
     const link = document.createElement("link");
-    link.href = "../components/genre-card/genre-card.css";
-    link.rel = "stylesheet";
+    link.setAttribute("href", "../components/genre-card/genre-card.css");
+    link.setAttribute("rel", "stylesheet");
     this.shadow.appendChild(link);
 
     /* The div showing the icons always and text on hover. */
     const anchor = document.createElement("a");
     anchor.classList.add("genre__anchor");
-    anchor.setAttribute("href", this.url);
     this.shadow.appendChild(anchor);
     this.anchorElement = anchor;
 

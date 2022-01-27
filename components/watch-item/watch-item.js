@@ -24,8 +24,8 @@ class WatchItem extends HTMLElement {
   connectedCallback() {
     /* The link component for the css. */
     const link = document.createElement("link");
-    link.href = "../components/watch-item/watch-item.css";
-    link.rel = "stylesheet";
+    link.setAttribute("href", "../components/watch-item/watch-item.css");
+    link.setAttribute("rel", "stylesheet");
     this.shadow.appendChild(link);
 
     /* The watch-item container. */
