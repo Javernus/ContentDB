@@ -1,15 +1,12 @@
-function slide(direction, id) {
-    var container = document.getElementById('movie_items_' + id);
-    scrollCompleted = 0;
-    var slideVar = setInterval(function(){
-        if(direction == 'left'){
-            container.scrollLeft -= 300;
-        } else {
-            container.scrollLeft += 300;
+function imageLoader (image, title) {
+    console.log(image);
+    console.log(title);
+    var image = new Image();
+    image.src = image;
+    var int = setInterval(function() {
+        if (img.complete) {
+            clearInterval(int);
+            document.getElementsById(title).style.backgroundImage = 'url(' + img.src + ')';
         }
-        scrollCompleted += 10;
-        if(scrollCompleted >= 100){
-            window.clearInterval(slideVar);
-        }
-    }, 60);
+    }, 50);
 }

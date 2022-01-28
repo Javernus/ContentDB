@@ -19,7 +19,7 @@
   transition-duration: 0.05s;
 
   box-shadow: 0 0 0.75rem 0.25rem var(--neutral-3);
-  z-index: 1;
+  z-index: 5;
 }
 
 .nav-bar__logo--invisible {

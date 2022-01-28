@@ -24,9 +24,45 @@ class GenreRow extends HTMLElement {
     const cards = document.createElement("div");
     cards.classList.add("genre__cards");
     this.shadow.appendChild(cards);
+    this.cardsElement = cards;
 
     const slot = document.createElement("slot");
     cards.appendChild(slot);
+
+    /* The x icon to close the dialog. */
+    const chevronLeft = document.createElement("cdb-icon-responsive");
+    chevronLeft.classList.add("genre__chevron");
+    chevronLeft.classList.add("genre__chevron--left");
+    chevronLeft.setAttribute("src", "../src/chevrons.svg#left");
+    chevronLeft.setAttribute("size", 5);
+    chevronLeft.setAttribute("colour", "var(--primary-main)");
+    chevronLeft.addEventListener("click", this.scrollLeft.bind(this));
+    this.shadow.appendChild(chevronLeft);
+    this.chevronLeftElement = chevronLeft;
+
+    /* The x icon to close the dialog. */
+    const chevronRight = document.createElement("cdb-icon-responsive");
+    chevronRight.classList.add("genre__chevron");
+    chevronRight.classList.add("genre__chevron--right");
+    chevronRight.setAttribute("src", "../src/chevrons.svg#right");
+    chevronRight.setAttribute("size", 5);
+    chevronRight.setAttribute("colour", "var(--primary-1)");
+    chevronRight.addEventListener("click", this.scrollRight.bind(this));
+    this.shadow.appendChild(chevronRight);
+    this.chevronRightElement = chevronRight;
+  }
+
+  scrollRight() {
+    const currentScroll = this.cardsElement.scrollLeft;
+    const maxScroll = this.cardsElement.scrollWidth;
+    const newScroll = this.cardsElement.scrollLeft + 800;
+    this.cardsElement.scrollLeft = newScroll < maxScroll ? newScroll : maxScroll;
+  }
+
+  scrollLeft() {
+    const currentScroll = this.cardsElement.scrollLeft;
+    const newScroll = this.cardsElement.scrollLeft - 800;
+    this.cardsElement.scrollLeft = newScroll > 0 ? newScroll : 0;
   }
 
   /* Returns the attributes which should be observed. */

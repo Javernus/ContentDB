@@ -161,6 +161,10 @@ pythontex-files-*/
 
 # env
 *.env
+*.env.local
 
 # DS_Store
 .DS_Store
+
+# Vendor
+vendor/

@@ -54,24 +54,23 @@ class ImdbScraper():
             self.actors.append(actors)
 
         self.ratings = re.findall(r'<strong title=\".+\">(.*)</strong>', response.text)
-        self.images = re.findall(r'<img src=\"(.*)\" width=\"45\" height=\"67\".*/>', response.text)
         self.release_dates = re.findall(r'<span class=\"secondaryInfo\">\((.*)\)</span>', response.text)
 
         for Id, title in enumerate(self.titles):
-            summary, duration, genre = self.get_movie_details(title)
+            summary, duration, genre, image = self.get_movie_details(title)
             self.movies[Id] = {
                 'FSID': Id + 1,
                 'title': title,
                 'actors': self.actors.pop(0),
                 'genre': genre,
-                'image': self.images.pop(0),
+                'image': image,
                 'rating': round(float(self.ratings.pop(0).replace(',', '.')) / 2),
                 'summary': summary,
                 'release_year': int(self.release_dates.pop(0)),
                 'duration': duration
             }
 
-        return self.movies
+        self.write_movies()
 
 
     def get_movie_details(self, movie_name):
@@ -111,11 +110,23 @@ class ImdbScraper():
             # Get the genres of the movie and convert it to a list
             genre = re.findall(r'\"genre\":\[\"(.*)\"\]', r.text)[0]
             genre = re.sub(r'\W+', ' ', genre).split(' ')
+            for x in genre:
+                if x == "Sci" or x == "Fi":
+                    genre.remove("Sci")
+                    genre.remove("Fi")
+                    genre.append("Science Fiction")
 
         except:
             genre = 'No genre available'
 
-        return description, duration, genre
+        try:
+            image = re.findall(r'srcSet=\"(.*)380w', r.text)[0]
+            image = image.split('285w, ')[1]
+
+        except:
+            image = 'No image available'
+
+        return description, duration, genre, image
 
     def get_movies(self, page_count, start_date, end_date):
         """

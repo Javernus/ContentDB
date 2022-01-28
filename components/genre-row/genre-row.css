@@ -1,5 +1,6 @@
 :host {
   display: block;
+  position: relative;
 }
 
 .genre__cards {
@@ -8,8 +9,49 @@
   display: flex;
   flex-direction: row;
   overflow: scroll;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+.genre__cards::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 
 .genre__heading {
-  margin: 0;
+  margin: 0 0 -.7em .5em;
+}
+
+@media (max-width : 400px) {
+  cdb-icon.genre__chevron {
+    display: none;
+  }
+}
+
+.genre__chevron {
+  position: absolute;
+  z-index: 2;
+  top: 44%;
+  cursor: pointer;
+  border-radius: 25%;
+  border: 0.0625rem solid var(--primary-1);
+  background-color: var(--neutral-3);
+  opacity: 0.8;
+  width: 5vh;
+  height: 5vh;
+  scroll-behavior: smooth;
+  transition: transform .5s ease;
+}
+
+.genre__chevron--left {
+  left: 1rem;
+}
+
+.genre__chevron--right {
+  right: 1rem;
+}
+
+.genre__chevron:hover {
+  box-shadow: 0 0 0.75rem 0.125rem var(--neutral-3);
+  transform: scale(1.1);
 }

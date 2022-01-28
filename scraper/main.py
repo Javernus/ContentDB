@@ -57,7 +57,7 @@ class DBConnector():
 
         val_list = []
 
-        sql = "INSERT INTO fstable (FSID, Title, Image, Description, Rating, Duration, ReleaseYear) VALUES (%s, %s, %s, %s, %s, %s,%s)"
+        sql = "INSERT INTO content (FSID, Title, Image, Description, Rating, Duration, ReleaseYear) VALUES (%s, %s, %s, %s, %s, %s,%s)"
 
         for FSID, movie in self.top_rated_movies.items():
             val_list.append((int(FSID) + 1, movie['title'], movie['image'], movie['summary'], movie['rating'], movie['duration'], movie['release_year']))
@@ -157,5 +157,5 @@ class DBConnector():
 database = DBConnector(MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PASSWORD)
 
 ###! Run functions
-# database.insert_movie_tables()
+database.insert_movie_tables()
 # database.insert_user_tables()

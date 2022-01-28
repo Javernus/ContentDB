@@ -5,6 +5,7 @@ class GenreCard extends HTMLElement {
 
     this.url = "../images/placeholder.png";
     this.src = "";
+    this.srcset = "";
   }
 
   connectedCallback() {
@@ -21,16 +22,22 @@ class GenreCard extends HTMLElement {
     this.anchorElement = anchor;
 
     /* The div showing the icons always and text on hover. */
-    const card = document.createElement("div");
+    const card = document.createElement("img");
     card.classList.add("genre__card");
-    card.style.backgroundImage = `url(${this.src})`;
+    card.setAttribute("loading", "lazy");
+    card.setAttribute(
+      "sizes",
+      "50vw, (min-width: 480px) 34vw, (min-width: 600px) 26vw, (min-width: 1024px) 16vw, (min-width: 1280px) 16vw"
+    );
+    card.setAttribute("src", this.src);
+    card.setAttribute("srcset", this.srcset);
     anchor.appendChild(card);
     this.cardElement = card;
   }
 
   /* Returns the attributes which should be observed. */
   static get observedAttributes() {
-    return ["url", "src"];
+    return ["url", "src", "srcset"];
   }
 
   /* Handles attributes changing. */
@@ -47,7 +54,11 @@ class GenreCard extends HTMLElement {
     }
 
     if (name === "src" && this.cardElement) {
-      this.cardElement.style.backgroundImage = `url(${newValue})`;
+      card.setAttribute("src", this.src);
+    }
+
+    if (name === "srcset" && this.cardElement) {
+      card.setAttribute("srcset", this.srcset);
     }
   }
 }
