@@ -3,11 +3,11 @@
  * Attributes
  *  - src: the id to an svg.
  *  - colour: the colour to apply to the svg.
- *  - size: the size of the svg in rem.
+ *  - size: the size of the svg in vh.
  *
  * Made by Jake.
  */
-class Icon extends HTMLElement {
+class ResponsiveIcon extends HTMLElement {
   constructor() {
     super();
     this.shadow = this.attachShadow({ mode: "open" });
@@ -20,14 +20,14 @@ class Icon extends HTMLElement {
   }
 
   connectedCallback() {
-    this.setAttribute("width", this.size + "rem");
-    this.setAttribute("height", this.size + "rem");
+    this.setAttribute("width", this.size + "vh");
+    this.setAttribute("height", this.size + "vh");
 
     /* The svg element. */
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttributeNS("null", "viewPort", "0 0 24 24");
-    svg.setAttribute("width", this.size + "rem");
-    svg.setAttribute("height", this.size + "rem");
+    svg.setAttribute("width", this.size + "vh");
+    svg.setAttribute("height", this.size + "vh");
     this.shadow.appendChild(svg);
 
     /* Save a reference of the svg for dynamic state change. */
@@ -36,8 +36,8 @@ class Icon extends HTMLElement {
     /* The div holding the icon and label. */
     const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
     use.setAttributeNS("http://www.w3.org/1999/xlink", "href", this.src);
-    use.setAttribute("width", this.size + "rem");
-    use.setAttribute("height", this.size + "rem");
+    use.setAttribute("width", this.size + "vh");
+    use.setAttribute("height", this.size + "vh");
     !this.stroke && (use.style.fill = this.colour);
     this.stroke && (use.style.stroke = this.colour);
     svg.appendChild(use);
@@ -73,12 +73,12 @@ class Icon extends HTMLElement {
         this.size = 3;
       }
 
-      this.setAttribute("width", this.size + "rem");
-      this.setAttribute("height", this.size + "rem");
-      this.svgElement.setAttribute("width", this.size + "rem");
-      this.svgElement.setAttribute("height", this.size + "rem");
-      this.useElement.setAttribute("width", this.size + "rem");
-      this.useElement.setAttribute("height", this.size + "rem");
+      this.setAttribute("width", this.size + "vh");
+      this.setAttribute("height", this.size + "vh");
+      this.svgElement.setAttribute("width", this.size + "vh");
+      this.svgElement.setAttribute("height", this.size + "vh");
+      this.useElement.setAttribute("width", this.size + "vh");
+      this.useElement.setAttribute("height", this.size + "vh");
     }
 
     if (name === "src" && this.useElement) {
@@ -98,4 +98,4 @@ class Icon extends HTMLElement {
 }
 
 /* Defines the custom element. */
-customElements.define("cdb-icon", Icon);
+customElements.define("cdb-icon-responsive", ResponsiveIcon);
