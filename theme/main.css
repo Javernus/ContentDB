@@ -60,12 +60,13 @@ body .content {
   background-color: var(--neutral-main);
   z-index: 1000;
   opacity: 1;
-  transition: opacity cubic-bezier(.6, .01, .4, .99) 0.5s;
-  transition-delay: 3s;
+  transition: opacity cubic-bezier(.6, .01, .4, .99) 0.2s;
+  cursor: progress;
 }
 
 #splash-screen.disappear {
   opacity: 0;
+  pointer-events: none;
 }
 
 /* Credits to https://codepen.io/camdenfoucht/pen/BVxawq for the loader. */

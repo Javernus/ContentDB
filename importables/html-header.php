@@ -138,7 +138,7 @@
         splashScreen.classList.add("disappear");
       }
 
-      window.onload = hideSplashScreen;
+      window.addEventListener("load", hideSplashScreen);
       </script>
     </cdb-navigation-bar>
     <div class="content">
