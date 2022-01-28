@@ -13,6 +13,7 @@
     <script type="text/javascript" src="../components/nav-bar/nav-bar.js"></script>
     <script type="text/javascript" src="../components/nav-item/nav-item.js"></script>
     <script type="text/javascript" src="../components/icon/icon.js"></script>
+    <script type="text/javascript" src="../components/icon/responsive-icon.js"></script>
     <script type="text/javascript" src="../components/carousel/carousel.js"></script>
     <script type="text/javascript" src="../components/carousel-item/carousel-item.js"></script>
     <script type="text/javascript" src="../components/button/button.js"></script>
@@ -133,9 +134,15 @@
       login.addEventListener("login", signIn);
       dialog.appendChild(login);
 
+      const splashScreen = document.getElementById("splash-screen");
+
       function hideSplashScreen() {
-        const splashScreen = document.getElementById("splash-screen");
+        splashScreen.addEventListener("transitionend", deleteSplashScreen);
         splashScreen.classList.add("disappear");
+      }
+
+      function hideSplashScreen() {
+        splashScreen.remove();
       }
 
       window.addEventListener("load", hideSplashScreen);
