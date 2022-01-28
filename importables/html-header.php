@@ -25,6 +25,25 @@
     <script type="text/javascript" src="../components/rating/rating.js"></script>
   </head>
   <body>
+    <div id="splash-screen">
+      <h1>Umbrim: Clean Watch Lists.</h1>
+      <div>
+        <div class="multi-spinner-container">
+          <div class="multi-spinner">
+            <div class="multi-spinner">
+              <div class="multi-spinner">
+                <div class="multi-spinner">
+                  <div class="multi-spinner">
+                    <div class="multi-spinner">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <cdb-navigation-bar id="navigation-bar">
       <cdb-navigation-item slot="items" label="Home" href="/home/"><cdb-icon slot="icon" src="../src/home.svg#nav-home" size="2" colour="var(--primary-main)"></cdb-icon></cdb-navigation-item>
       <cdb-navigation-item slot="items" label="Genres" href="/genres/"><cdb-icon slot="icon" src="../src/genres.svg#nav-genres" size="2" colour="var(--primary-main)"></cdb-icon></cdb-navigation-item>
@@ -113,6 +132,13 @@
       login.setAttribute("id", "user-login");
       login.addEventListener("login", signIn);
       dialog.appendChild(login);
+
+      function hideSplashScreen() {
+        const splashScreen = document.getElementById("splash-screen");
+        splashScreen.classList.add("disappear");
+      }
+
+      window.onload = hideSplashScreen;
       </script>
     </cdb-navigation-bar>
     <div class="content">

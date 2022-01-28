@@ -1,5 +1,5 @@
 <?php
-  $db = new PDO('mysql:host=localhost;dbname=contentdb;charset=utf8', 'Server', 'LKUgVm4eGAiNm9aS');
+  include_once("../php/databaseLogin.php");
 
   $data = json_decode(file_get_contents("php://input"));
 
