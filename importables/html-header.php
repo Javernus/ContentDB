@@ -141,7 +141,7 @@
         splashScreen.classList.add("disappear");
       }
 
-      function hideSplashScreen() {
+      function deleteSplashScreen() {
         splashScreen.remove();
       }
 
