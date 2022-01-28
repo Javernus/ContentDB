@@ -1,0 +1,70 @@
+.button {
+    background-color: var(--neutral-2);
+    border: var(--primary-1) solid 0.0625rem;
+    box-sizing: content-box;
+    padding: 0.5rem;
+    margin: 0.25rem;
+    border-radius: 0.5rem;
+    color: var(--text-colour);
+    cursor: pointer;
+    font-family: 'Courier New', Courier, monospace;
+    width: 10rem;
+}
+
+.button > p {
+    margin: 0;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+}
+
+.button:active {
+    background-color: var(--neutral-3);
+    box-shadow: 0.125rem 0.125rem 0.5rem 0 var(--neutral-2);
+}
+
+@media (max-width : 750px) {
+    .carousels {
+        display: none;
+    }
+
+    .slideshow {
+        display: flex;
+    }
+}
+
+.carousels {
+    text-align: center;
+    font-size: large;
+    width: 100%;
+    margin: auto;
+    display: flex;
+    position: relative;
+    margin-top: 4rem;
+}
+
+.carousel-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    flex-grow: 1;
+}
+
+.carousel-item > h2 {
+    margin-bottom: 2rem;
+}
+
+#account-buttons {
+    text-align: center;
+    width: 60%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+}
+
+h1.title {
+    text-align: center;
+    padding-top: 5em;
+}

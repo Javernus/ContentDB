@@ -13,6 +13,8 @@
     <script type="text/javascript" src="../components/nav-bar/nav-bar.js"></script>
     <script type="text/javascript" src="../components/nav-item/nav-item.js"></script>
     <script type="text/javascript" src="../components/icon/icon.js"></script>
+    <script type="text/javascript" src="../components/carousel/carousel.js"></script>
+    <script type="text/javascript" src="../components/carousel-item/carousel-item.js"></script>
     <script type="text/javascript" src="../components/button/button.js"></script>
     <script type="text/javascript" src="../components/input/input.js"></script>
     <script type="text/javascript" src="../components/dialog/dialog.js"></script>
@@ -21,7 +23,6 @@
     <script type="text/javascript" src="../components/genre-row/genre-row.js"></script>
     <script type="text/javascript" src="../components/watch-item/watch-item.js"></script>
     <script type="text/javascript" src="../components/rating/rating.js"></script>
-    <script type="text/javascript" src="./functions.js"></script>
   </head>
   <body>
     <cdb-navigation-bar id="navigation-bar">
@@ -77,6 +78,7 @@
         navItemSignIn.appendChild(navIconSignIn);
 
       function toggleSignInDialog() {
+        login.removeAttribute("signup");
         dialog.toggleAttribute("open");
       }
 
@@ -104,11 +106,11 @@
       }
 
       const dialog = document.createElement("cdb-dialog");
-      // dialog.setAttribute("open", true);
+      dialog.setAttribute("id", "login-dialog");
       document.body.appendChild(dialog);
 
       const login = document.createElement("cdb-login");
-      // login.setAttribute("signup", true);
+      login.setAttribute("id", "user-login");
       login.addEventListener("login", signIn);
       dialog.appendChild(login);
       </script>
