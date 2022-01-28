@@ -1,0 +1,114 @@
+@font-face {
+  font-family: 'Courier New', Courier, monospace;
+  src: url(Courier\ New.ttf);
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Courier New', Courier, monospace;
+  src: url(Courier\ New\ Bold.ttf);
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Courier New', Courier, monospace;
+  src: url(Courier\ New\ Italic.ttf);
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Courier New', Courier, monospace;
+  src: url(Courier\ New\ Bold\ Italic.ttf);
+  font-weight: bold;
+  font-style: italic;
+}
+
+body {
+  background-color: var(--neutral-main);
+  font-family: 'Courier New', Courier, monospace;
+  color: var(--text-colour);
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+body .content {
+  height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: 100%;
+  scrollbar-color: var(--text-colour) transparent;
+}
+
+.nav-item--hidden {
+  display: none;
+}
+
+#splash-screen {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  background-color: var(--neutral-main);
+  z-index: 1000;
+  opacity: 1;
+  transition: opacity cubic-bezier(.6, .01, .4, .99) 0.5s;
+  transition-delay: 2s;
+  cursor: progress;
+}
+
+#splash-screen.disappear {
+  opacity: 0;
+}
+
+/* Credits to https://codepen.io/camdenfoucht/pen/BVxawq for the loader. */
+
+.multi-spinner-container {
+  width: 150px;
+  height: 150px;
+  position: relative;
+  margin: 30px auto;
+  overflow: hidden;
+}
+
+.multi-spinner {
+  position: absolute;
+  width: calc(100% - 9.9px);
+  height: calc(100% - 9.9px);
+  border: 5px solid transparent;
+  border-top-color: var(--signal);
+  border-radius: 50%;
+  -webkit-animation: spin 5s cubic-bezier(0.17, 0.49, 0.96, 0.76) infinite;
+  animation: spin 5s cubic-bezier(0.17, 0.49, 0.96, 0.76) infinite;
+}
+
+@keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+#error {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  background-color: var(--neutral-main);
+}

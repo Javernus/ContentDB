@@ -1,0 +1,21 @@
+:root {
+  --neutral-1: #485A70;
+  --neutral-2: #384657;
+  --neutral-3: #28323E;
+  --neutral-4: #181E25;
+  --neutral-4-50: #181e25a8;
+  --neutral-5: #080A0C;
+  --neutral-main: var(--neutral-4);
+
+  --primary-1: #B5B4BB;
+  --primary-2: #B5B4BB;
+  --primary-3: #A09FA8;
+  --primary-4: #84828F;
+  --primary-5: #767481;
+  --primary-main: var(--primary-3);
+
+  --text-colour-muted: #ECFEFEff;
+  --text-colour: #DFDFE2;
+
+  --signal: #BF0603;
+}

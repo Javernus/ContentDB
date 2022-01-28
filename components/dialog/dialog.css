@@ -1,0 +1,45 @@
+:host(.dialog-centrer) {
+  position: fixed;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  width: 100vw;
+  height: 100vh;
+  flex-direction: column;
+  pointer-events: none;
+  z-index: 100;
+  background-color: var(--neutral-4-50);
+}
+
+.dialog {
+  width: 24rem;
+  height: fit-content;
+
+  z-index: 10;
+
+  background-color: var(--neutral-3);
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 2rem;
+
+  border: var(--primary-1) solid 0.0625rem;
+  border-radius: 1rem;
+
+  box-shadow: 0 0 0.75rem 0.25rem var(--neutral-3);
+
+  pointer-events: auto;
+}
+
+:host(.dialog-centrer--open) {
+  display: flex;
+}
+
+.dialog__exit {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  cursor: pointer;
+}
