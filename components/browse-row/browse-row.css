@@ -3,7 +3,7 @@
   position: relative;
 }
 
-.genre__cards {
+.browse__cards {
   position: relative;
   width: 100%;
   display: flex;
@@ -13,22 +13,22 @@
   scrollbar-width: none;
 }
 
-.genre__cards::-webkit-scrollbar {
+.browse__cards::-webkit-scrollbar {
   width: 0;
   height: 0;
 }
 
-.genre__heading {
+.browse__heading {
   margin: 0 0 -.7em .5em;
 }
 
 @media (max-width : 400px) {
-  cdb-icon.genre__chevron {
+  cdb-icon.browse__chevron {
     display: none;
   }
 }
 
-.genre__chevron {
+.browse__chevron {
   position: absolute;
   z-index: 2;
   top: 44%;
@@ -43,15 +43,15 @@
   transition: transform .5s ease;
 }
 
-.genre__chevron--left {
+.browse__chevron--left {
   left: 1rem;
 }
 
-.genre__chevron--right {
+.browse__chevron--right {
   right: 1rem;
 }
 
-.genre__chevron:hover {
+.browse__chevron:hover {
   box-shadow: 0 0 0.75rem 0.125rem var(--neutral-3);
   transform: scale(1.1);
 }

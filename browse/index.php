@@ -4,8 +4,8 @@
 
 
     <script type="text/javascript" src="scripts.js"></script>
-    <h1 class="page-title">Genres</h1>
-    <div class="genres" id="genres">
+    <h1 class="page-title">Browse</h1>
+    <div class="browse" id="browse">
         <?php
             ini_set( 'error_reporting', E_ALL );
             ini_set( 'display_errors', true );
@@ -21,18 +21,18 @@
                 $genres = $conn->query("SELECT * FROM genres WHERE Genre = '$genres_array[$i]'");
 
                 if ($genres->num_rows > 0) {
-                    echo "<cdb-genre-row label=$genres_array[$i]>";
+                    echo "<cdb-browse-row label=$genres_array[$i]>";
                     while ($row = $genres->fetch_assoc()) {
                         $movies = $conn->query("SELECT * FROM content WHERE FSID = '$row[FSID]'");
 
                         if ($movies->num_rows > 0) {
                             while ($movie = $movies->fetch_assoc()) {
-                                echo "<cdb-genre-card url=$movie[Image] src=$movie[Image]></cdb-genre-card>";
+                                echo "<cdb-browse-card url=$movie[Image] src=$movie[Image]></cdb-browse-card>";
                             }
                         }
                     }
                 }
-                echo "</cdb-genre-row>";
+                echo "</cdb-browse-row>";
             }
 
         ?>

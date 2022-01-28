@@ -1,4 +1,4 @@
-class GenreCard extends HTMLElement {
+class BrowseCard extends HTMLElement {
   constructor() {
     super();
     this.shadow = this.attachShadow({ mode: "open" });
@@ -11,19 +11,19 @@ class GenreCard extends HTMLElement {
   connectedCallback() {
     /* The link component for the css. */
     const link = document.createElement("link");
-    link.setAttribute("href", "../components/genre-card/genre-card.css");
+    link.setAttribute("href", "../components/browse-card/browse-card.css");
     link.setAttribute("rel", "stylesheet");
     this.shadow.appendChild(link);
 
     /* The div showing the icons always and text on hover. */
     const anchor = document.createElement("a");
-    anchor.classList.add("genre__anchor");
+    anchor.classList.add("browse__anchor");
     this.shadow.appendChild(anchor);
     this.anchorElement = anchor;
 
     /* The div showing the icons always and text on hover. */
     const card = document.createElement("img");
-    card.classList.add("genre__card");
+    card.classList.add("browse__card");
     card.setAttribute("loading", "lazy");
     card.setAttribute(
       "sizes",
@@ -63,4 +63,4 @@ class GenreCard extends HTMLElement {
   }
 }
 
-customElements.define("cdb-genre-card", GenreCard);
+customElements.define("cdb-browse-card", BrowseCard);

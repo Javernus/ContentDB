@@ -24,8 +24,8 @@ session_start();
     <script type="text/javascript" src="../components/input/input.js"></script>
     <script type="text/javascript" src="../components/dialog/dialog.js"></script>
     <script type="text/javascript" src="../components/login/login.js"></script>
-    <script type="text/javascript" src="../components/genre-card/genre-card.js"></script>
-    <script type="text/javascript" src="../components/genre-row/genre-row.js"></script>
+    <script type="text/javascript" src="../components/browse-card/browse-card.js"></script>
+    <script type="text/javascript" src="../components/browse-row/browse-row.js"></script>
     <script type="text/javascript" src="../components/watch-item/watch-item.js"></script>
     <script type="text/javascript" src="../components/rating/rating.js"></script>
   </head>
@@ -51,7 +51,7 @@ session_start();
     </div>
     <cdb-navigation-bar id="navigation-bar">
       <cdb-navigation-item slot="items" label="Home" href="/home/"><cdb-icon slot="icon" src="../src/home.svg#nav-home" size="2" colour="var(--primary-main)"></cdb-icon></cdb-navigation-item>
-      <cdb-navigation-item slot="items" label="Genres" href="/genres/"><cdb-icon slot="icon" src="../src/genres.svg#nav-genres" size="2" colour="var(--primary-main)"></cdb-icon></cdb-navigation-item>
+      <cdb-navigation-item slot="items" label="Browse" href="/browse/"><cdb-icon slot="icon" src="../src/browse.svg#nav-browse" size="2" colour="var(--primary-main)"></cdb-icon></cdb-navigation-item>
       <cdb-navigation-item slot="items" label="Search TBWO" href="/search/"><cdb-icon slot="icon" src="../src/search.svg#nav-search" size="2" colour="var(--primary-main)"></cdb-icon></cdb-navigation-item>
       <cdb-navigation-item slot="bottom-items" label="Settings" href="/settings/"><cdb-icon slot="icon" src="../src/settings.svg#nav-settings" size="2" colour="var(--primary-main)"></cdb-icon></cdb-navigation-item>
 

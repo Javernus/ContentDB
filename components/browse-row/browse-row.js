@@ -9,20 +9,20 @@ class GenreRow extends HTMLElement {
   connectedCallback() {
     /* The link component for the css. */
     const link = document.createElement("link");
-    link.setAttribute("href", "../components/genre-row/genre-row.css");
+    link.setAttribute("href", "../components/browse-row/browse-row.css");
     link.setAttribute("rel", "stylesheet");
     this.shadow.appendChild(link);
 
     /* The div showing the icons always and text on hover. */
     const heading = document.createElement("h2");
-    heading.classList.add("genre__heading");
+    heading.classList.add("browse__heading");
     heading.textContent = this.label;
     this.shadow.appendChild(heading);
     this.headingElement = heading;
 
     /* The div showing the icons always and text on hover. */
     const cards = document.createElement("div");
-    cards.classList.add("genre__cards");
+    cards.classList.add("browse__cards");
     this.shadow.appendChild(cards);
     this.cardsElement = cards;
 
@@ -31,8 +31,8 @@ class GenreRow extends HTMLElement {
 
     /* The x icon to close the dialog. */
     const chevronLeft = document.createElement("cdb-icon-responsive");
-    chevronLeft.classList.add("genre__chevron");
-    chevronLeft.classList.add("genre__chevron--left");
+    chevronLeft.classList.add("browse__chevron");
+    chevronLeft.classList.add("browse__chevron--left");
     chevronLeft.setAttribute("src", "../src/chevrons.svg#left");
     chevronLeft.setAttribute("size", 5);
     chevronLeft.setAttribute("colour", "var(--primary-main)");
@@ -42,8 +42,8 @@ class GenreRow extends HTMLElement {
 
     /* The x icon to close the dialog. */
     const chevronRight = document.createElement("cdb-icon-responsive");
-    chevronRight.classList.add("genre__chevron");
-    chevronRight.classList.add("genre__chevron--right");
+    chevronRight.classList.add("browse__chevron");
+    chevronRight.classList.add("browse__chevron--right");
     chevronRight.setAttribute("src", "../src/chevrons.svg#right");
     chevronRight.setAttribute("size", 5);
     chevronRight.setAttribute("colour", "var(--primary-1)");
@@ -85,4 +85,4 @@ class GenreRow extends HTMLElement {
   }
 }
 
-customElements.define("cdb-genre-row", GenreRow);
+customElements.define("cdb-browse-row", GenreRow);
