@@ -1,11 +1,12 @@
 /**
- * The PrivateRating component. Displays a variable amount of filled stars, adding empty
+ * The Rating component. Displays a variable amount of filled stars, adding empty
  * stars till a total of 5 stars is reached. Users can select stars themselves,
  * adding a personal rating to the corresponding item.
  * Attributes
  *  - rating: the amount of filled stars.
+ *  - static: bool of whether the user can change the index or not.
  */
-class PrivateRating extends HTMLElement {
+class Rating extends HTMLElement {
   constructor() {
     super();
 
@@ -13,11 +14,12 @@ class PrivateRating extends HTMLElement {
 
     /* Setting the defaults of the attributes. */
     this.rating = "0";
+    this.ratable = false;
   }
 
   /* Returns the attributes which should be observed. */
   static get observedAttributes() {
-    return ["rating"];
+    return ["rating", "ratable"];
   }
 
   /* Handles attributes changing. */
@@ -39,6 +41,12 @@ class PrivateRating extends HTMLElement {
     }
   }
 
+  ratingChange(event) {
+    if (!this.ratable) { 
+      this.setAttribute("rating", event.target.getAttribute("index"));
+    }
+  }
+
   /* Renders the component based on the given attributes. */
   connectedCallback() {
     const link = document.createElement("link");
@@ -53,7 +61,9 @@ class PrivateRating extends HTMLElement {
     for (let i = 0; i < 5; i++) {
       const starIcon = document.createElement("cdb-icon");
       starIcon.classList.add("star");
-      starIcon.setAttribute("onclick", "ratingChange("+ (i+1) +");");
+      starIcon.setAttribute("index", i+1);
+      starIcon.addEventListener("click", this.ratingChange.bind(this));
+      starIcon.setAttribute("cursor", "pointer");
 
       if (i < this.rating) {
         starIcon.setAttribute("src", "../src/star-filled.svg#star-filled");
@@ -70,4 +80,4 @@ class PrivateRating extends HTMLElement {
 }
 
 /* Defines the custom element. */
-customElements.define("cdb-private-rating", PrivateRating);
+customElements.define("cdb-rating", Rating);

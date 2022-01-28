@@ -8,13 +8,13 @@
 
     <link href="../theme/colours.css" rel="stylesheet">
     <link href="../theme/main.css" rel="stylesheet">
+    <link href="../item-page/style.css" rel="stylesheet">
     <script type="text/javascript" src="../components/nav-bar/nav-bar.js"></script>
     <script type="text/javascript" src="../components/nav-item/nav-item.js"></script>
     <script type="text/javascript" src="../components/icon/icon.js"></script>
     <script type="text/javascript" src="../components/item-view/item-view.js"></script>
-    <script type="text/javascript" src="../components/rating/private-rating.js"></script>
-    <script type="text/javascript" src="../components/rating/rating-functions.js"></script>
-    <script type="text/javascript" src="../components/item-view/functions.js"></script>
+    <script type="text/javascript" src="../components/rating/rating.js"></script>
+    <script type="text/javascript" src="../components/comment/comment.js"></script>
 
   </head>
   <body>
