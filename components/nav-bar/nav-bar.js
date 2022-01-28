@@ -69,7 +69,6 @@ class NavigationBar extends HTMLElement {
 
   /* Handles attributes changing. */
   attributeChangedCallback(name, oldValue, newValue) {
-    console.log("attr");
     if (oldValue === newValue) {
       return;
     }

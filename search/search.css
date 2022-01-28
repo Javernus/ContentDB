@@ -1,0 +1,26 @@
+h2.center {
+    text-align: center;
+    border-radius: 20px;
+}
+
+.search {
+    width: 70%;
+    border-radius: 20px;
+}
+
+.search-item {
+    padding: 5px;
+}
+
+.search-item:hover {
+    background-color: var(--neutral-2);
+}
+
+.topnav input[type=text] {
+    float: left;
+    padding: 6px;
+    margin-top: 8px;
+    margin-right: 16px;
+    border: none;
+    font-size: 17px;
+}

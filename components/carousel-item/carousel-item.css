@@ -1,0 +1,62 @@
+:host {
+  position: absolute;
+  height: 48vh;
+  max-height: 37.5vw;
+  width: 32vh;
+  max-width: 25vw;
+  left: 0;
+  right: 0;
+  margin: auto;
+  transition: transform .4s ease, opacity .1s ease;
+  cursor: pointer;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+
+:host(.current) img {
+  box-shadow: 0px 0px 5px 0px rgba(81, 81, 81, 0.47);
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+
+:host(.current) {
+  transform: translatex(0) scale(1);
+  opacity: 1;
+  z-index: 1;
+}
+
+:host(.previous) {
+  transform: translatex(-40%) scale(.8);
+  opacity: .4;
+  z-index: 0;
+}
+
+:host(.next) {
+  transform: translatex(40%) scale(.8);
+  opacity: .4;
+  z-index: 0;
+}
+
+:host(:not(.previous):not(.current):not(.next)) {
+  opacity: 0;
+  transform: translatex(0) scale(.8);
+}
+
+@media (max-width : 750px) {
+  :host {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+}
