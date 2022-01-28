@@ -19,10 +19,8 @@
   $success = $stmt->execute();
   $uid = $stmt->fetch()[0];
 
-  setcookie("UserID", $uid, time() + (86400 * 30), "/");
-
-
   if ($uid) {
+    setcookie("UserID", $uid, time() + (86400 * 30), "/");
     echo "true";
   } else {
     echo "false";

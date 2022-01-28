@@ -57,6 +57,7 @@ class Login extends HTMLElement {
     /* The email input. */
     const signInEmailInput = document.createElement("cdb-input");
     signInEmailInput.setAttribute("placeholder", "Enter your email...");
+    signInEmailInput.addEventListener("input", this.handleLoginChange.bind(this));
     signInInputs.appendChild(signInEmailInput);
 
     /* Save a reference of the signInEmailInput for dynamic state change. */
@@ -66,6 +67,7 @@ class Login extends HTMLElement {
     const signInPasswordInput = document.createElement("cdb-input");
     signInPasswordInput.setAttribute("type", "password");
     signInPasswordInput.setAttribute("placeholder", "Enter your password...");
+    signInPasswordInput.addEventListener("input", this.handleLoginChange.bind(this));
     signInInputs.appendChild(signInPasswordInput);
 
     /* Save a reference of the signInPasswordInput for dynamic state change. */
@@ -132,6 +134,11 @@ class Login extends HTMLElement {
 
     /* Save a reference of the signUpSubmitButton for dynamic state change. */
     this.signUpSubmitButtonElement = signUpSubmitButton;
+  }
+
+  handleLoginChange() {
+    this.signInEmailElement.removeAttribute("error");
+    this.signInPasswordElement.removeAttribute("error");
   }
 
   /* Shows the sign in inputs in the login component. */
@@ -237,13 +244,15 @@ class Login extends HTMLElement {
         return response;
       })
       .then((res) => {
-        const event = new CustomEvent("signup", {
-          detail: {
-            successful: res,
-          },
-        });
+        if (res === "true") {
+          const event = new CustomEvent("signup", {
+            detail: {
+              successful: res,
+            },
+          });
 
-        this.dispatchEvent(event);
+          this.dispatchEvent(event);
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -270,13 +279,18 @@ class Login extends HTMLElement {
         return response.text();
       })
       .then((res) => {
-        const event = new CustomEvent("login", {
-          detail: {
-            successful: res,
-          },
-        });
+        if (res === "true") {
+          const event = new CustomEvent("login", {
+            detail: {
+              successful: res,
+            },
+          });
 
-        this.dispatchEvent(event);
+          this.dispatchEvent(event);
+        } else {
+          this.signInEmailElement.setAttribute("error", true);
+          this.signInPasswordElement.setAttribute("error", true);
+        }
       })
       .catch((error) => {
         console.log(error);

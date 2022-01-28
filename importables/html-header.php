@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -132,6 +136,7 @@
       const login = document.createElement("cdb-login");
       login.setAttribute("id", "user-login");
       login.addEventListener("login", signIn);
+      login.addEventListener("signup", signIn);
       dialog.appendChild(login);
 
       const splashScreen = document.getElementById("splash-screen");
