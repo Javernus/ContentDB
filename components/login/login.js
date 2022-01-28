@@ -224,11 +224,13 @@ class Login extends HTMLElement {
     const password = this.signUpPasswordElement.value;
     const passwordTwo = this.signUpPasswordTwoElement.value;
 
-    if (password != passwordTwo) {
+    if (
+      password != passwordTwo ||
+      this.signUpUsernameElement.getAttribute("error") ||
+      this.signUpEmailElement.getAttribute("error")
+    ) {
       return;
     }
-
-    // const hashedPassword = hash();
 
     const data = { username: username, email: email, password: password };
 
@@ -241,17 +243,17 @@ class Login extends HTMLElement {
       },
     })
       .then((response) => {
-        return response;
+        return response.text();
       })
       .then((res) => {
-        if (res === "true") {
-          const event = new CustomEvent("signup", {
-            detail: {
-              successful: res,
-            },
-          });
-
-          this.dispatchEvent(event);
+        switch (res) {
+          case "success":
+            this.dispatchEvent(new CustomEvent("signup"));
+            break;
+          case "limitreached":
+            // Add text to indicate waiting
+            // this.dispatchEvent(new CustomEvent("signup"));
+            break;
         }
       })
       .catch((error) => {

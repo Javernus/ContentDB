@@ -1,9 +1,10 @@
 <?php
   include_once("../php/databaseLogin.php");
+  session_start();
 
-  // if ($_SESSION["addAccountTime"] < time() - 300) {
-  //   echo "false";
-  // } else {
+  if (isset($_SESSION['signuptime']) && $_SESSION['signuptime'] > time() - 300) {
+    echo "limitreached";
+  } else {
     $data = json_decode(file_get_contents("php://input"));
 
     $username = $data->username;
@@ -33,11 +34,11 @@
       $success = $stmt->execute();
       $uid = $stmt->fetch()[0];
 
-      $_SESSION["addAccountTime"] = time();
+      $_SESSION['signuptime'] = time();
       setcookie("UserID", $uid, time() + (86400 * 30), "/");
-      echo "true";
+      echo "success";
     } else {
-      echo "false";
+      echo "failure";
     }
-  // }
+  }
 ?>

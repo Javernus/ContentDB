@@ -11,7 +11,7 @@
   $stmt->execute();
   $data = $stmt->fetch();
 
-  if ($data[0]) {
+  if ($data) {
     echo "true";
   } else {
     echo "false";
