@@ -16,7 +16,7 @@ class CarouselItem extends HTMLElement {
   connectedCallback() {
     /* The link component for the css. */
     const link = document.createElement("link");
-    link.href = "../components/carousel-item/carousel-item.css";
+    link.href = "/components/carousel-item/carousel-item.css";
     link.rel = "stylesheet";
     this.shadow.appendChild(link);
 

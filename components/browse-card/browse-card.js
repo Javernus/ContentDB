@@ -3,7 +3,7 @@ class BrowseCard extends HTMLElement {
     super();
     this.shadow = this.attachShadow({ mode: "open" });
 
-    this.url = "../images/placeholder.png";
+    this.url = "/images/placeholder.png";
     this.src = "";
     this.srcset = "";
   }
@@ -11,7 +11,7 @@ class BrowseCard extends HTMLElement {
   connectedCallback() {
     /* The link component for the css. */
     const link = document.createElement("link");
-    link.setAttribute("href", "../components/browse-card/browse-card.css");
+    link.setAttribute("href", "/components/browse-card/browse-card.css");
     link.setAttribute("rel", "stylesheet");
     this.shadow.appendChild(link);
 

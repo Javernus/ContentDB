@@ -14,7 +14,7 @@ class Login extends HTMLElement {
 
     /* The link component for the css. */
     const link = document.createElement("link");
-    link.setAttribute("href", "../components/login/login.css");
+    link.setAttribute("href", "/components/login/login.css");
     link.setAttribute("rel", "stylesheet");
     this.shadow.appendChild(link);
 
@@ -156,7 +156,7 @@ class Login extends HTMLElement {
 
     const data = { email: email };
 
-    fetch("../php/emailExists.php", {
+    fetch("/php/emailExists.php", {
       method: "post",
       body: JSON.stringify(data),
       headers: {
@@ -184,7 +184,7 @@ class Login extends HTMLElement {
 
     const data = { username: username };
 
-    fetch("../php/usernameExists.php", {
+    fetch("/php/usernameExists.php", {
       method: "post",
       body: JSON.stringify(data),
       headers: {
@@ -234,7 +234,7 @@ class Login extends HTMLElement {
 
     const data = { username: username, email: email, password: password };
 
-    fetch("../php/signUp.php", {
+    fetch("/php/signUp.php", {
       method: "post",
       body: JSON.stringify(data),
       headers: {
@@ -269,7 +269,7 @@ class Login extends HTMLElement {
 
     const data = { email: email, password: password };
 
-    fetch("../php/login.php", {
+    fetch("/php/login.php", {
       method: "post",
       body: JSON.stringify(data),
       headers: {

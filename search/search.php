@@ -15,7 +15,7 @@
         <li><div class="search-item">Spiderman</div></li>
         <li><div class="search-item">Spiderman 2</div></li>
         <li><div class="search-item">Spiderman 3</div></li>
-    </ol> 
+    </ol>
 </div>
 
 <?php

@@ -10,7 +10,7 @@ class NavigationItem extends HTMLElement {
 
     /* The link component for the css. */
     const link = document.createElement("link");
-    link.setAttribute("href", "../components/nav-item/nav-item.css");
+    link.setAttribute("href", "/components/nav-item/nav-item.css");
     link.setAttribute("rel", "stylesheet");
     this.shadow.appendChild(link);
 

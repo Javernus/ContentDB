@@ -2,6 +2,8 @@
  * The Navigation Bar component. Houses Navigation Items.
  * Attributes
  *  - logoSrc: the src of the logo.
+ *
+ * Made by Jake.
  */
 class NavigationBar extends HTMLElement {
   constructor() {
@@ -10,10 +12,11 @@ class NavigationBar extends HTMLElement {
 
     /* Setting the defaults of the attributes. */
     this.logoSrc = "";
+    this.label = "Umbrim";
 
     /* The link component for the css. */
     const link = document.createElement("link");
-    link.setAttribute("href", "../components/nav-bar/nav-bar.css");
+    link.setAttribute("href", "/components/nav-bar/nav-bar.css");
     link.setAttribute("rel", "stylesheet");
     this.shadow.appendChild(link);
 
@@ -26,15 +29,31 @@ class NavigationBar extends HTMLElement {
     const navBarExpander = document.createElement("div");
     navBarExpander.classList.add("nav-bar__expander");
     navBar.appendChild(navBarExpander);
+    this.navBarExpanderElement = navBarExpander;
 
     /* The div containing the logo. */
     const navBarLogo = document.createElement("div");
     navBarLogo.classList.add("nav-bar__logo");
-    !this.logoSrc && navBarLogo.classList.add("nav-bar__logo--invisible");
+    // !this.logoSrc && navBarLogo.classList.add("nav-bar__logo--invisible");
     navBarExpander.appendChild(navBarLogo);
 
     /* Save a reference of the navBarLogo for dynamic state change. */
     this.navBarLogoElement = navBarLogo;
+
+    /* The hamburger icon to close the nav bar on mobile. */
+    const hamburgerIcon = document.createElement("cdb-icon");
+    hamburgerIcon.classList.add("nav-bar__hamburger");
+    hamburgerIcon.setAttribute("src", "/src/nav.svg#hamburger");
+    // hamburgerIcon.setAttribute("stroke", true);
+    hamburgerIcon.setAttribute("size", 3);
+    hamburgerIcon.setAttribute("colour", "var(--primary-main)");
+    hamburgerIcon.addEventListener("click", this.toggleBar.bind(this));
+    navBarLogo.appendChild(hamburgerIcon);
+
+    const title = document.createElement("p");
+    title.textContent = this.label;
+    navBarLogo.appendChild(title);
+    this.titleElement = title;
 
     const image = document.createElement("img");
     image.src = this.logoSrc;
@@ -62,9 +81,13 @@ class NavigationBar extends HTMLElement {
     navBottomItem.appendChild(bottomSlot);
   }
 
+  toggleBar() {
+    this.navBarExpanderElement.classList.toggle("nav-bar__expander--open");
+  }
+
   /* Returns the attributes which should be observed. */
   static get observedAttributes() {
-    return ["logoSrc"];
+    return ["logoSrc", "title"];
   }
 
   /* Handles attributes changing. */
@@ -84,6 +107,10 @@ class NavigationBar extends HTMLElement {
         this.navBarLogoElement.classList.add("nav-bar__logo--invisible");
         this.imageElement.src = "";
       }
+    }
+
+    if (name === "title") {
+      this.titleElement.textContent = newValue;
     }
   }
 }

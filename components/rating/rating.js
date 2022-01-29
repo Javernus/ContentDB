@@ -30,9 +30,9 @@ class Rating extends HTMLElement {
     if (name === "rating" && this.star1Element) {
       for (let i = 0; i < 5; i++) {
         if (i < this.rating) {
-          this[`star${i}Element`].setAttribute("src", "../src/star-filled.svg#star-filled");
+          this[`star${i}Element`].setAttribute("src", "/src/star-filled.svg#star-filled");
         } else {
-          this[`star${i}Element`].setAttribute("src", "../src/star.svg#star");
+          this[`star${i}Element`].setAttribute("src", "/src/star.svg#star");
         }
       }
     }
@@ -41,7 +41,7 @@ class Rating extends HTMLElement {
   /* Renders the component based on the given attributes. */
   connectedCallback() {
     const link = document.createElement("link");
-    link.setAttribute("href", "../components/rating/rating.css");
+    link.setAttribute("href", "/components/rating/rating.css");
     link.setAttribute("rel", "stylesheet");
     this.shadow.appendChild(link);
 
@@ -54,9 +54,9 @@ class Rating extends HTMLElement {
       starIcon.classList.add("star");
 
       if (i < this.rating) {
-        starIcon.setAttribute("src", "../src/star-filled.svg#star-filled");
+        starIcon.setAttribute("src", "/src/star-filled.svg#star-filled");
       } else {
-        starIcon.setAttribute("src", "../src/star.svg#star");
+        starIcon.setAttribute("src", "/src/star.svg#star");
       }
 
       starIcon.setAttribute("size", 2);
