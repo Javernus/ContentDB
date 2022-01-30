@@ -46,13 +46,13 @@
         document.getElementById("profilepage").appendChild(watchList);
 
     </script>
-    <div class='container'>
+    <div class='list-container'>
         <div id='towatchlist' class="list-view list-view--active"></div>
         <script>
             /* Scripts by Timo, updated by Jake. */
             for (let i = 0; i < 10; i++) {
                 const list_element = document.createElement('div');
-                list_element.innerHTML = '<watch-item title="Spiderman" src="./image/Spiderman.png" rating="3"><p>What is that? A spider?!</p></watch-list>';
+                list_element.innerHTML = '<watch-item title="Spiderman: Long Title From Home" src="./image/Spiderman.png" rating="3"><p>What is that? A spider?!</p></watch-list>';
                 document.getElementById('towatchlist').appendChild(list_element);
             }
         </script>

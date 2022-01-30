@@ -69,6 +69,12 @@
     padding-left: 50px; padding-right: 50px;
 }
 
+.list-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 .divider {
     width: 110%;
     margin-right: 50%;
@@ -78,6 +84,8 @@
 .list-view {
     display: none;
     flex-direction: column;
+    max-width: 60rem;
+    width: 100%;
     overflow: hidden;
     overflow-x: auto;
 }

@@ -57,6 +57,7 @@ body .content {
   justify-content: center;
   align-content: center;
   align-items: center;
+  text-align: center;
   background-color: var(--neutral-main);
   z-index: 1000;
   opacity: 1;
@@ -111,4 +112,8 @@ body .content {
   align-content: center;
   align-items: center;
   background-color: var(--neutral-main);
+}
+
+p {
+  margin: 0;
 }
