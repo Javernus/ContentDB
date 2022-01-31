@@ -9,6 +9,7 @@
  *  - year: the year the movie or series came out.
  *  - duration: the playtime of the movie or series in minutes.
  *  - description: the description of the movie or series.
+ *  - actors: the most prominent actors playing in the movie or series.
  * 
  * Made by Timo.
  */
@@ -27,6 +28,7 @@
       this.src = "";
       this.title = "";
       this.description = "";
+      this.actors = "";
     }
   
     connectedCallback() {
@@ -56,6 +58,7 @@
       heading.classList.add("item-view__heading");
       textualInfo.appendChild(heading);
   
+   
       /* The div containing the body of the film description. */
       const body = document.createElement("div");
       body.classList.add("item-view__body");
@@ -67,66 +70,118 @@
       heading.appendChild(title);
       this.titleElement = title;
 
+      /* The div containing subdivs to align them to the right. */
+      const headingStretch = document.createElement("div");
+      headingStretch.classList.add("item-view__heading");
+      headingStretch.classList.add("item-view__headingStretch");
+      heading.appendChild(headingStretch);
+      
+
+      /* The div containing the add to list icon and the text. */
+      const addLogo = document.createElement("div");
+      addLogo.classList.add("item-view__button");
+      headingStretch.appendChild(addLogo);
+
+      /* The dropdown menu to be shown after the plus button is clicked. */
+      const optionsContainer = document.createElement('div');
+      optionsContainer.classList.add("item-view__dropdown");
+      
+      const option1 = document.createElement("p");
+      option1.innerText = "To Watch";
+      optionsContainer.appendChild(option1);
+      
+      const option2 = document.createElement("p");
+      option2.innerText = "Watching";
+      optionsContainer.appendChild(option2);
+      
+      const option3 = document.createElement("p");
+      option3.innerText = "Watched";
+      optionsContainer.appendChild(option3);
+      
+      const option4 = document.createElement("p");
+      option4.innerText = "Favorites";
+      optionsContainer.appendChild(option4);
+      
+      const option5 = document.createElement("p");
+      option5.innerText = "To Watch";
+      optionsContainer.appendChild(option5);
+
+
+      /* Adding button functionality. */
+      addLogo.addEventListener("click", function(){ optionsContainer.classList.toggle("item-view__show");
+      });
+
+
+      /* The div containing the icon. */
+      const plusIcon = document.createElement("div");
+      addLogo.appendChild(plusIcon);
+      addLogo.appendChild(optionsContainer);
+      /* SVG icon component functionality added. */
+      plusIcon.innerHTML = `<cdb-icon slot="icon" src="../src/add.svg#plus" size="4" colour="var(--primary-main)"></cdb-icon>`;
+      
+
+
       /* The year of the film or series. */
       const year = document.createElement("h1");
+      const yearContainer = document.createElement("div");
+      yearContainer.classList.add("item-view__headerBox");
+      yearContainer.classList.add("item-view__headerBox:left")
+
       year.textContent = this.year;
-      heading.appendChild(year);
+      yearContainer.appendChild(year);
+      headingStretch.appendChild(yearContainer)
       this.yearElement = year;
 
       /* The duration of the film or series. */
       const duration = document.createElement("h1");
-      duration.textContent = this.duration;
-      heading.appendChild(duration);
+      const durationContainer = document.createElement("div");
+      durationContainer.classList.add("item-view__headerBox");
+      
+      duration.textContent = this.duration + "min";
+      durationContainer.appendChild(duration);
+      headingStretch.appendChild(durationContainer);
       this.durationElement = duration;
 
       
-      /* The div containing the button and its dropdown menu */
-      const buttoncontainer = document.createElement("div");
-      const addButton = document.createElement("button");
-      addButton.classList.add("item-view__button");
-      addButton.setAttribute("onclick", this.toggleDropdown());
-      addButton.innerText = "Add item";
-      buttoncontainer.appendChild(addButton);
-      heading.appendChild(buttoncontainer);
-
       /* The dropdown menu to be shown when the button is clicked. */
-      const dropdown = document.createElement("div");
-      dropdown.classList.add("item-view__dropdown");
-      dropdown.id = "dropdown";
-      buttoncontainer.appendChild(dropdown);
-      
+      const dropdownContainer = document.createElement("div");
+      dropdownContainer.classList.add("item-view__headerBox");
+      dropdownContainer.classList.add("item-view__dropdown");
 
 
-      const toWatch = document.createElement("a");
-      toWatch.innerText = "To Watch";
-      dropdown.appendChild(toWatch);
-      const watched = document.createElement("a");
-      watched.innerText = "Watched";
-      dropdown.appendChild(watched);
-      const watching = document.createElement("a");
-      watching.innerText = "Watching";
-      dropdown.appendChild(watching);
+      /* The item description. */
+      const description = document.createElement("p");
+      description.textContent = this.description;
+      description.classList.add("item-view__description");
+      body.appendChild(description);
+      this.descriptionElement = description;
 
-  
+      /* The star actors of the film or series. */
+      const actors = document.createElement("p");
+      actors.textContent = this.actors;
+      actors.classList.add("item-view__actors");
+      body.appendChild(actors);
+      this.actorsElement = actors;
+
+
       /* The cdb-rating component for the private rating of the film or series. */
-      const private_rating = document.createElement("cdb-private-rating");
-      private_rating.setAttribute("private-rating", this.private_rating);
+      const private_rating = document.createElement("cdb-rating");
+      private_rating.setAttribute("rating", this.private_rating);
       body.appendChild(private_rating);
       this.privateratingElement = private_rating;
 
       /* The cdb-rating component for the public rating of the film or series. */
-      const public_rating = document.createElement("cdb-private-rating");
-      public_rating.setAttribute("public-rating", this.public_rating);
+      const public_rating = document.createElement("cdb-rating");
+      public_rating.setAttribute("rating", this.public_rating);
+      private_rating.setAttribute("ratable", true);
       body.appendChild(public_rating);
       this.publicratingElement = public_rating;
-
-      /* The */
 
     }
   
     /* Returns the attributes which should be observed. */
     static get observedAttributes() {
-      return ["private_rating", "public_rating", "src", "title"];
+      return ["private_rating", "public_rating", "src", "title", "actors", "description", "year", "duration"];
     }
   
     /* Handles attributes changing. */
@@ -139,12 +194,12 @@
   
       /* Updates only the necessary parts of the component on update. */
       if (name === "public_rating" && this.publicratingElement) {
-        this.publicratingElement.setAttribute("public_rating", newValue);
+        this.publicratingElement.setAttribute("rating", newValue);
         return;
       }
 
       if (name === "private_rating" && this.privateratingElement) {
-        this.privateratingElement.setAttribute("private_rating", newValue);
+        this.privateratingElement.setAttribute("rating", newValue);
         return;
       }
   
@@ -167,11 +222,16 @@
         this.durationElement.textContent = newValue;
         return;
       }
-
       
-    }
-    toggleDropdown() {
-      document.getElementById("dropdown").classList.toggle("item-view__show");
+      if (name === "actors" && this.actorsElement) {
+        this.actorsElement.textContent = newValue;
+        return;
+      }
+
+      if (name === "description" && this.descriptionElement) {
+        this.descriptionElement.textContent = newValue;
+        return;
+      }  
     }
   }
   window.customElements.define("item-view", ItemView);

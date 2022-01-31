@@ -23,26 +23,37 @@ h3 {
 .item-view__info {
     display: flex;
     flex-direction: column;
-    padding-left: 2.5rem;
+    flex: 1;
 }
 
 .item-view__heading {
     display: flex;
     flex-direction: row;
+    width: 100%;
+    overflow: hidden;
 }
 
 .item-view__heading h1 {
+    padding: 1.25rem 3rem 1.25rem 3rem;
     font-family: 'Courier New', Courier, monospace;
+    text-align: center;
     color: var(--text-colour);
     margin: 0;
-    padding: 1.25rem 5rem 1.25rem 0;
 }
 
 .item-view__heading cdb-rating {
     padding: 1.25rem 5rem 1.25rem 5rem;
     display: flex;
     flex-direction: row;
-    }
+}
+
+.item-view__headingStretch {
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    clear: both;
+    flex-direction: row-reverse;
+}
 
 .item-view__description {
     font-family: 'Courier New', Courier, monospace;
@@ -51,24 +62,40 @@ h3 {
 }
 
 .item-view__dropdown {
-    display: flex;
+    display: none;
+    position: absolute;
     flex-direction: column;
+    z-index: 2;
 }
 
 .item-view__show {
-    display: block;
+    display: inline-block;
 }
 
 .item-view__button {
     cursor: pointer;
+    position: relative;
+    display: inline-block;
+    margin: 0;
+    padding-right: 5em;
+    padding-left: 5em;   
     border-radius: 1rem;
-    left: 15em;
     color: var(--neutal-4);
     border: var(--neutral-5);
-    padding: 16px;
-    background-color: var(--primary-1);
 }
 
-.item-view__button:hover {
-    background-color: var(--primary-3);
+.item-view__headerBox {
+    background-color: var(--primary-1);
+    position: static;
+    padding: 0 5rem 0 5rem;
+    border: var(--neutral-5);
+}
+
+.item-view__headerBox:left {
+    border-bottom-left-radius: 1em;
+}
+
+
+.item-view__headerBox:right {
+    border-bottom-right-radius: 1em;
 }
