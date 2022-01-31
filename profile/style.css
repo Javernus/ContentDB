@@ -61,7 +61,7 @@
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background-color: var(--neutal-4);
+  background-color: var(--neutral-4);
   border-radius: 0.5rem;
   border: 0.0625rem solid;
   border-color: var(--primary-2);
@@ -80,6 +80,11 @@
   z-index: 1;
   pointer-events: none;
   display: none;
+}
+
+.tab-option {
+  background-color: var(--neutral-4);
+  border: 0.0625rem solid var(--primary-2);
 }
 
 .title {

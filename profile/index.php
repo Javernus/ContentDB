@@ -9,6 +9,8 @@
     </div>
     <script>
         /* Scripts by Jake. */
+
+        /* Creates the tab bar and dropdown select. */
         const watchList = document.createElement("div");
         watchList.classList.add("tab-bar");
 
@@ -19,7 +21,6 @@
         const chevronDown = document.createElement("cdb-icon");
         chevronDown.classList.add("tab-select__chevron");
         chevronDown.setAttribute("src", "../src/chevrons.svg#bottom");
-        // chevronDown.setAttribute("stroke", true);
         chevronDown.setAttribute("size", 1.5);
         chevronDown.setAttribute("colour", "var(--text-colour)");
         watchList.appendChild(chevronDown);
@@ -31,19 +32,23 @@
             const listId = event.target.id.replace("tab", "list");
             const list = document.getElementById(listId);
 
+            /* Update the dropdown. */
             for (const option of watchSelectList.options) {
                 option.toggleAttribute("selected", false);
+
                 if (option.id === event.target.id.replace("tab", "option")) {
                     option.toggleAttribute("selected", true);
                 }
             }
 
+            /* Update the tabs. */
             for (const tab of watchList.children) {
                 tab.classList.remove("tab--active");
             }
 
             event.target.classList.add("tab--active");
 
+            /* Update the list views. */
             for (const list of document.getElementsByClassName("list-view")) {
                 list.classList.remove("list-view--active")
             }
@@ -58,8 +63,8 @@
             const listId = event.target.value.replace("option", "list");
             const list = document.getElementById(listId);
 
+            /* Updates the tabs */
             for (const tab of watchList.children) {
-                console.log(tab);
                 if (tab.nodeName === "DIV") {
                     tab.classList.remove("tab--active");
                 }
@@ -70,12 +75,13 @@
                 }
             }
 
+            /* Updates the list views. */
             for (const list of document.getElementsByClassName("list-view")) {
-                list.classList.remove("list-view--active")
+                list.classList.remove("list-view--active");
             }
 
             if (list) {
-                list.classList.add("list-view--active")
+                list.classList.add("list-view--active");
             }
         }
 
@@ -95,10 +101,11 @@
             option.setAttribute("id", tabName.replaceAll(" ", "").toLowerCase() + "option");
             option.setAttribute("value", tabName.replaceAll(" ", "").toLowerCase() + "option");
             option.textContent = tabName;
-            option.addEventListener("click", showTab);
+            option.addEventListener("click", showSelectTab);
             watchSelectList.appendChild(option);
         }
 
+        /* Append the tab bar and dropdown to the page. */
         document.getElementById("profilepage").appendChild(watchList);
         watchSelectList.addEventListener("change", showSelectTab);
         watchList.appendChild(watchSelectList);

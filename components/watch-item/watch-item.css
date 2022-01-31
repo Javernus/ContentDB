@@ -81,16 +81,6 @@ h3 {
         height: 7.5rem;
     }
 
-    .watch-item__image {
-        background-size: contain;
-        background-position: center;
-        background-size: 100% 100%;
-        background-color: gray;
-        width: 10rem;
-        height: 15rem;
-        flex: none;
-    }
-
     .watch-item__info {
         padding-left: 0.5rem;
     }
