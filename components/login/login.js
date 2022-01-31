@@ -156,27 +156,13 @@ class Login extends HTMLElement {
 
     const data = { email: email };
 
-    fetch("/php/emailExists.php", {
-      method: "post",
-      body: JSON.stringify(data),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        return response.text();
-      })
-      .then((res) => {
-        if (res === "true") {
-          this.signUpEmailElement.setAttribute("error", true);
-        } else if (res === "false") {
-          this.signUpEmailElement.removeAttribute("error");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    postFetch("../php/emailExists.php", data, false, (res) => {
+      if (res === "true") {
+        this.signUpEmailElement.setAttribute("error", true);
+      } else if (res === "false") {
+        this.signUpEmailElement.removeAttribute("error");
+      }
+    });
   }
 
   handleUsername() {
@@ -184,27 +170,13 @@ class Login extends HTMLElement {
 
     const data = { username: username };
 
-    fetch("/php/usernameExists.php", {
-      method: "post",
-      body: JSON.stringify(data),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        return response.text();
-      })
-      .then((res) => {
-        if (res === "true") {
-          this.signUpUsernameElement.setAttribute("error", true);
-        } else if (res === "false") {
-          this.signUpUsernameElement.removeAttribute("error");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    postFetch("../php/usernameExists.php", data, false, (res) => {
+      if (res === "true") {
+        this.signUpUsernameElement.setAttribute("error", true);
+      } else if (res === "false") {
+        this.signUpUsernameElement.removeAttribute("error");
+      }
+    });
   }
 
   handlePassword() {
@@ -234,69 +206,32 @@ class Login extends HTMLElement {
 
     const data = { username: username, email: email, password: password };
 
-    fetch("/php/signUp.php", {
-      method: "post",
-      body: JSON.stringify(data),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        return response.text();
-      })
-      .then((res) => {
-        switch (res) {
-          case "success":
-            this.dispatchEvent(new CustomEvent("signup"));
-            break;
-          case "limitreached":
-            // Add text to indicate waiting
-            // this.dispatchEvent(new CustomEvent("signup"));
-            break;
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    postFetch("../php/signUp.php", data, false, (res) => {
+      switch (res) {
+        case "success":
+          this.dispatchEvent(new CustomEvent("signup"));
+          break;
+        case "limitreached":
+          // Add text to indicate waiting
+          break;
+      }
+    });
   }
 
   signIn() {
     const email = this.signInEmailElement.value;
     const password = this.signInPasswordElement.value;
 
-    // const hashedPassword = hash();
-
     const data = { email: email, password: password };
 
-    fetch("/php/login.php", {
-      method: "post",
-      body: JSON.stringify(data),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        return response.text();
-      })
-      .then((res) => {
-        if (res === "true") {
-          const event = new CustomEvent("login", {
-            detail: {
-              successful: res,
-            },
-          });
-
-          this.dispatchEvent(event);
-        } else {
-          this.signInEmailElement.setAttribute("error", true);
-          this.signInPasswordElement.setAttribute("error", true);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    postFetch("../php/login.php", data, false, (res) => {
+      if (res === "true") {
+        this.dispatchEvent(new CustomEvent("login"));
+      } else {
+        this.signInEmailElement.setAttribute("error", true);
+        this.signInPasswordElement.setAttribute("error", true);
+      }
+    });
   }
 
   /* Returns the attributes which should be observed. */

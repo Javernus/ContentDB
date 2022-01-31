@@ -14,20 +14,42 @@ session_start();
     <link href="/theme/main.css" rel="stylesheet">
     <link href="./style.css" rel="stylesheet">
 
-    <script type="text/javascript" src="/components/nav-bar/nav-bar.js"></script>
-    <script type="text/javascript" src="/components/nav-item/nav-item.js"></script>
-    <script type="text/javascript" src="/components/icon/icon.js"></script>
-    <script type="text/javascript" src="/components/icon/responsive-icon.js"></script>
-    <script type="text/javascript" src="/components/carousel/carousel.js"></script>
-    <script type="text/javascript" src="/components/carousel-item/carousel-item.js"></script>
-    <script type="text/javascript" src="/components/button/button.js"></script>
-    <script type="text/javascript" src="/components/input/input.js"></script>
-    <script type="text/javascript" src="/components/dialog/dialog.js"></script>
-    <script type="text/javascript" src="/components/login/login.js"></script>
-    <script type="text/javascript" src="/components/browse-card/browse-card.js"></script>
-    <script type="text/javascript" src="/components/browse-row/browse-row.js"></script>
-    <script type="text/javascript" src="/components/watch-item/watch-item.js"></script>
-    <script type="text/javascript" src="/components/rating/rating.js"></script>
+    <script type="text/javascript" src="../components/nav-bar/nav-bar.js"></script>
+    <script type="text/javascript" src="../components/nav-item/nav-item.js"></script>
+    <script type="text/javascript" src="../components/icon/icon.js"></script>
+    <script type="text/javascript" src="../components/icon/responsive-icon.js"></script>
+    <script type="text/javascript" src="../components/carousel/carousel.js"></script>
+    <script type="text/javascript" src="../components/carousel-item/carousel-item.js"></script>
+    <script type="text/javascript" src="../components/button/button.js"></script>
+    <script type="text/javascript" src="../components/input/input.js"></script>
+    <script type="text/javascript" src="../components/dialog/dialog.js"></script>
+    <script type="text/javascript" src="../components/login/login.js"></script>
+    <script type="text/javascript" src="../components/browse-card/browse-card.js"></script>
+    <script type="text/javascript" src="../components/browse-row/browse-row.js"></script>
+    <script type="text/javascript" src="../components/watch-item/watch-item.js"></script>
+    <script type="text/javascript" src="../components/rating/rating.js"></script>
+
+    <script>
+      function postFetch(url, data, json, callback) {
+        fetch(url, {
+          method: "post",
+          body: JSON.stringify(data),
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        })
+          .then((res) => {
+            return json ? res.json() : res.text();
+          })
+          .then((res) => {
+            callback(res);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    </script>
   </head>
   <body>
     <div id="splash-screen">
@@ -114,17 +136,8 @@ session_start();
           dialog.toggleAttribute("open");
         }
 
-        /* Signs the user out and updates the nav bar. */
-        function signOut() {
-          fetch("/php/logout.php", {
-            method: "post",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          })
-            .catch((error) => {
-              console.log(error);
-            });
+      function signOut() {
+        postFetch("../php/logout.php", {}, false, () => {});
 
           navItemProfile.classList.add("nav-item--hidden");
           navItemSignOut.classList.add("nav-item--hidden");

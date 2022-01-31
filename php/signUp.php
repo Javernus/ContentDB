@@ -27,7 +27,7 @@
       $stmt->execute();
       $salt = $stmt->fetch();
 
-      $sql = 'CALL CheckLogin(:p0,:p1)';
+      $sql = 'CALL Login(:p0,:p1)';
       $stmt = $db->prepare($sql);
       $stmt->bindValue(":p0", $email, PDO::PARAM_STR);
       $stmt->bindValue(":p1", $password.$salt[0], PDO::PARAM_STR);
