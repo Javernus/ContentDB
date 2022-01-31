@@ -18,36 +18,43 @@
           // Use parse_url() function to parse the URL
           // and return an associative array which
           // contains its various components
-          $url_components = parse_url($url);
+          if (parse_url($url, PHP_URL_QUERY)) {
+            $url_components = parse_url($url);
+            // Use parse_str() function to parse the
+            // st ring passed via URL
+            parse_str($url_components['query'], $web_params);
+            $FSID = $web_params["FSID"];
+            
+            include_once("../php/databaseLogin.php");
+            $sql = 'CALL fsGetContentByFSID(:p0)';
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(":p0", $FSID, PDO::PARAM_STR);
+            $stmt->execute();
+            $results = $stmt->fetch();
 
-          // Use parse_str() function to parse the
-          // st ring passed via URL
-          parse_str($url_components['query'], $web_params);
-          $FSID = $web_params["FSID"];
-          // const data = { 'FSID': $web_params["FSID"] };
-          
-          include_once("../php/databaseLogin.php");
-          $sql = 'CALL fsGetContentByFSID(:p0)';
-          $stmt = $db->prepare($sql);
-          $stmt->bindValue(":p0", $FSID, PDO::PARAM_STR);
-          $stmt->execute();
-          $results = $stmt->fetch();
-
-          if ($results) {
-            echo "<item-view title='$results[1]' src='$results[2]' description='$results[3]' public_rating=$results[4] duration=$results[5] year=$results[6] private_rating=3></item-view>";
+            if ($results) {
+              echo "<item-view title='$results[1]' src='$results[2]' description='$results[3]' public_rating=$results[4] duration=$results[5] year=$results[6] private_rating=3></item-view>";
+            } else {
+              echo "Hm, looks like something went wrong!";
+            }
           } else {
-            echo "Hm, looks like something went wrong!";
+            echo 'Hm, looks like something went wrong!';
           }
+          
         ?>
       </div>
     </div>
 
     <div class="comment" id='comment-section'>
      <!-- if logged in -->
-      <?php ?>
-      <div class="comment__user">
-        <textarea type="text" class="comment__input" placeholder="Write a comment." id="commentInput"></textarea><button onclick="addComment(, document.getElementById('commentInput').value)" class='comment__submit' type="submit">Add Comment</button>
-      </div>
+      <?php 
+      // TODO: SET THIS TO TRUE
+        if ($logged_in === false) {
+          echo `<div class="comment__user">
+          <textarea type="text" class="comment__input" placeholder="Write a comment." id="commentInput"></textarea><button onclick="addComment(, document.getElementById('commentInput').value)" class='comment__submit' type="submit">Add Comment</button>
+        </div>`;
+        }
+      ?>
       <!-- not logged in as well -->
     </div>
 <!-- 
