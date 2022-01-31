@@ -68,6 +68,7 @@ body .content {
   justify-content: center;
   align-content: center;
   align-items: center;
+  text-align: center;
   background-color: var(--neutral-main);
   z-index: 1000;
   opacity: 1;
@@ -124,4 +125,8 @@ body .content {
   align-items: center;
   background-color: var(--neutral-main);
   text-align: center;
+}
+
+p {
+  margin: 0;
 }

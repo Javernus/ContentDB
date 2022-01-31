@@ -3,7 +3,7 @@
  * Attributes
  *  - rating: the rating of the film or series.
  *  - src: the src for the image.
- *  - title: the title of the movie.
+ *  - label: the title of the movie.
  *
  * Slots
  *  - default: the description.
@@ -18,7 +18,7 @@ class WatchItem extends HTMLElement {
     /* The defaults for the attributes. */
     this.rating = 1;
     this.src = "";
-    this.title = "";
+    this.label = "";
   }
 
   connectedCallback() {
@@ -71,7 +71,7 @@ class WatchItem extends HTMLElement {
 
   /* Returns the attributes which should be observed. */
   static get observedAttributes() {
-    return ["rating", "src", "title"];
+    return ["rating", "src", "label"];
   }
 
   /* Handles attributes changing. */
@@ -92,9 +92,11 @@ class WatchItem extends HTMLElement {
       this.imageElement.style.backgroundImage = `url(${newValue})`;
     }
 
-    if (name === "title" && this.titleElement) {
+    if (name === "label" && this.titleElement) {
       this.titleElement.textContent = newValue;
     }
   }
 }
+
+/* Defines the custom element. */
 window.customElements.define("watch-item", WatchItem);

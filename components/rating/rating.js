@@ -35,6 +35,8 @@ class Rating extends HTMLElement {
           this[`star${i}Element`].setAttribute("src", "/src/star.svg#star");
         }
       }
+
+      this.numberElement && (this.numberElement.textContent = this.rating);
     }
   }
 
@@ -51,7 +53,8 @@ class Rating extends HTMLElement {
 
     for (let i = 0; i < 5; i++) {
       const starIcon = document.createElement("cdb-icon");
-      starIcon.classList.add("star");
+      starIcon.classList.add("rating__star");
+      i === 0 && starIcon.classList.add("rating__star--first");
 
       if (i < this.rating) {
         starIcon.setAttribute("src", "/src/star-filled.svg#star-filled");
@@ -64,6 +67,12 @@ class Rating extends HTMLElement {
       container.appendChild(starIcon);
       this[`star${i}Element`] = starIcon;
     }
+
+    const number = document.createElement("h3");
+    number.classList.add("rating__number");
+    number.textContent = this.rating;
+    container.appendChild(number);
+    this.numberElement = number;
   }
 }
 

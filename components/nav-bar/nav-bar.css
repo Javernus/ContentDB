@@ -19,7 +19,7 @@
   box-sizing: border-box;
 
   background-color: var(--neutral-3);
-  border-right: 0.0625rem solid var(--primary-1);
+  border-right: 0.0625rem solid var(--primary-2);
   position: relative;
   overflow-y: hidden;
   overflow: hidden;

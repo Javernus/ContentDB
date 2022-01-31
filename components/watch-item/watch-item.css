@@ -5,10 +5,21 @@ h3 {
 :host(.watch-item) {
     display: flex;
     flex-direction: row;
-    border: var(--primary-1) 0.125rem solid;
     border-radius: 2rem;
-    overflow: hidden;
+    /* overflow: hidden; */
     height: fit-content;
+    position: relative;
+    padding: 0.5rem 0;
+}
+
+:host(.watch-item)::before {
+    width: 100%;
+    height: 0;
+    position: absolute;
+    content: " ";
+    bottom: -0.03125rem;
+    border: var(--primary-2) solid 0.0625rem;
+    border-radius: 0.5rem;
 }
 
 .watch-item__image {
@@ -16,36 +27,78 @@ h3 {
     background-position: center;
     background-size: 100% 100%;
     background-color: gray;
-    width: 10.8rem;
-    height: 16rem;
+    width: 10rem;
+    height: 15rem;
+    flex: none;
+    border-radius: 0.5rem;
+    overflow: hidden;
 }
 
 .watch-item__info {
     display: flex;
     flex-direction: column;
-    padding-left: 2.5rem;
+    padding-left: 1rem;
+    width: 100%;
 }
 
 .watch-item__heading {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
 }
 
 .watch-item__heading h1 {
     font-family: 'Courier New', Courier, monospace;
     color: var(--text-colour);
     margin: 0;
-    padding: 1.25rem 5rem 1.25rem 0;
+    padding: 1.25rem 0.5rem 1.25rem 0;
 }
 
 .watch-item__heading cdb-rating {
-    padding: 1.25rem 5rem 1.25rem 5rem;
+    padding: 1.25rem 0 1.25rem 0;
     display: flex;
     flex-direction: row;
-    }
+}
 
 .watch-item__description {
     font-family: 'Courier New', Courier, monospace;
     color: var(--text-colour);
-    padding: 0 5rem 0 0;
+}
+
+.watch-item__description::slotted(p) {
+    margin: 0;
+}
+
+@media (max-width : 750px) {
+    :host {
+        padding: 0.25rem 0;
+    }
+
+    .watch-item__image {
+        width: 5rem;
+        height: 7.5rem;
+    }
+
+    .watch-item__info {
+        padding-left: 0.5rem;
+    }
+
+    .watch-item__heading h1 {
+        padding: 0.5rem 1rem 0.5rem 0;
+        font-size: 1rem;
+        height: fit-content;
+    }
+
+    .watch-item__heading cdb-rating {
+        padding: 0.5rem 0rem 0.5rem 0rem;
+    }
+}
+
+@media (max-width : 450px) {
+    .watch-item__image {
+        width: 3.5rem;
+        height: 5.25rem;
+    }
 }
