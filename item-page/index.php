@@ -33,42 +33,23 @@
           $stmt->execute();
           $results = $stmt->fetch();
 
-          // echo "$results[1]";
-          // for ($i = 0; $i <= count($results); $i++) {
-          //   echo "$results[$i]";
-          //   echo "  b   ";
-          // }
           if ($results) {
-            echo "<item-view title='$results[1]' src='$results[2]' description='$results[3]' public-rating='4' duration=$results[5] year=$results[6] private-rating=''></item-view>";
+            echo "<item-view title='$results[1]' src='$results[2]' description='$results[3]' public_rating=$results[4] duration=$results[5] year=$results[6] private_rating=3></item-view>";
           } else {
             echo "Hm, looks like something went wrong!";
           }
-
-          
-
-
-
-          // if (in_array('FSID', $web_params)) {
-          //   $stmt = "{ CALL GetContent(?,?)}";
-          //   $params = $web_params["FSID"]
-          //   $result = sqlrsv_query($conn,$stmt,$params);
-          //   sqlrsv_close($conn);
-          // }
-          // else {
-          //   echo "Oops. Something went wrong!";            
-          // }
         ?>
       </div>
     </div>
-<!-- 
-    <div class="comment" id='comment-section'>
-      <div class="comment__user">
-        <textarea type="text" class="comment__input" placeholder="Write a comment." id="commentInput"></textarea><button v-on:click="addComment()" class='comment__submit' type="submit">Add Comment</button>
-      </div>
-      
-      
 
-    </div> -->
+    <div class="comment" id='comment-section'>
+     <!-- if logged in -->
+      <?php ?>
+      <div class="comment__user">
+        <textarea type="text" class="comment__input" placeholder="Write a comment." id="commentInput"></textarea><button onclick="addComment(, document.getElementById('commentInput').value)" class='comment__submit' type="submit">Add Comment</button>
+      </div>
+      <!-- not logged in as well -->
+    </div>
 <!-- 
     <script>
         /* Scripts by Timo. Here we load the movie item and display it. */

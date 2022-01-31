@@ -18,10 +18,15 @@
  class ItemView extends HTMLElement {
     constructor() {
       super();
+
+      /* Setting default values. */
+      this.private_rating = 0;
+      this.public_rating = 0;
     }
   
     connectedCallback() {
       this.shadow = this.attachShadow({ mode: "open" });
+      
       /* The link component for the css. */
       const link = document.createElement("link");
       link.href = "../components/item-view/item-view.css";
@@ -127,7 +132,7 @@
       const durationContainer = document.createElement("div");
       durationContainer.classList.add("item-view__headerBox");
       
-      duration.textContent = this.duration + "min";
+      duration.textContent = this.duration + " min";
       durationContainer.appendChild(duration);
       headingStretch.appendChild(durationContainer);
       this.durationElement = duration;
@@ -152,21 +157,21 @@
       actors.classList.add("item-view__actors");
       body.appendChild(actors);
       this.actorsElement = actors;
-
-
-      /* The cdb-rating component for the private rating of the film or series. */
-      const private_rating = document.createElement("cdb-rating");
-      private_rating.setAttribute("rating", this.private_rating);
-      body.appendChild(private_rating);
-      this.privateratingElement = private_rating;
-
+  
       /* The cdb-rating component for the public rating of the film or series. */
       const public_rating = document.createElement("cdb-rating");
+      public_rating.setAttribute("ratable", false);
       public_rating.setAttribute("rating", this.public_rating);
-      private_rating.setAttribute("ratable", true);
       body.appendChild(public_rating);
       this.publicratingElement = public_rating;
 
+      /* The cdb-rating component for the private rating of the film or series. */
+      const private_rating = document.createElement("cdb-rating");
+      private_rating.setAttribute("ratable", true);
+      private_rating.setAttribute("rating", this.private_rating);
+      body.appendChild(private_rating);
+      this.privateratingElement = private_rating;
+    
     }
   
     /* Returns the attributes which should be observed. */
@@ -179,9 +184,8 @@
       if (oldValue === newValue) {
         return;
       }
-  
+
       this[name] = newValue;
-  
       /* Updates only the necessary parts of the component on update. */
       if (name === "public_rating" && this.publicratingElement) {
         this.publicratingElement.setAttribute("rating", newValue);
