@@ -1,3 +1,15 @@
+/**
+ * The Navigation Item component. Lets users navigate to other pages.
+ * Attributes
+ *  - active: TBF.
+ *  - href: A link to the page to go to.
+ *  - label: The text next to the image.
+ *
+ * Slots
+ *  - default: the icon seen when the nav bar is not open.
+ *
+ * Made by Jake.
+ */
 class NavigationItem extends HTMLElement {
   constructor() {
     super();
@@ -10,7 +22,7 @@ class NavigationItem extends HTMLElement {
 
     /* The link component for the css. */
     const link = document.createElement("link");
-    link.setAttribute("href", "../components/nav-item/nav-item.css");
+    link.setAttribute("href", "/components/nav-item/nav-item.css");
     link.setAttribute("rel", "stylesheet");
     this.shadow.appendChild(link);
 
@@ -19,8 +31,6 @@ class NavigationItem extends HTMLElement {
     anchor.classList.add("nav-anchor");
     this.href && anchor.setAttribute("href", this.href);
     this.shadow.appendChild(anchor);
-
-    /* Save a reference of the anchor for dynamic state change. */
     this.anchorElement = anchor;
 
     /* The div holding the icon and label. */
@@ -28,8 +38,6 @@ class NavigationItem extends HTMLElement {
     navItem.classList.add("nav-item");
     this.active && navItem.classList.add("nav-item--active");
     anchor.appendChild(navItem);
-
-    /* Save a reference of the navItem for dynamic state change. */
     this.navItemElement = navItem;
 
     /* The div with the slot for the icon. */
@@ -41,17 +49,16 @@ class NavigationItem extends HTMLElement {
     slot.setAttribute("name", "icon");
     navIcon.appendChild(slot);
 
-    /* The div with the label. */
+    /* The div containing the label. */
     const navLabel = document.createElement("div");
     navLabel.classList.add("nav-item__label");
     navItem.appendChild(navLabel);
 
+    /* The label. */
     const paragraph = document.createElement("p");
     paragraph.classList.add("nav-item--label");
     paragraph.textContent = this.label;
     navLabel.appendChild(paragraph);
-
-    /* Save a reference of the paragraph for dynamic state change. */
     this.paragraphElement = paragraph;
   }
 

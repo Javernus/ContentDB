@@ -16,6 +16,12 @@
   cursor: pointer;
 }
 
+@media (max-width : 750px) {
+  .nav-item {
+    width: 100vw;
+  }
+}
+
 .nav-item--active > .nav-item__label > p {
   color: var(--text-colour-active);
 }

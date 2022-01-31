@@ -17,7 +17,7 @@ class Input extends HTMLElement {
   connectedCallback() {
     /* The link component for the css. */
     const link = document.createElement("link");
-    link.setAttribute("href", "../components/input/input.css");
+    link.setAttribute("href", "/components/input/input.css");
     link.setAttribute("rel", "stylesheet");
     this.shadow.appendChild(link);
 

@@ -1,16 +1,27 @@
 .nav-bar {
   width: 3rem;
+  height: 100vh;
   margin-right: 1rem;
   position: relative;
+}
+
+.nav-bar__mobile-top {
+  display: none;
+}
+
+.nav-bar__hamburger {
+  height: 3rem;
 }
 
 .nav-bar__expander {
   width: 3rem;
   height: 100vh;
+  box-sizing: border-box;
 
   background-color: var(--neutral-3);
   border-right: 0.0625rem solid var(--primary-1);
   position: relative;
+  overflow-y: hidden;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -22,23 +33,85 @@
   z-index: 5;
 }
 
-.nav-bar__logo--invisible {
-  display: none;
-}
-
 .nav-bar__expander:hover {
   width: 20rem;
   transition-delay: 0.65s;
   transition-duration: 0.5s;
+  scrollbar-width: none;
 }
 
+.nav-bar__expander::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.nav-bar__mobile-top {
+  height: 3rem;
+  width: 100vw;
+  align-items: center;
+  align-content: center;
+}
+
+.nav-bar__mobile-top p {
+  margin: 0 0 0 0.5rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
 
 .nav-bar__items {
-   position: relative;
-   display: flex;
-   flex-direction: column;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .nav-bar__bottom-items {
   margin-top: auto;
+}
+
+
+@media (max-width : 750px) {
+  .nav-bar {
+    width: 100vw;
+    height: 3rem;
+    margin-bottom: 1rem;
+    margin-right: 0;
+    position: relative;
+  }
+
+  .nav-bar__mobile-top {
+    display: flex;
+  }
+
+  .nav-bar__expander {
+    width: 100vw;
+    height: 3rem;
+    border-right: none;
+    border-bottom: 0.0625rem solid var(--primary-1);
+    transition: height cubic-bezier(.6, .01, .4, .99);
+    transition-delay: 0s;
+  }
+
+  .nav-bar__expander:hover {
+    width: 100vw;
+    height: 3rem;
+    transition-delay: 0s;
+  }
+
+  .nav-bar__expander--open {
+    width: 100vw;
+    height: 100vh;
+    overflow-y: scroll;
+    transition-delay: 0s;
+  }
+
+  .nav-bar__expander--open:hover {
+    width: 100vw;
+    height: 100vh;
+    overflow-y: scroll;
+    transition-delay: 0s;
+  }
+
+  .nav-bar__bottom-items {
+    margin-top: 0;
+  }
 }

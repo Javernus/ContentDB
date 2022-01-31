@@ -18,7 +18,7 @@ class Dialog extends HTMLElement {
   connectedCallback() {
     /* The link component for the css. */
     const link = document.createElement("link");
-    link.setAttribute("href", "../components/dialog/dialog.css");
+    link.setAttribute("href", "/components/dialog/dialog.css");
     link.setAttribute("rel", "stylesheet");
     this.shadow.appendChild(link);
 
@@ -34,7 +34,7 @@ class Dialog extends HTMLElement {
     /* The x icon to close the dialog. */
     const closingIcon = document.createElement("cdb-icon");
     closingIcon.classList.add("dialog__exit");
-    closingIcon.setAttribute("src", "../src/x.svg#x");
+    closingIcon.setAttribute("src", "/src/x.svg#x");
     closingIcon.setAttribute("stroke", true);
     closingIcon.setAttribute("size", 1.5);
     closingIcon.setAttribute("colour", "var(--primary-main)");

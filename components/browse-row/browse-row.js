@@ -9,7 +9,7 @@ class GenreRow extends HTMLElement {
   connectedCallback() {
     /* The link component for the css. */
     const link = document.createElement("link");
-    link.setAttribute("href", "../components/browse-row/browse-row.css");
+    link.setAttribute("href", "/components/browse-row/browse-row.css");
     link.setAttribute("rel", "stylesheet");
     this.shadow.appendChild(link);
 
@@ -33,7 +33,7 @@ class GenreRow extends HTMLElement {
     const chevronLeft = document.createElement("cdb-icon-responsive");
     chevronLeft.classList.add("browse__chevron");
     chevronLeft.classList.add("browse__chevron--left");
-    chevronLeft.setAttribute("src", "../src/chevrons.svg#left");
+    chevronLeft.setAttribute("src", "/src/chevrons.svg#left");
     chevronLeft.setAttribute("size", 5);
     chevronLeft.setAttribute("colour", "var(--primary-main)");
     chevronLeft.addEventListener("click", this.scrollLeft.bind(this));
@@ -44,7 +44,7 @@ class GenreRow extends HTMLElement {
     const chevronRight = document.createElement("cdb-icon-responsive");
     chevronRight.classList.add("browse__chevron");
     chevronRight.classList.add("browse__chevron--right");
-    chevronRight.setAttribute("src", "../src/chevrons.svg#right");
+    chevronRight.setAttribute("src", "/src/chevrons.svg#right");
     chevronRight.setAttribute("size", 5);
     chevronRight.setAttribute("colour", "var(--primary-1)");
     chevronRight.addEventListener("click", this.scrollRight.bind(this));
