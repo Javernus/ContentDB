@@ -5,11 +5,11 @@
 
   $FSID = $data->FSID;
 
-  $sql = 'CALL getContent(:p0)';
+  $sql = 'CALL getContent(:p0, :p1)';
   $stmt = $db->prepare($sql);
   $stmt->bindValue(":p0", $FSID, PDO::PARAM_STR);
   $stmt->execute();
-  $data = $stmt->fetch();
+  $results = $stmt->fetch();
 
   if ($data) {
     echo "true";

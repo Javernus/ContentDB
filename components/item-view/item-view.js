@@ -18,20 +18,10 @@
  class ItemView extends HTMLElement {
     constructor() {
       super();
-      this.shadow = this.attachShadow({ mode: "open" });
-  
-      /* The defaults for the attributes. */
-      this.private_rating = 0;
-      this.public_rating = 0;
-      this.year = 0;
-      this.duration = 0;
-      this.src = "";
-      this.title = "";
-      this.description = "";
-      this.actors = "";
     }
   
     connectedCallback() {
+      this.shadow = this.attachShadow({ mode: "open" });
       /* The link component for the css. */
       const link = document.createElement("link");
       link.href = "../components/item-view/item-view.css";

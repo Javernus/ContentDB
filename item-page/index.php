@@ -13,8 +13,6 @@
           
           ini_set( 'error_reporting', E_ALL );
           ini_set( 'display_errors', true );
-
-          // include_once '../importables/db-connect.inc.php';
           $url = $_SERVER['REQUEST_URI'];
 
           // Use parse_url() function to parse the URL
@@ -25,10 +23,28 @@
           // Use parse_str() function to parse the
           // st ring passed via URL
           parse_str($url_components['query'], $web_params);
+          $FSID = $web_params["FSID"];
+          // const data = { 'FSID': $web_params["FSID"] };
+          
+          include_once("../php/databaseLogin.php");
+          $sql = 'CALL fsGetContentByFSID(:p0)';
+          $stmt = $db->prepare($sql);
+          $stmt->bindValue(":p0", $FSID, PDO::PARAM_STR);
+          $stmt->execute();
+          $results = $stmt->fetch();
 
-          const data = { FSID: $web_params["FSID"] };
-                                                                                                                                                                                                    
+          // echo "$results[1]";
+          // for ($i = 0; $i <= count($results); $i++) {
+          //   echo "$results[$i]";
+          //   echo "  b   ";
+          // }
+          if ($results) {
+            echo "<item-view title='$results[1]' src='$results[2]' description='$results[3]' public-rating='4' duration=$results[5] year=$results[6] private-rating=''></item-view>";
+          } else {
+            echo "Hm, looks like something went wrong!";
+          }
 
+          
 
 
 
@@ -37,7 +53,6 @@
           //   $params = $web_params["FSID"]
           //   $result = sqlrsv_query($conn,$stmt,$params);
           //   sqlrsv_close($conn);
-          //   // echo "<item-view title='$params[`title`]' src='$params[`src`]' public-rating='$params[`pub`]' private-rating='$params[`priv`]' id='$params[`id`]' duration='$params[`duration`]' year='$params[`year`]' description='$params[`desc`]'></item-view>";
           // }
           // else {
           //   echo "Oops. Something went wrong!";            
