@@ -1,7 +1,11 @@
 /**
  * The Navigation Bar component. Houses Navigation Items.
  * Attributes
- *  - logoSrc: the src of the logo.
+ *  - label: the label visible on mobile. Defaults to Umbrim.
+ *
+ * Slots
+ *  - items: the top navigation items in the bar.
+ *  - bottom-items: the bottom navigation items in the bar.
  *
  * Made by Jake.
  */
@@ -20,49 +24,45 @@ class NavigationBar extends HTMLElement {
     link.setAttribute("rel", "stylesheet");
     this.shadow.appendChild(link);
 
-    /* The div showing the icons always and text on hover. */
+    /* The nav bar that takes up the necessary space on screen when not opened. */
     const navBar = document.createElement("div");
     navBar.classList.add("nav-bar");
     this.shadow.appendChild(navBar);
 
-    /* The div showing the icons always and text on hover. */
+    /* The div showing the icons always and text on hover (desktop), or opening on hamburger click (mobile). */
     const navBarExpander = document.createElement("div");
     navBarExpander.classList.add("nav-bar__expander");
     navBar.appendChild(navBarExpander);
     this.navBarExpanderElement = navBarExpander;
 
-    /* The div containing the logo. */
-    const navBarLogo = document.createElement("div");
-    navBarLogo.classList.add("nav-bar__logo");
-    // !this.logoSrc && navBarLogo.classList.add("nav-bar__logo--invisible");
-    navBarExpander.appendChild(navBarLogo);
+    /* The div containing the hamburger and label for mobile. */
+    const navBarMobileTop = document.createElement("div");
+    navBarMobileTop.classList.add("nav-bar__mobile-top");
+    navBarExpander.appendChild(navBarMobileTop);
+    this.navBarMobileTopElement = navBarMobileTop;
 
-    /* Save a reference of the navBarLogo for dynamic state change. */
-    this.navBarLogoElement = navBarLogo;
-
-    /* The hamburger icon to close the nav bar on mobile. */
+    /* The hamburger icon to open and close the nav bar on mobile. */
     const hamburgerIcon = document.createElement("cdb-icon");
     hamburgerIcon.classList.add("nav-bar__hamburger");
     hamburgerIcon.setAttribute("src", "/src/nav.svg#hamburger");
-    // hamburgerIcon.setAttribute("stroke", true);
     hamburgerIcon.setAttribute("size", 3);
     hamburgerIcon.setAttribute("colour", "var(--primary-main)");
     hamburgerIcon.addEventListener("click", this.toggleBar.bind(this));
-    navBarLogo.appendChild(hamburgerIcon);
+    navBarMobileTop.appendChild(hamburgerIcon);
 
+    /* The label in the mobile nav bar. */
     const title = document.createElement("p");
     title.textContent = this.label;
-    navBarLogo.appendChild(title);
+    navBarMobileTop.appendChild(title);
     this.titleElement = title;
 
+    /* A logo in the nav bar. WIP. */
     const image = document.createElement("img");
     image.src = this.logoSrc;
-    navBarLogo.appendChild(image);
-
-    /* Save a reference of the image for dynamic state change. */
+    navBarMobileTop.appendChild(image);
     this.imageElement = image;
 
-    /* The div with the slot containing the items. */
+    /* The div with the slot containing the navigation items. */
     const navItem = document.createElement("div");
     navItem.classList.add("nav-bar__items");
     navBarExpander.appendChild(navItem);
@@ -71,7 +71,7 @@ class NavigationBar extends HTMLElement {
     slot.setAttribute("name", "items");
     navItem.appendChild(slot);
 
-    /* The div with the slot containing the bottom items. */
+    /* The div with the slot containing the bottom navigation items. */
     const navBottomItem = document.createElement("div");
     navBottomItem.classList.add("nav-bar__bottom-items");
     navBarExpander.appendChild(navBottomItem);
@@ -81,6 +81,7 @@ class NavigationBar extends HTMLElement {
     navBottomItem.appendChild(bottomSlot);
   }
 
+  /* Toggles the bar open and closed on mobile. */
   toggleBar() {
     this.navBarExpanderElement.classList.toggle("nav-bar__expander--open");
   }
@@ -101,10 +102,10 @@ class NavigationBar extends HTMLElement {
     /* Updates only the necessary parts of the component on update. */
     if (name === "logoSrc") {
       if (newValue) {
-        this.navBarLogoElement.classList.remove("nav-bar__logo--invisible");
+        this.navBarMobileTopElement.classList.remove("nav-bar__logo--invisible");
         this.imageElement.src = newValue;
       } else {
-        this.navBarLogoElement.classList.add("nav-bar__logo--invisible");
+        this.navBarMobileTopElement.classList.add("nav-bar__logo--invisible");
         this.imageElement.src = "";
       }
     }

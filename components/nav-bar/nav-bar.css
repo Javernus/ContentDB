@@ -5,7 +5,7 @@
   position: relative;
 }
 
-.nav-bar__logo {
+.nav-bar__mobile-top {
   display: none;
 }
 
@@ -45,22 +45,17 @@
   height: 0;
 }
 
-.nav-bar__logo {
+.nav-bar__mobile-top {
   height: 3rem;
   width: 100vw;
   align-items: center;
   align-content: center;
 }
 
-.nav-bar__logo p {
+.nav-bar__mobile-top p {
   margin: 0 0 0 0.5rem;
   font-size: 1.5rem;
   font-weight: bold;
-
-}
-
-.nav-bar__logo--invisible {
-  display: none;
 }
 
 .nav-bar__items {
@@ -83,7 +78,7 @@
     position: relative;
   }
 
-  .nav-bar__logo {
+  .nav-bar__mobile-top {
     display: flex;
   }
 

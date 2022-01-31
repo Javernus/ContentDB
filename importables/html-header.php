@@ -56,8 +56,15 @@ session_start();
       <cdb-navigation-item slot="bottom-items" label="Settings" href="/settings/"><cdb-icon slot="icon" src="/src/nav.svg#settings" size="2" colour="var(--primary-main)"></cdb-icon></cdb-navigation-item>
 
       <script>
-        const bar = document.getElementById("navigation-bar");
+        /* Script by Jake. */
+
+        /* Set whether you are logged in for JS. */
         const loggedIn = <?php echo isset($_COOKIE["UserID"]) ? "true" : "false"; ?>;
+
+        /* Get the navigation bar to append children to it for changes based on login state. */
+        const bar = document.getElementById("navigation-bar");
+
+        /* The navigation items. */
 
         const navItemProfile = document.createElement("cdb-navigation-item");
         !loggedIn && navItemProfile.classList.add("nav-item--hidden");
@@ -101,56 +108,63 @@ session_start();
         navIconSignIn.setAttribute("colour", "var(--primary-main)");
         navItemSignIn.appendChild(navIconSignIn);
 
-      function toggleSignInDialog() {
-        login.removeAttribute("signup");
-        dialog.toggleAttribute("open");
-      }
+        /* Toggles the login dialog. */
+        function toggleSignInDialog() {
+          login.removeAttribute("signup");
+          dialog.toggleAttribute("open");
+        }
 
-      function signOut() {
-        fetch("/php/logout.php", {
-          method: "post",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-          .catch((error) => {
-            console.log(error);
-          });
+        /* Signs the user out and updates the nav bar. */
+        function signOut() {
+          fetch("/php/logout.php", {
+            method: "post",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+            .catch((error) => {
+              console.log(error);
+            });
 
-        navItemProfile.classList.add("nav-item--hidden");
-        navItemSignOut.classList.add("nav-item--hidden");
-        navItemSignIn.classList.remove("nav-item--hidden");
-      }
+          navItemProfile.classList.add("nav-item--hidden");
+          navItemSignOut.classList.add("nav-item--hidden");
+          navItemSignIn.classList.remove("nav-item--hidden");
+        }
 
-      function signIn() {
-        dialog.removeAttribute("open");
-        navItemProfile.classList.remove("nav-item--hidden");
-        navItemSignOut.classList.remove("nav-item--hidden");
-        navItemSignIn.classList.add("nav-item--hidden");
-      }
+        /* Updates the nav bar and hides the dialog on login. */
+        function handleLogin() {
+          dialog.removeAttribute("open");
+          navItemProfile.classList.remove("nav-item--hidden");
+          navItemSignOut.classList.remove("nav-item--hidden");
+          navItemSignIn.classList.add("nav-item--hidden");
+        }
 
-      const dialog = document.createElement("cdb-dialog");
-      dialog.setAttribute("id", "login-dialog");
-      document.body.appendChild(dialog);
+        /* Create the dialog with login. */
 
-      const login = document.createElement("cdb-login");
-      login.setAttribute("id", "user-login");
-      login.addEventListener("login", signIn);
-      login.addEventListener("signup", signIn);
-      dialog.appendChild(login);
+        const dialog = document.createElement("cdb-dialog");
+        dialog.setAttribute("id", "login-dialog");
+        document.body.appendChild(dialog);
 
-      const splashScreen = document.getElementById("splash-screen");
+        const login = document.createElement("cdb-login");
+        login.setAttribute("id", "user-login");
+        login.addEventListener("login", handleLogin);
+        login.addEventListener("signup", handleLogin);
+        dialog.appendChild(login);
 
-      function hideSplashScreen() {
-        splashScreen.addEventListener("transitionend", deleteSplashScreen);
-        splashScreen.classList.add("disappear");
-      }
+        /* Hide the splash screen after load. */
 
-      function deleteSplashScreen() {
-        splashScreen.remove();
-      }
+        const splashScreen = document.getElementById("splash-screen");
 
-      window.addEventListener("load", hideSplashScreen);
+        function hideSplashScreen() {
+          splashScreen.addEventListener("transitionend", deleteSplashScreen);
+          splashScreen.classList.add("disappear");
+        }
+
+        function deleteSplashScreen() {
+          splashScreen.remove();
+        }
+
+        window.addEventListener("load", hideSplashScreen);
       </script>
     </cdb-navigation-bar>
     <div class="content">
