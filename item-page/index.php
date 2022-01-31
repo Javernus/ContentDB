@@ -14,7 +14,7 @@
           ini_set( 'error_reporting', E_ALL );
           ini_set( 'display_errors', true );
 
-          include_once '../importables/db-connect.inc.php';
+          // include_once '../importables/db-connect.inc.php';
           $url = $_SERVER['REQUEST_URI'];
 
           // Use parse_url() function to parse the URL
@@ -26,16 +26,22 @@
           // st ring passed via URL
           parse_str($url_components['query'], $web_params);
 
-          if (in_array('FSID', $web_params)) {
-            $stmt = "{ CALL GetContent(?,?)}";
-            $params = $web_params["FSID"]
-            $result = sqlrsv_query($conn,$stmt,$params);
-            sqlrsv_close($conn);
-            // echo "<item-view title='$params[`title`]' src='$params[`src`]' public-rating='$params[`pub`]' private-rating='$params[`priv`]' id='$params[`id`]' duration='$params[`duration`]' year='$params[`year`]' description='$params[`desc`]'></item-view>";
-          }
-          else {
-            echo "Oops. Something went wrong!";            
-          }
+          const data = { FSID: $web_params["FSID"] };
+                                                                                                                                                                                                    
+
+
+
+
+          // if (in_array('FSID', $web_params)) {
+          //   $stmt = "{ CALL GetContent(?,?)}";
+          //   $params = $web_params["FSID"]
+          //   $result = sqlrsv_query($conn,$stmt,$params);
+          //   sqlrsv_close($conn);
+          //   // echo "<item-view title='$params[`title`]' src='$params[`src`]' public-rating='$params[`pub`]' private-rating='$params[`priv`]' id='$params[`id`]' duration='$params[`duration`]' year='$params[`year`]' description='$params[`desc`]'></item-view>";
+          // }
+          // else {
+          //   echo "Oops. Something went wrong!";            
+          // }
         ?>
       </div>
     </div>
