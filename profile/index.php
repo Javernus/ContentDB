@@ -12,13 +12,33 @@
         const watchList = document.createElement("div");
         watchList.classList.add("tab-bar");
 
+        const watchSelectList = document.createElement("select");
+        watchSelectList.classList.add("tab-select");
+
+        /* The chevron down icon to indicate the select list is a list. */
+        const chevronDown = document.createElement("cdb-icon");
+        chevronDown.classList.add("tab-select__chevron");
+        chevronDown.setAttribute("src", "../src/chevrons.svg#bottom");
+        // chevronDown.setAttribute("stroke", true);
+        chevronDown.setAttribute("size", 1.5);
+        chevronDown.setAttribute("colour", "var(--text-colour)");
+        watchList.appendChild(chevronDown);
+
         const tabs = ["To Watch", "Watching", "Watched", "Favourites", "Friends", "Comments"]
 
+        /* Handles clicking a tab. */
         function showTab(event) {
             const listId = event.target.id.replace("tab", "list");
             const list = document.getElementById(listId);
 
-            for (const tab of event.target.parentElement.children) {
+            for (const option of watchSelectList.options) {
+                option.toggleAttribute("selected", false);
+                if (option.id === event.target.id.replace("tab", "option")) {
+                    option.toggleAttribute("selected", true);
+                }
+            }
+
+            for (const tab of watchList.children) {
                 tab.classList.remove("tab--active");
             }
 
@@ -33,17 +53,55 @@
             }
         }
 
+        /* Handles selecting a tab through the select dropdown. */
+        function showSelectTab(event) {
+            const listId = event.target.value.replace("option", "list");
+            const list = document.getElementById(listId);
+
+            for (const tab of watchList.children) {
+                console.log(tab);
+                if (tab.nodeName === "DIV") {
+                    tab.classList.remove("tab--active");
+                }
+
+                if (tab.id === event.target.value.replace("option", "tab")) {
+                    console.log(tab);
+                    tab.classList.add("tab--active");
+                }
+            }
+
+            for (const list of document.getElementsByClassName("list-view")) {
+                list.classList.remove("list-view--active")
+            }
+
+            if (list) {
+                list.classList.add("list-view--active")
+            }
+        }
+
+        /* Creates the tabs for desktop (divs) and mobile (options). */
         for (const tabName of tabs) {
             const tab = document.createElement("div");
             tab.classList.add("tab");
             tabName === "To Watch" && tab.classList.add("tab--active");
-            tab.id = tabName.replaceAll(" ", "").toLowerCase() + "tab";
+            tab.setAttribute("id", tabName.replaceAll(" ", "").toLowerCase() + "tab");
             tab.textContent = tabName;
             tab.addEventListener("click", showTab);
             watchList.appendChild(tab);
+
+            const option = document.createElement("option");
+            option.classList.add("tab-option");
+            tabName === "To Watch" && option.toggleAttribute("selected", true);
+            option.setAttribute("id", tabName.replaceAll(" ", "").toLowerCase() + "option");
+            option.setAttribute("value", tabName.replaceAll(" ", "").toLowerCase() + "option");
+            option.textContent = tabName;
+            option.addEventListener("click", showTab);
+            watchSelectList.appendChild(option);
         }
 
         document.getElementById("profilepage").appendChild(watchList);
+        watchSelectList.addEventListener("change", showSelectTab);
+        watchList.appendChild(watchSelectList);
 
     </script>
     <div class='list-container'>

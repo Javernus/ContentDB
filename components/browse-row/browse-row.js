@@ -46,7 +46,7 @@ class GenreRow extends HTMLElement {
     chevronRight.classList.add("browse__chevron--right");
     chevronRight.setAttribute("src", "../src/chevrons.svg#right");
     chevronRight.setAttribute("size", 5);
-    chevronRight.setAttribute("colour", "var(--primary-1)");
+    chevronRight.setAttribute("colour", "var(--primary-2)");
     chevronRight.addEventListener("click", this.scrollRight.bind(this));
     this.shadow.appendChild(chevronRight);
     this.chevronRightElement = chevronRight;

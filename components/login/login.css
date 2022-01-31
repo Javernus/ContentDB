@@ -14,7 +14,7 @@
   position: absolute;
   content: " ";
   bottom: 0;
-  border: var(--primary-1) solid 0.0625rem;
+  border: var(--primary-2) solid 0.0625rem;
   border-radius: 0.5rem;
 
 }
@@ -32,7 +32,7 @@
   content: " ";
   bottom: -0.5625rem;
   left: -5%;
-  border: var(--primary-1) solid 0.125rem;
+  border: var(--primary-2) solid 0.125rem;
   border-radius: 0.5rem;
 }
 
@@ -54,7 +54,7 @@
 
 .login__input {
   background-color: var(--neutral-3);
-  border: var(--primary-1) solid 0.0625rem;
+  border: var(--primary-2) solid 0.0625rem;
   border-radius: 0.5rem;
   padding: 0.5rem;
   box-sizing: border-box;

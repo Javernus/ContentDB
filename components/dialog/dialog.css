@@ -25,7 +25,7 @@
   box-sizing: border-box;
   padding: 2rem;
 
-  border: var(--primary-1) solid 0.0625rem;
+  border: var(--primary-2) solid 0.0625rem;
   border-radius: 1rem;
 
   box-shadow: 0 0 0.75rem 0.25rem var(--neutral-3);
