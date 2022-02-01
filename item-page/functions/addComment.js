@@ -1,3 +1,5 @@
 function addComment(UID, Comment) {
-    alert(UID);
+    COMMENT = document.createElement('div');
+    COMMENT.textContent = Comment;
+    document.body.appendChild(COMMENT);
 }

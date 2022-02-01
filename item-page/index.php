@@ -13,6 +13,20 @@
           
           ini_set( 'error_reporting', E_ALL );
           ini_set( 'display_errors', true );
+
+          if (isset($_COOKIE["UserID"])) {
+            $UID = $_COOKIE;
+          }
+          else {
+            // SET THIS TO FALSE
+            // 
+            // 
+            // 
+            // 
+            // 
+            $UID = 1;
+          }
+
           $url = $_SERVER['REQUEST_URI'];
 
           // Use parse_url() function to parse the URL
@@ -26,14 +40,27 @@
             $FSID = $web_params["FSID"];
             
             include_once("../php/databaseLogin.php");
-            $sql = 'CALL fsGetContentByFSID(:p0)';
+            $sql = 'CALL GetContentByFSID(:p0)';
             $stmt = $db->prepare($sql);
-            $stmt->bindValue(":p0", $FSID, PDO::PARAM_STR);
+            $stmt->bindValue(":p0", $FSID, PDO::PARAM_INT);
             $stmt->execute();
             $results = $stmt->fetch();
 
+            if ($UID) {
+              $sql = 'CALL GetRating(:p0, :p1)';
+              $stmt = $db->prepare($sql);
+              $stmt->bindValue(":p0", $FSID, PDO::PARAM_INT);
+              $stmt->bindValue(":p1", $UID, PDO::PARAM_INT);
+              $stmt->execute();
+              $rating=$stmt->fetch();
+            }
+            else {
+              $rating=0;
+            }
+           
+
             if ($results) {
-              echo "<item-view title='$results[1]' src='$results[2]' description='$results[3]' public_rating=$results[4] duration=$results[5] year=$results[6] private_rating=3></item-view>";
+              echo "<item-view title='$results[1]' src='$results[2]' description='$results[3]' public_rating=$results[4] duration=$results[5] year=$results[6] private_rating=$rating></item-view>";
             } else {
               echo "Hm, looks like something went wrong!";
             }
@@ -46,24 +73,25 @@
     </div>
 
     <div class="comment" id='comment-section'>
-     <!-- if logged in -->
       <?php 
-      // TODO: SET THIS TO TRUE
-        if ($logged_in === false) {
-          echo `<div class="comment__user">
-          <textarea type="text" class="comment__input" placeholder="Write a comment." id="commentInput"></textarea><button onclick="addComment(, document.getElementById('commentInput').value)" class='comment__submit' type="submit">Add Comment</button>
-        </div>`;
-        }
-      ?>
-      <!-- not logged in as well -->
+        $HTML = '<div class="comment__user">';
+        $HTML .= '<textarea type="text" class="comment__input"';
+        $HTML .= 'placeholder="Write a comment." id="commentInput"></textarea>';
+        $HTML .= '<button onclick="addComment(' . strval($UID) . ' , ';
+        $HTML .= 'document.getElementById(`commentInput`).value)"';
+        $HTML .= 'class=`comment__submit` type="submit">Add Comment';
+        $HTML .= '</button></div>';
+        echo $HTML;
+
+        ?>  
+              
+        <!-- // if ($UID) {
+        //   echo `<div class="comment__user">
+        //   <textarea type="text" class="comment__input" placeholder="Write a comment." id="commentInput"></textarea><button onclick="addComment(, document.getElementById('commentInput').value)" class='comment__submit' type="submit">Add Comment</button>
+        // </div>`;
+        // } -->
+      
     </div>
-<!-- 
-    <script>
-        /* Scripts by Timo. Here we load the movie item and display it. */
-        const item_element = document.createElement('div');
-        item_element.innerHTML = '<item-view title="Spoder" src="./image/Spiderman.png" public-rating="" private-rating="3" id="private-rating" duration="146" year="2012" description="test"></item-view>';
-        document.getElementById('itemlist').appendChild(item_element);
-    </script> -->
 
     <!-- <script>
       /* Scrips by Timo. Here the comments are loaded in consecutively. */
