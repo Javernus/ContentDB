@@ -9,9 +9,9 @@
 
     $sql = 'CALL fsSetRating(:p0, p1, p2)';
     $stmt = $db->prepare($sql);
-    $stmt->bindValue(":p0", $rating, PDO::PARAM_STR);
-    $stmt->bindValue(":p0", $FSID, PDO::PARAM_STR);
-    $stmt->bindValue(":p0", $uid, PDO::PARAM_STR);
+    $stmt->bindValue(":p0", $rating, PDO::PARAM_INT);
+    $stmt->bindValue(":p1", $FSID, PDO::PARAM_INT);
+    $stmt->bindValue(":p2", $uid, PDO::PARAM_INT);
     $stmt->execute();
     // $success = $stmt->fetch()[0];
 ?>

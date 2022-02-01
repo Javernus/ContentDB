@@ -1,7 +1,51 @@
 <?php
-  include '../importables/html-header.php';
-?>
+  ini_set( 'error_reporting', E_ALL );
+  ini_set( 'display_errors', true );
 
+ 
+
+  $url = $_SERVER['REQUEST_URI'];
+
+  // Use parse_url() function to parse the URL
+  // and return an associative array which
+  // contains its various components
+  if (parse_url($url, PHP_URL_QUERY)) {
+    $url_components = parse_url($url);
+    // Use parse_str() function to parse the
+    // st ring passed via URL
+    parse_str($url_components['query'], $web_params);
+
+    $FSID = (int) $web_params["FSID"];    
+  }
+
+  if (isset($_COOKIE["UserID"])) {
+    $UID = $_COOKIE;
+  }
+  else {
+    $UID = "null";
+  }
+
+  include("../php/FSIDExists.php");
+
+  if (!$fsid_exists) {
+    include ("../error/404.php");
+    exit();
+  }
+
+  include '../importables/html-header.php';
+?> 
+
+
+<script>
+  const FSID = <?php echo $FSID?>;
+  const UID = <?php echo $UID?>;
+  
+ // CHECK IF FSID EXISTS 
+ data = { FSID : FSID};
+  postFetch("../php/checkFSID.php", data, false, (res) => {
+    alert(res);
+  });
+</script>
 
 <div style='justify-content:left; padding-left: 5%; padding-right: 5%;' class="item-page" id="item-page">
     <div class='title'>
@@ -9,66 +53,38 @@
     </div>
     <div id='itemlist' class="item-view">
       <div>
-        <?php
-          
-          ini_set( 'error_reporting', E_ALL );
-          ini_set( 'display_errors', true );
 
-          if (isset($_COOKIE["UserID"])) {
-            $UID = $_COOKIE;
+        <script>
+          const data = { FSID: FSID };
+
+          const data2 = { FSID:FSID, UID:UID};
+          let rating = 0;
+          if (UID) {
+            postFetch("../php/getRating.php", data2, false, (res) => {
+              console.log(res);
+              rating = res;
+            });
           }
           else {
-            // SET THIS TO FALSE
-            // 
-            // 
-            // 
-            // 
-            // 
-            $UID = 1;
+            rating = 0;
           }
 
-          $url = $_SERVER['REQUEST_URI'];
+          if (FSID) {
+            postFetch("../php/getContent.php", data, true, (res) => {
+              console.log(res);
+              const itemElement = document.createElement("item-view");
+              itemElement.setAttribute("title", res[1]);
+              itemElement.setAttribute("src", res[2]);
+              itemElement.setAttribute("description", res[3]);
+              itemElement.setAttribute("public_rating", res[4]);
+              itemElement.setAttribute("private_rating", rating);
+              itemElement.setAttribute("duration", res[5]);
+              itemElement.setAttribute("year", res[6]);
 
-          // Use parse_url() function to parse the URL
-          // and return an associative array which
-          // contains its various components
-          if (parse_url($url, PHP_URL_QUERY)) {
-            $url_components = parse_url($url);
-            // Use parse_str() function to parse the
-            // st ring passed via URL
-            parse_str($url_components['query'], $web_params);
-            $FSID = $web_params["FSID"];
-            
-            include_once("../php/databaseLogin.php");
-            $sql = 'CALL GetContentByFSID(:p0)';
-            $stmt = $db->prepare($sql);
-            $stmt->bindValue(":p0", $FSID, PDO::PARAM_INT);
-            $stmt->execute();
-            $results = $stmt->fetch();
-
-            if ($UID) {
-              $sql = 'CALL GetRating(:p0, :p1)';
-              $stmt = $db->prepare($sql);
-              $stmt->bindValue(":p0", $FSID, PDO::PARAM_INT);
-              $stmt->bindValue(":p1", $UID, PDO::PARAM_INT);
-              $stmt->execute();
-              $rating=$stmt->fetch();
-            }
-            else {
-              $rating=0;
-            }
-           
-
-            if ($results) {
-              echo "<item-view title='$results[1]' src='$results[2]' description='$results[3]' public_rating=$results[4] duration=$results[5] year=$results[6] private_rating=$rating></item-view>";
-            } else {
-              echo "Hm, looks like something went wrong!";
-            }
-          } else {
-            echo 'Hm, looks like something went wrong!';
+              document.getElementById("itemlist").appendChild(itemElement);
+            });
           }
-          
-        ?>
+        </script>
       </div>
     </div>
 
@@ -82,7 +98,6 @@
         $HTML .= 'class=`comment__submit` type="submit">Add Comment';
         $HTML .= '</button></div>';
         echo $HTML;
-
         ?>  
               
         <!-- // if ($UID) {
