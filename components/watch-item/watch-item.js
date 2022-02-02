@@ -65,6 +65,8 @@ class WatchItem extends HTMLElement {
     /* The cdb-rating component for the rating of the film or series. */
     const rating = document.createElement("cdb-rating");
     rating.setAttribute("rating", this.rating);
+		rating.setAttribute("ratable", true);
+		rating.addEventListener("ratingchange", this.handleRatingChange.bind(this));
     heading.appendChild(rating);
     this.ratingElement = rating;
 
@@ -77,10 +79,38 @@ class WatchItem extends HTMLElement {
     description.appendChild(slot);
   }
 
+	getCookie(name) {
+		const value = `; ${document.cookie}`;
+		const parts = value.split(`; ${name}=`);
+		if (parts.length === 2) return parts.pop().split(';').shift();
+	}
+
+	handleRatingChange(event) {
+		const fsid = this.fsid;
+		const uid = this.getCookie("UserID");
+		const contentData = { fsid: fsid, uid: uid };
+
+		postFetch("../php/getRating.php", contentData, false, (result) => {
+			const userData = { fsid: fsid, uid: uid, rating: event.detail.value};
+			if (result=="") {
+				postFetch("../php/setRating.php", userData, false, (result) => {
+					return;
+				});
+			}
+			else {
+				postFetch("../php/updateRating.php", userData, false, (result) => {
+					return;
+				});
+			}
+		});
+	}
+
   /* Returns the attributes which should be observed. */
   static get observedAttributes() {
-    return ["rating", "src", "label", "url"];
+    return ["rating", "src", "label", "url", "fsid"];
   }
+
+
 
   /* Handles attributes changing. */
   attributeChangedCallback(name, oldValue, newValue) {

@@ -143,13 +143,15 @@
                 $result = $stmt->fetchAll();
 
                 foreach ($result as $row) {
+                    echo "<div class='list-item'>";
                     $fsid = intval($row['FSID']);
                     $sql = "CALL GetContentByFSID(:p0)";
                     $stmt = $db->prepare($sql);
                     $stmt->bindParam(':p0',$fsid, PDO::PARAM_INT);
                     $stmt->execute();
                     $result = $stmt->fetch();
-                    echo "<watch-item title='$result[Title]' src='$result[Image]' rating='3' url='/content?FSID=$result[FSID]'><p>$result[Description]</p></watch-item>";
+                    echo "<watch-item title='$result[Title]' src='$result[Image]' rating='3' fsid='$result[FSID]' url='/content?FSID=$result[FSID]'><p>$result[Description]</p></watch-item>";
+                    echo "</div>";
                 }
             ?>
         </div>
