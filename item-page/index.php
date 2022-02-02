@@ -104,18 +104,27 @@
 
             /* This function handles rating changes. */
             function handleRatingChange(event) {
+              const data7 = {fsid:<?php echo $FSID; ?>, uid:<?php echo $UID; ?>};
+              postFetch("../php/getRating.php", data7, false, (result) => {
+                const data6 = {fsid:FSID, uid:UID, rating: event.detail.value};
+                if (result=="") {
+                  // alert(event.detail.value)
+                  postFetch("../php/setRating.php", data6, false, (result) => {
+                    return;
+                  });
+                }
+                else {
+                  postFetch("../php/updateRating.php", data6, false, (result) => {
+                    return;
+                  });
+                }
+              });
+            }
+
+
+            /* Handles a favourites change. */
+            function handleFavouritesChange(event) {
               alert("TEST");
-              alert(<?php echo $UID ?>);
-              if (UID) {
-                alert(event.details.value)
-                const data6 = {fsid:FSID, uid:UID, rating: event.details.value};
-                postFetch("../php/setRating.php", data6, false, (result) => {
-                  console.log(result);
-                });
-              }
-              else {
-                return;
-              }
             }
 
 
@@ -143,8 +152,11 @@
               itemElement.setAttribute("private_rating", rating);
               itemElement.setAttribute("duration", res[5]);
               itemElement.setAttribute("year", res[6]);
+              alert(<?php echo $UID ? "true" : "false" ?>);
+              itemElement.setAttribute("logged_in", <?php echo $UID ? "true" : "false" ?>);
               itemElement.addEventListener("watchlistchange", handleWatchlistChange);
               itemElement.addEventListener("ratingchange", handleRatingChange);
+              itemElement.addEventListener("favouriteschange", handleFavouritesChange);
               document.getElementById("itemlist").appendChild(itemElement);
             });
             

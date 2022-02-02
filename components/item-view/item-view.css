@@ -165,3 +165,12 @@ h3 {
     position: absolute;
     z-index: 999;
   }
+
+  .fav {
+    width: 30px;
+    background-color: green;
+  }
+  
+  .item-view__hide {
+    display: none;
+  }
