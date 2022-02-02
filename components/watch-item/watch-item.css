@@ -34,6 +34,11 @@ h3 {
     overflow: hidden;
 }
 
+.watch-item__url {
+    text-decoration: none;
+    color: var(--text-colour);
+}
+
 .watch-item__info {
     display: flex;
     flex-direction: column;

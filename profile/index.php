@@ -149,7 +149,7 @@
                     $stmt->bindParam(':p0',$fsid, PDO::PARAM_INT);
                     $stmt->execute();
                     $result = $stmt->fetch();
-                    echo "<watch-item title='$result[Title]' src='$result[Image]' rating='3'><p>$result[Description]</p></watch-item>";
+                    echo "<watch-item title='$result[Title]' src='$result[Image]' rating='3' url='/content?FSID=$result[FSID]'><p>$result[Description]</p></watch-item>";
                 }
             ?>
         </div>

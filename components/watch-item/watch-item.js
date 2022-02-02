@@ -19,6 +19,7 @@ class WatchItem extends HTMLElement {
     this.rating = 1;
     this.src = "";
     this.label = "";
+    this.url = "";
   }
 
   connectedCallback() {
@@ -50,9 +51,15 @@ class WatchItem extends HTMLElement {
 
     /* The title heading. */
     const title = document.createElement("h1");
-    title.textContent = this.title;
     heading.appendChild(title);
     this.titleElement = title;
+
+    /* the url in title */
+    const url = document.createElement("a");
+    url.classList.add("watch-item__url");
+    url.setAttribute("href", this.url);
+    url.textContent = this.title;
+    title.appendChild(url);
 
     /* The cdb-rating component for the rating of the film or series. */
     const rating = document.createElement("cdb-rating");
@@ -71,7 +78,7 @@ class WatchItem extends HTMLElement {
 
   /* Returns the attributes which should be observed. */
   static get observedAttributes() {
-    return ["rating", "src", "label"];
+    return ["rating", "src", "label", "url"];
   }
 
   /* Handles attributes changing. */
