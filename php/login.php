@@ -5,7 +5,7 @@
 
   $data = json_decode(file_get_contents("php://input"));
 
-  $email = $data->email;
+  $username = $data->username;
   $password = $data->password;
 
   $sql = 'CALL GetSalt(:p0)';
@@ -16,7 +16,7 @@
 
   $sql = 'CALL Login(:p0,:p1)';
   $stmt = $db->prepare($sql);
-  $stmt->bindValue(":p0", $email, PDO::PARAM_STR);
+  $stmt->bindValue(":p0", $username, PDO::PARAM_STR);
   $stmt->bindValue(":p1", $password.$salt, PDO::PARAM_STR);
   $success = $stmt->execute();
   $uid = $stmt->fetch()[0];

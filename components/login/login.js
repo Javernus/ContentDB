@@ -54,14 +54,14 @@ class Login extends HTMLElement {
     /* Save a reference of the signInInputs container for dynamic state change. */
     this.signInInputsElement = signInInputs;
 
-    /* The email input. */
-    const signInEmailInput = document.createElement("cdb-input");
-    signInEmailInput.setAttribute("placeholder", "Enter your email...");
-    signInEmailInput.addEventListener("input", this.handleLoginChange.bind(this));
-    signInInputs.appendChild(signInEmailInput);
+    /* The username input. */
+    const signInUsernameInput = document.createElement("cdb-input");
+    signInUsernameInput.setAttribute("placeholder", "Enter your username...");
+    signInUsernameInput.addEventListener("input", this.handleLoginChange.bind(this));
+    signInInputs.appendChild(signInUsernameInput);
 
-    /* Save a reference of the signInEmailInput for dynamic state change. */
-    this.signInEmailElement = signInEmailInput;
+    /* Save a reference of the signInUsernameInput for dynamic state change. */
+    this.signInUsernameElement = signInUsernameInput;
 
     /* The password input. */
     const signInPasswordInput = document.createElement("cdb-input");
@@ -97,15 +97,6 @@ class Login extends HTMLElement {
     /* Save a reference of the signUpUsernameInput for dynamic state change. */
     this.signUpUsernameElement = signUpUsernameInput;
 
-    /* The email input. */
-    const signUpEmailInput = document.createElement("cdb-input");
-    signUpEmailInput.setAttribute("placeholder", "Enter your email...");
-    signUpEmailInput.addEventListener("change", this.handleEmail.bind(this));
-    signUpInputs.appendChild(signUpEmailInput);
-
-    /* Save a reference of the signUpEmailInput for dynamic state change. */
-    this.signUpEmailElement = signUpEmailInput;
-
     /* The passwerd input. */
     const signUpPasswordInput = document.createElement("cdb-input");
     signUpPasswordInput.setAttribute("type", "password");
@@ -137,7 +128,7 @@ class Login extends HTMLElement {
   }
 
   handleLoginChange() {
-    this.signInEmailElement.removeAttribute("error");
+    this.signInUsernameElement.removeAttribute("error");
     this.signInPasswordElement.removeAttribute("error");
   }
 
@@ -149,20 +140,6 @@ class Login extends HTMLElement {
   /* Shows the sign up inputs in the login component. */
   showSignUp() {
     this.setAttribute("signup", true);
-  }
-
-  handleEmail() {
-    const email = this.signUpEmailElement.value;
-
-    const data = { email: email };
-
-    postFetch("../php/emailExists.php", data, false, (res) => {
-      if (res === "true") {
-        this.signUpEmailElement.setAttribute("error", true);
-      } else if (res === "false") {
-        this.signUpEmailElement.removeAttribute("error");
-      }
-    });
   }
 
   handleUsername() {
@@ -192,19 +169,14 @@ class Login extends HTMLElement {
 
   signUp() {
     const username = this.signUpUsernameElement.value;
-    const email = this.signUpEmailElement.value;
     const password = this.signUpPasswordElement.value;
     const passwordTwo = this.signUpPasswordTwoElement.value;
 
-    if (
-      password != passwordTwo ||
-      this.signUpUsernameElement.getAttribute("error") ||
-      this.signUpEmailElement.getAttribute("error")
-    ) {
+    if (password != passwordTwo || this.signUpUsernameElement.getAttribute("error")) {
       return;
     }
 
-    const data = { username: username, email: email, password: password };
+    const data = { username: username, password: password };
 
     postFetch("../php/signUp.php", data, false, (res) => {
       switch (res) {
@@ -219,16 +191,16 @@ class Login extends HTMLElement {
   }
 
   signIn() {
-    const email = this.signInEmailElement.value;
+    const username = this.signInUsernameElement.value;
     const password = this.signInPasswordElement.value;
 
-    const data = { email: email, password: password };
+    const data = { username: username, password: password };
 
     postFetch("../php/login.php", data, false, (res) => {
       if (res === "true") {
         this.dispatchEvent(new CustomEvent("login"));
       } else {
-        this.signInEmailElement.setAttribute("error", true);
+        this.signInUsernameElement.setAttribute("error", true);
         this.signInPasswordElement.setAttribute("error", true);
       }
     });
