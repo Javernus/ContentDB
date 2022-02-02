@@ -1,0 +1,26 @@
+<?php
+  include '../importables/html-header.php';
+?>
+
+<cdb-dialog open=true>
+
+    <cdb-input class="search-input" type="text" placeholder="Search.."></cdb-input>
+
+    <h1>All results for ...</h1>
+    <div id='towatchlist' class="list-view list-view--active"></div>
+    <script>
+        /* Scripts by Mario. */
+        for (let i = 0; i < 10; i++) {
+            const result = document.createElement("cdb-result");
+            result.setAttribute("label", "Placeholder");
+            result.setAttribute("src", "./image/Spiderman.png");
+            result.setAttribute("rating", 1);
+
+            document.getElementById('towatchlist').appendChild(result);
+        }
+    </script>
+</cdb-dialog>
+
+<?php
+  include '../importables/html-footer.php';
+?>

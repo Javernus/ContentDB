@@ -42,6 +42,14 @@ class Input extends HTMLElement {
     this.inputElement = input;
   }
 
+  focus() {
+    this.inputElement.focus();
+  }
+
+  blur() {
+    this.inputElement.blur();
+  }
+
   /* Handles the <input> updating so the value attribute stays up to date. Sends out a `change` event. */
   handleChange() {
     this.value = this.inputElement.value;
