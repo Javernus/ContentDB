@@ -1,3 +1,10 @@
+:host {
+    min-width: 20rem;
+    width: fit-content;
+    max-width: 100%;
+    margin: 0.5rem 0;
+}
+
 .comment {
     display: flex;
     flex-direction: column;
@@ -5,8 +12,14 @@
 
 .comment__header {
     display: flex;
-    width: 50%;
-    justify-content:space-between;
+    width: calc(100% - 0.5rem);
+    box-sizing: border-box;
+    justify-content: space-between;
+    margin: 0 0.25rem;
+}
+
+.comment__header p {
+    margin: 0;
 }
 
 .comment__header .left {
@@ -17,16 +30,20 @@
 .comment__header .right {
     float: right;
     position: relative;
-
 }
 
-.comment__textarea {
+.comment__content {
     display: block;
-    resize: none;
-    outline: none;
-    width: 50%;
-    height: 100%;
-    background-color: var(--neutral-5);
+    box-sizing: border-box;
+    padding: 1rem;
+    margin: 0;
+    border-radius: 0.5rem;
+    width: 100%;
+    height: fit-content;
+    background-color: var(--neutral-3);
+    border: 0.0625rem solid var(--primary-2);
     font-size: 1rem;
     color: var(--text-colour);
+    inline-size: 100%;
+    overflow-wrap: break-word;
 }

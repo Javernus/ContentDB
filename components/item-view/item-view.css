@@ -1,12 +1,12 @@
 h3 {
-    color: var(--text-colour);
+  color: var(--text-colour);
 }
 
 :host(.item-view) {
     display: flex;
-    flex-direction: row;
-    border: var(--primary-1) 0.125rem solid;
-    border-radius: 2rem;
+    flex-direction: column;
+    max-width: 80rem;
+    width: 95%;
     overflow: hidden;
     height: fit-content;
 }
@@ -16,8 +16,11 @@ h3 {
     background-position: center;
     background-size: 100% 100%;
     background-color: gray;
+    border: 0.0625rem solid var(--neutral-5);
+    border-radius: 0.5rem;
     width: 10.8rem;
     height: 16rem;
+    flex: none;
 }
 
 .item-view__info {
@@ -26,39 +29,60 @@ h3 {
     flex: 1;
 }
 
+.item-view__top {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.item-view__top h1 {
+  margin: 0;
+  margin-right: auto;
+}
+
+.item-view__top p {
+  margin: 0;
+  margin-right: 0.5rem;
+  padding: 0.4rem;
+  border: var(--primary-2) solid 0.0625rem;
+  border-radius: 0.5rem;
+}
+
+.item-view__middle {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.item-view__ratings {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  width: fit-content;
+}
+
+.item-view__rating {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item-view__rating p {
+  margin: 0;
+  padding: 1rem;
+}
+
 .item-view__heading {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    overflow: hidden;
-}
-
-.item-view__heading h1 {
-    padding: 1.25rem 3rem 1.25rem 3rem;
-    font-family: 'Courier New', Courier, monospace;
-    text-align: center;
-    color: var(--text-colour);
-    margin: 0;
-}
-
-.item-view__heading cdb-rating {
-    padding: 1.25rem 5rem 1.25rem 5rem;
-    display: flex;
-    flex-direction: row;
-}
-
-.item-view__headingStretch {
-    display: flex;
-    position: relative;
-    overflow: hidden;
-    clear: both;
-    flex-direction: row-reverse;
+  padding: 0.25rem;
+  width: fit-content;
 }
 
 .item-view__description {
     font-family: 'Courier New', Courier, monospace;
     color: var(--text-colour);
-    padding: 0 5rem 0 0;
+    padding: 0 5rem 0 1em;
 }
 
 .item-view__dropdown {
@@ -78,7 +102,7 @@ h3 {
     display: inline-block;
     margin: 0;
     padding-right: 5em;
-    padding-left: 5em;   
+    padding-left: 5em;
     border-radius: 1rem;
     color: var(--neutal-4);
     border: var(--neutral-5);
@@ -103,7 +127,6 @@ h3 {
 .item-view__select {
     position: relative;
     justify-content: center;
-    margin-bottom: 1rem;
     padding: 0.5rem 1rem;
     font-family: 'Courier New', Courier, monospace;
     color: var(--text-colour);
@@ -117,12 +140,12 @@ h3 {
     border-color: var(--primary-2);
     display: none;
   }
-  
+
   .item-view__select:focus {
     outline: none;
     border-color: var(--primary-1);
   }
-  
+
   .item-view__select-chevron {
     position: absolute;
     right: 0.5rem;
@@ -131,7 +154,7 @@ h3 {
     pointer-events: none;
     display: none;
   }
-  
+
   .item-view__select-option {
     background-color: var(--neutral-4);
     border: 0.0625rem solid var(--primary-2);
@@ -141,12 +164,9 @@ h3 {
     position: relative;
     display: flex;
     flex-direction: row;
-    min-width: 16rem;
-    width: 15vw;
-    max-width: 30rem;
+    width: 12rem;
     height: fit-content;
     justify-content: center;
-    margin: 0 auto 1rem;
   }
 
   .item-view__select-bar::before {
@@ -170,7 +190,7 @@ h3 {
     width: 30px;
     background-color: green;
   }
-  
+
   .item-view__hide {
     display: none;
   }
