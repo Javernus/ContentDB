@@ -1,7 +1,3 @@
-<?php
-session_start();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -23,6 +19,7 @@ session_start();
     <script type="text/javascript" src="../components/button/button.js"></script>
     <script type="text/javascript" src="../components/input/input.js"></script>
     <script type="text/javascript" src="../components/dialog/dialog.js"></script>
+    <script type="text/javascript" src="../components/cookie-dialog/cookie-dialog.js"></script>
     <script type="text/javascript" src="../components/login/login.js"></script>
     <script type="text/javascript" src="../components/settings/settings.js"></script>
     <script type="text/javascript" src="../components/browse-card/browse-card.js"></script>
@@ -72,6 +69,15 @@ session_start();
         </div>
       </div>
     </div>
+    <?php
+        // show cookie dialog if there is no session yet
+        if (!isset($_COOKIE['cookie-dialog'])) {
+            echo '<cdb-cookie-dialog open="true"></cdb-cookie-dialog>';
+        } else {
+            session_start();
+        }
+    ?>
+
     <cdb-navigation-bar id="navigation-bar">
       <cdb-navigation-item slot="items" label="Home" href="/home/"><cdb-icon slot="icon" src="/src/nav.svg#home" size="2" colour="var(--primary-main)"></cdb-icon></cdb-navigation-item>
       <cdb-navigation-item slot="items" label="Browse" href="/browse/"><cdb-icon slot="icon" src="/src/nav.svg#browse" size="2" colour="var(--primary-main)"></cdb-icon></cdb-navigation-item>
