@@ -5,7 +5,7 @@
 <h1 class="title">Terms and Conditions.</h1>
 
 <div class="layout-design">
-  <div class="explanation">These terms and conditions govern your use of umbrim.com</div>
+  <div class="explanation">These terms and conditions govern your use of umbrim.com.</div>
   <div class="sub-design">1.   BINDING AGREEMENT</div>
   <div class="explanation">The Terms is a binding legal contract between you and umbrim.com. Please read the terms carefully before using the Services. Your use of the services means that you agree to be bound by the Terms. <b>Do not use the Services if you do not accept the Terms.</b></div>
 
