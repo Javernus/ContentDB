@@ -5,7 +5,24 @@
 
 <div style='justify-content:left; padding-left: 5%; padding-right: 5%;' id="profilepage">
     <div class='title'>
-        <h1>Profile</h1>
+        <?php
+
+            ini_set('display_errors', 1);
+            ini_set('display_startup_errors', 1);
+            error_reporting(E_ALL);
+
+            include "../php/databaseLogin.php";
+
+            $user = intval($_COOKIE['UserID']);
+
+            $sql = 'CALL GetUsernameByUID(:p0);';
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam(':p0',$user,PDO::PARAM_INT);
+            $stmt->execute();
+            $result = $stmt->fetch();
+
+            echo "<h1>".$result['Username']."'s profile</h1>";
+        ?>
     </div>
     <script>
         /* Scripts by Jake. */
@@ -112,15 +129,30 @@
 
     </script>
     <div class='list-container'>
-        <div id='towatchlist' class="list-view list-view--active"></div>
-        <script>
-            /* Scripts by Timo, updated by Jake. */
-            for (let i = 0; i < 10; i++) {
-                const list_element = document.createElement('div');
-                list_element.innerHTML = '<watch-item title="Spiderman: Long Title From Home" src="./image/Spiderman.png" rating="3"><p>What is that? A spider?!</p></watch-list>';
-                document.getElementById('towatchlist').appendChild(list_element);
-            }
-        </script>
+        <div id='towatchlist' class="list-view list-view--active">
+            <?php
+
+                $user = intval($_COOKIE['UserID']);
+                $state = 1;
+
+                $sql = 'CALL GetWatchlist(:p0,:p1);';
+                $stmt = $db->prepare($sql);
+                $stmt->bindParam(':p0',$user,PDO::PARAM_INT);
+                $stmt->bindParam(':p1',$state,PDO::PARAM_INT);
+                $stmt->execute();
+                $result = $stmt->fetchAll();
+
+                foreach ($result as $row) {
+                    $fsid = intval($row['FSID']);
+                    $sql = "CALL GetContentByFSID(:p0)";
+                    $stmt = $db->prepare($sql);
+                    $stmt->bindParam(':p0',$fsid, PDO::PARAM_INT);
+                    $stmt->execute();
+                    $result = $stmt->fetch();
+                    echo "<watch-item title='$result[Title]' src='$result[Image]' rating='3'><p>$result[Description]</p></watch-item>";
+                }
+            ?>
+        </div>
     </div>
 </div>
 

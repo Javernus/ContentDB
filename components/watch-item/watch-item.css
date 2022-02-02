@@ -9,7 +9,7 @@ h3 {
     /* overflow: hidden; */
     height: fit-content;
     position: relative;
-    padding: 0.5rem 0;
+    padding: 1rem 0;
 }
 
 :host(.watch-item)::before {
