@@ -154,6 +154,60 @@
             ?>
         </div>
     </div>
+
+    <div class='list-container'>
+        <div id='watchinglist' class="list-view">
+            <?php
+
+                $user = intval($_COOKIE['UserID']);
+                $state = 2;
+
+                $sql = 'CALL GetWatchlist(:p0,:p1);';
+                $stmt = $db->prepare($sql);
+                $stmt->bindParam(':p0',$user,PDO::PARAM_INT);
+                $stmt->bindParam(':p1',$state,PDO::PARAM_INT);
+                $stmt->execute();
+                $result = $stmt->fetchAll();
+
+                foreach ($result as $row) {
+                    $fsid = intval($row['FSID']);
+                    $sql = "CALL GetContentByFSID(:p0)";
+                    $stmt = $db->prepare($sql);
+                    $stmt->bindParam(':p0',$fsid, PDO::PARAM_INT);
+                    $stmt->execute();
+                    $result = $stmt->fetch();
+                    echo "<watch-item title='$result[Title]' src='$result[Image]' rating='3'><p>$result[Description]</p></watch-item>";
+                }
+            ?>
+        </div>
+    </div>
+
+    <div class='list-container'>
+        <div id='watchedlist' class="list-view">
+            <?php
+
+                $user = intval($_COOKIE['UserID']);
+                $state = 3;
+
+                $sql = 'CALL GetWatchlist(:p0,:p1);';
+                $stmt = $db->prepare($sql);
+                $stmt->bindParam(':p0',$user,PDO::PARAM_INT);
+                $stmt->bindParam(':p1',$state,PDO::PARAM_INT);
+                $stmt->execute();
+                $result = $stmt->fetchAll();
+
+                foreach ($result as $row) {
+                    $fsid = intval($row['FSID']);
+                    $sql = "CALL GetContentByFSID(:p0)";
+                    $stmt = $db->prepare($sql);
+                    $stmt->bindParam(':p0',$fsid, PDO::PARAM_INT);
+                    $stmt->execute();
+                    $result = $stmt->fetch();
+                    echo "<watch-item title='$result[Title]' src='$result[Image]' rating='3'><p>$result[Description]</p></watch-item>";
+                }
+            ?>
+        </div>
+    </div>
 </div>
 
 <?php
