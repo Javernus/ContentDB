@@ -42,7 +42,7 @@
           include '../php/databaseLogin.php';
 
 					echo "<cdb-carousel>";
-          $sql = 'SELECT * FROM `content` ORDER BY `ReleaseYear` DESC LIMIT 10';
+          $sql = 'CALL GetNewContent()';
           $stmt = $db->prepare($sql);
         	$stmt->execute();
         	$result = $stmt->fetchAll();
@@ -62,7 +62,7 @@
           include '../php/databaseLogin.php';
 
 					echo "<cdb-carousel>";
-          $sql = 'SELECT * FROM `content` ORDER BY `FSID` ASC LIMIT 15';
+          $sql = 'CALL GetTopContent()';
           $stmt = $db->prepare($sql);
         	$stmt->execute();
         	$result = $stmt->fetchAll();
