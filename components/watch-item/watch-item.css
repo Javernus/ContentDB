@@ -9,7 +9,7 @@ h3 {
     /* overflow: hidden; */
     height: fit-content;
     position: relative;
-    padding: 0.5rem 0;
+    padding: 1rem 0;
 }
 
 :host(.watch-item)::before {
@@ -32,6 +32,11 @@ h3 {
     flex: none;
     border-radius: 0.5rem;
     overflow: hidden;
+}
+
+.watch-item__url {
+    text-decoration: none;
+    color: var(--text-colour);
 }
 
 .watch-item__info {

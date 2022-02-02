@@ -15,7 +15,6 @@
   width: 100%;
   height: fit-content;
   justify-content: center;
-  margin-bottom: 1rem;
 }
 
 .tab-bar::before {
@@ -90,7 +89,7 @@
 .title {
   display: flex;
   justify-content: center;
-  margin-top: 2rem;
+  margin: 3rem 0;
 }
 
 .trans-btn {
@@ -123,8 +122,9 @@
     flex-direction: column;
     max-width: 60rem;
     width: 100%;
-    overflow: hidden;
-    overflow-x: auto;
+    height: 72vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
     margin: 0 4rem;
 }
 

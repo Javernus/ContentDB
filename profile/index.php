@@ -5,7 +5,24 @@
 
 <div style='justify-content:left; padding-left: 5%; padding-right: 5%;' id="profilepage">
     <div class='title'>
-        <h1>Profile</h1>
+        <?php
+
+            ini_set('display_errors', 1);
+            ini_set('display_startup_errors', 1);
+            error_reporting(E_ALL);
+
+            include "../php/databaseLogin.php";
+
+            $user = intval($_COOKIE['UserID']);
+
+            $sql = 'CALL GetUsernameByUID(:p0);';
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam(':p0',$user,PDO::PARAM_INT);
+            $stmt->execute();
+            $userresult = $stmt->fetch();
+
+            echo "<h1>".$userresult['Username']."'s profile</h1>";
+        ?>
     </div>
     <script>
         /* Scripts by Jake. */
@@ -25,7 +42,7 @@
         chevronDown.setAttribute("colour", "var(--text-colour)");
         watchList.appendChild(chevronDown);
 
-        const tabs = ["To Watch", "Watching", "Watched", "Favourites", "Friends", "Comments"];
+        const tabs = ["To Watch", "Watching", "Watched", "Favourites", "Comments"];
 
         /* Handles clicking a tab. */
         function showTab(event) {
@@ -112,15 +129,184 @@
 
     </script>
     <div class='list-container'>
-        <div id='towatchlist' class="list-view list-view--active"></div>
-        <script>
-            /* Scripts by Timo, updated by Jake. */
-            for (let i = 0; i < 10; i++) {
-                const list_element = document.createElement('div');
-                list_element.innerHTML = '<watch-item title="Spiderman: Long Title From Home" src="./image/Spiderman.png" rating="3"><p>What is that? A spider?!</p></watch-list>';
-                document.getElementById('towatchlist').appendChild(list_element);
-            }
-        </script>
+        <div id='towatchlist' class="list-view list-view--active">
+            <?php
+
+                $user = intval($_COOKIE['UserID']);
+                $state = 1;
+
+                $sql = 'CALL GetWatchlist(:p0,:p1);';
+                $stmt = $db->prepare($sql);
+                $stmt->bindParam(':p0',$user,PDO::PARAM_INT);
+                $stmt->bindParam(':p1',$state,PDO::PARAM_INT);
+                $stmt->execute();
+                $result = $stmt->fetchAll();
+
+                foreach ($result as $row) {
+                    $fsid = intval($row['FSID']);
+                    $sql = "CALL GetContentByFSID(:p0)";
+                    $stmt = $db->prepare($sql);
+                    $stmt->bindParam(':p0',$fsid, PDO::PARAM_INT);
+                    $stmt->execute();
+                    $result = $stmt->fetch();
+
+                    $sql = "CALL GetRating(:p0,:p1)";
+                    $stmt = $db->prepare($sql);
+                    $stmt->bindParam(':p0',$fsid, PDO::PARAM_INT);
+                    $stmt->bindParam(':p1',$user, PDO::PARAM_INT);
+                    $stmt->execute();
+                    $personalRating = $stmt->fetch();
+
+                    if ($personalRating == NULL) {
+                        $rating = 0;
+                    } else {
+                        $rating = $personalRating['Rating'];
+                    }
+
+                    echo "<watch-item title='$result[Title]' src='$result[Image]' rating='$rating' fsid='$result[FSID]' url='/content?FSID=$result[FSID]'><p>$result[Description]</p></watch-item>";
+                }
+            ?>
+        </div>
+    </div>
+
+    <div class='list-container'>
+        <div id='watchinglist' class="list-view">
+            <?php
+
+                $user = intval($_COOKIE['UserID']);
+                $state = 2;
+
+                $sql = 'CALL GetWatchlist(:p0,:p1);';
+                $stmt = $db->prepare($sql);
+                $stmt->bindParam(':p0',$user,PDO::PARAM_INT);
+                $stmt->bindParam(':p1',$state,PDO::PARAM_INT);
+                $stmt->execute();
+                $result = $stmt->fetchAll();
+
+                foreach ($result as $row) {
+                    $fsid = intval($row['FSID']);
+                    $sql = "CALL GetContentByFSID(:p0)";
+                    $stmt = $db->prepare($sql);
+                    $stmt->bindParam(':p0',$fsid, PDO::PARAM_INT);
+                    $stmt->execute();
+                    $result = $stmt->fetch();
+
+                    $sql = "CALL GetRating(:p0,:p1)";
+                    $stmt = $db->prepare($sql);
+                    $stmt->bindParam(':p0',$fsid, PDO::PARAM_INT);
+                    $stmt->bindParam(':p1',$user, PDO::PARAM_INT);
+                    $stmt->execute();
+                    $personalRating = $stmt->fetch();
+
+                    if ($personalRating == NULL) {
+                        $rating = 0;
+                    } else {
+                        $rating = $personalRating['Rating'];
+                    }
+
+                    echo "<watch-item title='$result[Title]' src='$result[Image]' rating='$rating' fsid='$result[FSID]' url='/content?FSID=$result[FSID]'><p>$result[Description]</p></watch-item>";
+                }
+            ?>
+        </div>
+    </div>
+
+    <div class='list-container'>
+        <div id='watchedlist' class="list-view">
+            <?php
+
+                $user = intval($_COOKIE['UserID']);
+                $state = 3;
+
+                $sql = 'CALL GetWatchlist(:p0,:p1);';
+                $stmt = $db->prepare($sql);
+                $stmt->bindParam(':p0',$user,PDO::PARAM_INT);
+                $stmt->bindParam(':p1',$state,PDO::PARAM_INT);
+                $stmt->execute();
+                $result = $stmt->fetchAll();
+
+                foreach ($result as $row) {
+                    $fsid = intval($row['FSID']);
+                    $sql = "CALL GetContentByFSID(:p0)";
+                    $stmt = $db->prepare($sql);
+                    $stmt->bindParam(':p0',$fsid, PDO::PARAM_INT);
+                    $stmt->execute();
+                    $result = $stmt->fetch();
+
+                    $sql = "CALL GetRating(:p0,:p1)";
+                    $stmt = $db->prepare($sql);
+                    $stmt->bindParam(':p0',$fsid, PDO::PARAM_INT);
+                    $stmt->bindParam(':p1',$user, PDO::PARAM_INT);
+                    $stmt->execute();
+                    $personalRating = $stmt->fetch();
+
+                    if ($personalRating == NULL) {
+                        $rating = 0;
+                    } else {
+                        $rating = $personalRating['Rating'];
+                    }
+
+                    echo "<watch-item title='$result[Title]' src='$result[Image]' rating='$rating' fsid='$result[FSID]' url='/content?FSID=$result[FSID]'><p>$result[Description]</p></watch-item>";
+                }
+            ?>
+        </div>
+    </div>
+
+    <div class='list-container'>
+        <div id='favouriteslist' class="list-view">
+            <?php
+
+                $user = intval($_COOKIE['UserID']);
+
+                $sql = 'CALL GetFavourites(:p0);';
+                $stmt = $db->prepare($sql);
+                $stmt->bindParam(':p0',$user,PDO::PARAM_INT);
+                $stmt->execute();
+                $result = $stmt->fetchAll();
+
+                foreach ($result as $row) {
+                    $fsid = intval($row['FSID']);
+                    $sql = "CALL GetContentByFSID(:p0)";
+                    $stmt = $db->prepare($sql);
+                    $stmt->bindParam(':p0',$fsid, PDO::PARAM_INT);
+                    $stmt->execute();
+                    $result = $stmt->fetch();
+
+                    $sql = "CALL GetRating(:p0,:p1)";
+                    $stmt = $db->prepare($sql);
+                    $stmt->bindParam(':p0',$fsid, PDO::PARAM_INT);
+                    $stmt->bindParam(':p1',$user, PDO::PARAM_INT);
+                    $stmt->execute();
+                    $personalRating = $stmt->fetch();
+
+                    if ($personalRating == NULL) {
+                        $rating = 0;
+                    } else {
+                        $rating = $personalRating['Rating'];
+                    }
+
+                    echo "<watch-item title='$result[Title]' src='$result[Image]' rating='$rating' fsid='$result[FSID]' url='/content?FSID=$result[FSID]'><p>$result[Description]</p></watch-item>";
+                }
+            ?>
+        </div>
+    </div>
+
+    <div class='list-container'>
+        <div id='commentslist' class="list-view">
+            <?php
+
+                $user = intval($_COOKIE['UserID']);
+
+                $sql = 'CALL GetCommentsByUID(:p0);';
+                $stmt = $db->prepare($sql);
+                $stmt->bindParam(':p0',$user,PDO::PARAM_INT);
+                $stmt->execute();
+                $result = $stmt->fetchAll();
+
+                foreach ($result as $row) {
+                    echo "<movie-comment username='$userresult[Username]' timestamp='$row[Date]' content='$row[Comment]'></movie-comment>";
+                }
+            ?>
+        </div>
     </div>
 </div>
 
