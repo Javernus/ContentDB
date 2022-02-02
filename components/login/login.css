@@ -16,7 +16,6 @@
   bottom: 0;
   border: var(--primary-2) solid 0.0625rem;
   border-radius: 0.5rem;
-
 }
 
 .login__tab {
@@ -38,6 +37,12 @@
 
 .login__tab:hover {
   font-weight: bold;
+}
+
+.login__status {
+    padding: 0 0 1rem 0;
+    font-size: .9rem;
+    color: transparent;
 }
 
 .login__inputs {
@@ -63,16 +68,4 @@
   margin: 0.25rem;
   outline: none;
   font-family: 'Courier New', Courier, monospace;
-}
-
-.login__input--error {
-  border-color: var(--signal);
-}
-
-.login__input::placeholder {
-  color: var(--text-colour-muted);
-}
-
-.login__input:focus {
-  box-shadow: 0.125rem 0.125rem 0.5rem 0 var(--neutral-2);
 }

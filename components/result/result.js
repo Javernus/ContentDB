@@ -10,7 +10,7 @@
  *
  * Made by Timo, refactored by Jake.
  */
-class WatchItem extends HTMLElement {
+class Result extends HTMLElement {
   constructor() {
     super();
     this.shadow = this.attachShadow({ mode: "open" });
@@ -19,67 +19,47 @@ class WatchItem extends HTMLElement {
     this.rating = 1;
     this.src = "";
     this.label = "";
-    this.url = "";
   }
 
   connectedCallback() {
     /* The link component for the css. */
     const link = document.createElement("link");
-    link.setAttribute("href", "/components/watch-item/watch-item.css");
+    link.setAttribute("href", "/components/result/result.css");
     link.setAttribute("rel", "stylesheet");
     this.shadow.appendChild(link);
 
-    /* The watch-item container. */
-    this.classList.add("watch-item");
+    /* The result container. */
+    this.classList.add("result");
 
     /* The poster image. */
     const image = document.createElement("div");
-    image.classList.add("watch-item__image");
+    image.classList.add("result__image");
     image.style.backgroundImage = `url(${this.src})`;
     this.shadow.appendChild(image);
     this.imageElement = image;
 
-    /* The div containing all textual info of the film or series. */
-    const textualInfo = document.createElement("div");
-    textualInfo.classList.add("watch-item__info");
-    this.shadow.appendChild(textualInfo);
-
-    /* The div containing the title of the film or series. */
-    const heading = document.createElement("div");
-    heading.classList.add("watch-item__heading");
-    textualInfo.appendChild(heading);
+    /* The div containing all info of the film or series. */
+    const info = document.createElement("div");
+    info.classList.add("result__info");
+    this.shadow.appendChild(info);
 
     /* The title heading. */
     const title = document.createElement("h1");
     title.textContent = this.label;
-    heading.appendChild(title);
+    info.appendChild(title);
     this.titleElement = title;
-
-    /* the url in title */
-    const url = document.createElement("a");
-    url.classList.add("watch-item__url");
-    url.setAttribute("href", this.url);
-    url.textContent = this.title;
-    title.appendChild(url);
 
     /* The cdb-rating component for the rating of the film or series. */
     const rating = document.createElement("cdb-rating");
     rating.setAttribute("rating", this.rating);
-    heading.appendChild(rating);
+    rating.setAttribute("small", true);
+    info.appendChild(rating);
     this.ratingElement = rating;
-
-    /* The div slotting the description of the film or series. */
-    const description = document.createElement("div");
-    description.classList.add("watch-item__description");
-    textualInfo.appendChild(description);
-
-    const slot = document.createElement("slot");
-    description.appendChild(slot);
   }
 
   /* Returns the attributes which should be observed. */
   static get observedAttributes() {
-    return ["rating", "src", "label", "url"];
+    return ["rating", "src", "label"];
   }
 
   /* Handles attributes changing. */
@@ -107,4 +87,4 @@ class WatchItem extends HTMLElement {
 }
 
 /* Defines the custom element. */
-window.customElements.define("watch-item", WatchItem);
+window.customElements.define("cdb-result", Result);

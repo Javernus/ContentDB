@@ -13,6 +13,7 @@
     <script type="text/javascript" src="../components/nav-bar/nav-bar.js"></script>
     <script type="text/javascript" src="../components/nav-item/nav-item.js"></script>
     <script type="text/javascript" src="../components/icon/icon.js"></script>
+    <script type="text/javascript" src="../components/item-view/item-view.js"></script>
     <script type="text/javascript" src="../components/icon/responsive-icon.js"></script>
     <script type="text/javascript" src="../components/carousel/carousel.js"></script>
     <script type="text/javascript" src="../components/carousel-item/carousel-item.js"></script>
@@ -22,10 +23,14 @@
     <script type="text/javascript" src="../components/cookie-dialog/cookie-dialog.js"></script>
     <script type="text/javascript" src="../components/login/login.js"></script>
     <script type="text/javascript" src="../components/settings/settings.js"></script>
+    <script type="text/javascript" src="../components/search/search.js"></script>
     <script type="text/javascript" src="../components/browse-card/browse-card.js"></script>
     <script type="text/javascript" src="../components/browse-row/browse-row.js"></script>
     <script type="text/javascript" src="../components/watch-item/watch-item.js"></script>
+    <script type="text/javascript" src="../components/result/result.js"></script>
     <script type="text/javascript" src="../components/rating/rating.js"></script>
+    <script type="text/javascript" src="../components/comment/comment.js"></script>
+
 
     <script>
       function postFetch(url, data, json, callback) {
@@ -81,7 +86,6 @@
     <cdb-navigation-bar id="navigation-bar">
       <cdb-navigation-item slot="items" label="Home" href="/home/"><cdb-icon slot="icon" src="/src/nav.svg#home" size="2" colour="var(--primary-main)"></cdb-icon></cdb-navigation-item>
       <cdb-navigation-item slot="items" label="Browse" href="/browse/"><cdb-icon slot="icon" src="/src/nav.svg#browse" size="2" colour="var(--primary-main)"></cdb-icon></cdb-navigation-item>
-      <cdb-navigation-item slot="items" label="Search TBWO" href="/search/"><cdb-icon slot="icon" src="/src/nav.svg#search" size="2" colour="var(--primary-main)"></cdb-icon></cdb-navigation-item>
 
       <script>
         /* Script by Jake. */
@@ -98,6 +102,19 @@
 
         /* Get the navigation bar to append children to it for changes based on login state. */
         const bar = document.getElementById("navigation-bar");
+
+        const navItemSearch = document.createElement("cdb-navigation-item");
+        navItemSearch.setAttribute("slot", "items");
+        navItemSearch.setAttribute("label", "Search");
+        navItemSearch.addEventListener("click", toggleSearchDialog);
+        bar.appendChild(navItemSearch);
+
+        const navIconSearch = document.createElement("cdb-icon");
+        navIconSearch.setAttribute("slot", "icon");
+        navIconSearch.setAttribute("src", "/src/nav.svg#search");
+        navIconSearch.setAttribute("size", 2);
+        navIconSearch.setAttribute("colour", "var(--primary-main)");
+        navItemSearch.appendChild(navIconSearch);
 
         /* The navigation items. */
         const settingsItem = document.createElement("cdb-navigation-item");
@@ -182,6 +199,17 @@
             settingsDialog.toggleAttribute("open");
         }
 
+        /* Toggles the search dialog. */
+        function toggleSearchDialog() {
+          searchDialog.toggleAttribute("open");
+          search.focus();
+        }
+
+        function toggleSettings() {
+            settings.toggleAttribute("open");
+            settingsDialog.toggleAttribute("open");
+        }
+
       function signOut() {
         postFetch("../php/logout.php", {}, false, () => {});
 
@@ -244,6 +272,14 @@
         login.addEventListener("signup", handleLogin);
         dialog.appendChild(login);
 
+        /* Create the dialog with login. */
+        const searchDialog = document.createElement("cdb-dialog");
+        searchDialog.setAttribute("id", "login-dialog");
+        document.body.appendChild(searchDialog);
+
+        const search = document.createElement("cdb-search");
+        searchDialog.appendChild(search);
+
         /* Hide the splash screen after load. */
 
         const splashScreen = document.getElementById("splash-screen");
@@ -259,5 +295,6 @@
 
         window.addEventListener("load", hideSplashScreen);
       </script>
+      <cdb-navigation-item slot="bottom-items" label="ToS & Privacy" href="/tos/"><cdb-icon slot="icon" src="/src/tos.svg#tos" size="2" colour="var(--primary-main)"></cdb-icon></cdb-navigation-item>
     </cdb-navigation-bar>
     <div class="content">

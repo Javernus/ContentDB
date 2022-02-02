@@ -49,7 +49,8 @@ class CookieDialog extends HTMLElement {
     /* cookie dialog content text */
     const dialogText = document.createElement("p");
     dialogText.classList.add("dialog__text");
-    dialogText.innerHTML = "This website uses cookies to ensure you get the best experience on our website. See our <a href='/privacy-policy' class='dialog__policy-link'>privacy policy</a> for more information.";
+    dialogText.innerHTML =
+      "This website uses cookies to ensure you get the best experience on our website. See our <a href='/tos/' class='dialog__policy-link'>Terms of Service and Privacy Policy</a> for more information.";
     dialogContent.appendChild(dialogText);
 
     /* cookie dialog content button */

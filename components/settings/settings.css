@@ -25,7 +25,7 @@
     cursor: pointer;
 }
 
-.settings__tab--active::before {
+.settings__tab::before {
     width: 110%;
     height: 0;
     position: absolute;
@@ -34,10 +34,6 @@
     left: -5%;
     border: var(--primary-2) solid 0.125rem;
     border-radius: 0.5rem;
-}
-
-.settings__tab:hover {
-    font-weight: bold;
 }
 
 .settings__inputs {

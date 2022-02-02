@@ -1,8 +1,10 @@
 /**
  * The Rating component. Displays a variable amount of filled stars, adding empty
- * stars till a total of 5 stars is reached.
+ * stars till a total of 5 stars is reached. Users can select stars themselves,
+ * adding a personal rating to the corresponding item.
  * Attributes
  *  - rating: the amount of filled stars.
+ *  - ratable: bool of whether the user can change the index or not.
  */
 class Rating extends HTMLElement {
   constructor() {
@@ -12,11 +14,12 @@ class Rating extends HTMLElement {
 
     /* Setting the defaults of the attributes. */
     this.rating = 1;
+    this.small = false;
   }
 
   /* Returns the attributes which should be observed. */
   static get observedAttributes() {
-    return ["rating"];
+    return ["rating", "ratable", "small"];
   }
 
   /* Handles attributes changing. */
@@ -30,21 +33,42 @@ class Rating extends HTMLElement {
     if (name === "rating" && this.star1Element) {
       for (let i = 0; i < 5; i++) {
         if (i < this.rating) {
-          this[`star${i}Element`].setAttribute("src", "/src/star.svg#filled");
+          this[`star${i}Element`].setAttribute("src", "../src/star.svg#filled");
         } else {
-          this[`star${i}Element`].setAttribute("src", "/src/star.svg#outline");
+          this[`star${i}Element`].setAttribute("src", "../src/star.svg#outline");
         }
       }
-
-      this.numberElement && (this.numberElement.textContent = this.rating);
     }
+
+    if (name === "small" && this.star1Element) {
+      if (newValue === "true" || newValue === "") {
+        this.classList.add("rating--small");
+      } else {
+        this.classList.remove("rating--small");
+      }
+    }
+  }
+
+  ratingChange(event) {
+    if (this.ratable === "true") {
+      this.setAttribute("rating", event.target.getAttribute("index"));
+    }
+
+    const customEvent = new CustomEvent("ratingchange", {
+      detail: {
+        value: event.target.getAttribute("index"),
+      },
+    });
+    this.dispatchEvent(customEvent);
   }
 
   /* Renders the component based on the given attributes. */
   connectedCallback() {
+    this.small && this.classList.add("rating--small");
+
     const link = document.createElement("link");
-    link.setAttribute("href", "/components/rating/rating.css");
-    link.setAttribute("rel", "stylesheet");
+    link.href = "../components/rating/rating.css";
+    link.rel = "stylesheet";
     this.shadow.appendChild(link);
 
     const container = document.createElement("div");
@@ -54,12 +78,15 @@ class Rating extends HTMLElement {
     for (let i = 0; i < 5; i++) {
       const starIcon = document.createElement("cdb-icon");
       starIcon.classList.add("rating__star");
+      starIcon.setAttribute("index", i + 1);
       i === 0 && starIcon.classList.add("rating__star--first");
+      starIcon.addEventListener("click", this.ratingChange.bind(this));
+      starIcon.setAttribute("cursor", "pointer");
 
       if (i < this.rating) {
-        starIcon.setAttribute("src", "/src/star.svg#filled");
+        starIcon.setAttribute("src", "../src/star.svg#filled");
       } else {
-        starIcon.setAttribute("src", "/src/star.svg#outline");
+        starIcon.setAttribute("src", "../src/star.svg#outline");
       }
 
       starIcon.setAttribute("size", 2);
