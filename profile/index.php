@@ -19,9 +19,9 @@
             $stmt = $db->prepare($sql);
             $stmt->bindParam(':p0',$user,PDO::PARAM_INT);
             $stmt->execute();
-            $result = $stmt->fetch();
+            $userresult = $stmt->fetch();
 
-            echo "<h1>".$result['Username']."'s profile</h1>";
+            echo "<h1>".$userresult['Username']."'s profile</h1>";
         ?>
     </div>
     <script>
@@ -285,6 +285,25 @@
                     }
 
                     echo "<watch-item title='$result[Title]' src='$result[Image]' rating='$rating' fsid='$result[FSID]' url='/content?FSID=$result[FSID]'><p>$result[Description]</p></watch-item>";
+                }
+            ?>
+        </div>
+    </div>
+
+    <div class='list-container'>
+        <div id='commentslist' class="list-view">
+            <?php
+
+                $user = intval($_COOKIE['UserID']);
+
+                $sql = 'CALL GetCommentsByUID(:p0);';
+                $stmt = $db->prepare($sql);
+                $stmt->bindParam(':p0',$user,PDO::PARAM_INT);
+                $stmt->execute();
+                $result = $stmt->fetchAll();
+
+                foreach ($result as $row) {
+                    echo "<movie-comment username='$userresult[Username]' timestamp='$row[Date]' content='$row[Comment]'></movie-comment>";
                 }
             ?>
         </div>
