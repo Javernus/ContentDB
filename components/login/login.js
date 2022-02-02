@@ -54,6 +54,14 @@ class Login extends HTMLElement {
     /* Save a reference of the signInInputs container for dynamic state change. */
     this.signInInputsElement = signInInputs;
 
+    /* Placeholder div for status text */
+    const status = document.createElement("div");
+    status.classList.add("login__status");
+    status.textContent = "status";
+    signInInputs.appendChild(status);
+
+    this.signInStatus = status;
+
     /* The username input. */
     const signInUsernameInput = document.createElement("cdb-input");
     signInUsernameInput.setAttribute("placeholder", "Enter your username...");
@@ -87,6 +95,14 @@ class Login extends HTMLElement {
 
     /* Save a reference of the signUpInputs container for dynamic state change. */
     this.signUpInputsElement = signUpInputs;
+
+		/* Placeholder div for status text */
+    const signUpStatus = document.createElement("div");
+    signUpStatus.classList.add("login__status");
+    signUpStatus.textContent = "status";
+    signUpInputs.appendChild(signUpStatus);
+
+    this.signUpStatus = signUpStatus;
 
     /* The username input. */
     const signUpUsernameInput = document.createElement("cdb-input");
@@ -128,6 +144,7 @@ class Login extends HTMLElement {
   }
 
   handleLoginChange() {
+    this.signInStatus.style.color = "transparent";
     this.signInUsernameElement.removeAttribute("error");
     this.signInPasswordElement.removeAttribute("error");
   }
@@ -149,6 +166,8 @@ class Login extends HTMLElement {
 
     postFetch("../php/usernameExists.php", data, false, (res) => {
       if (res === "true") {
+				this.signUpStatus.style.color = "red";
+				this.signUpStatus.textContent = "Username already exists.";
         this.signUpUsernameElement.setAttribute("error", true);
       } else if (res === "false") {
         this.signUpUsernameElement.removeAttribute("error");
@@ -162,7 +181,10 @@ class Login extends HTMLElement {
 
     if (password !== passwordTwo && passwordTwo !== "") {
       this.signUpPasswordTwoElement.setAttribute("error", true);
+			this.signUpStatus.style.color = "red";
+			this.signUpStatus.textContent = "Passwords do not match.";
     } else {
+			this.signUpStatus.style.color = "transparent";
       this.signUpPasswordTwoElement.removeAttribute("error");
     }
   }
@@ -201,6 +223,8 @@ class Login extends HTMLElement {
         this.dispatchEvent(new CustomEvent("login"));
         window.location.href = "/profile";
       } else {
+        this.signInStatus.textContent = "Incorrect username or password.";
+        this.signInStatus.style.color = "red";
         this.signInUsernameElement.setAttribute("error", true);
         this.signInPasswordElement.setAttribute("error", true);
       }
