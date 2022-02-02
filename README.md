@@ -22,3 +22,5 @@ Password: TBD
 ## Acknowledgement
 
 We have adapted the loader design from https://codepen.io/camdenfoucht/pen/BVxawq.
+
+The layout of the API is based on https://github.com/shahbaz17/php-rest-api.
