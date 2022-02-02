@@ -9,7 +9,7 @@
     $UID = $data->uid;
     $sql = 'CALL GetUsernameByUID(:p0)';
     $stmt = $db->prepare($sql);
-    $stmt->bindValue(":p0", $uid, PDO::PARAM_INT);
+    $stmt->bindValue(":p0", $UID, PDO::PARAM_INT);
     $stmt->execute();
     $result = $stmt->fetch()[0];
     echo $result;

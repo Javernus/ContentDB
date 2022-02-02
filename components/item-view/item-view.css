@@ -99,3 +99,65 @@ h3 {
 .item-view__headerBox:right {
     border-bottom-right-radius: 1em;
 }
+
+.item-view__select {
+    position: relative;
+    justify-content: center;
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+    font-family: 'Courier New', Courier, monospace;
+    color: var(--text-colour);
+    width: 100%;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: var(--neutral-4);
+    border-radius: 0.5rem;
+    border: 0.0625rem solid;
+    border-color: var(--primary-2);
+    display: none;
+  }
+  
+  .item-view__select:focus {
+    outline: none;
+    border-color: var(--primary-1);
+  }
+  
+  .item-view__select__chevron {
+    position: absolute;
+    right: 0.5rem;
+    top: 0.25rem;
+    z-index: 1;
+    pointer-events: none;
+    display: none;
+  }
+  
+  .item-view__select-option {
+    background-color: var(--neutral-4);
+    border: 0.0625rem solid var(--primary-2);
+  }
+
+  .item-view__select-bar {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    min-width: 16rem;
+    width: 40vw;
+    max-width: 30rem;
+    height: fit-content;
+    justify-content: center;
+    margin: 0 auto 1rem;
+  }
+
+  .item-view__select-bar::before {
+    width: 110%;
+  }
+
+  .item-view__select {
+    display: block;
+  }
+
+  .item-view__select-chevron {
+    display: flex;
+  }

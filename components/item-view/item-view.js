@@ -22,6 +22,7 @@
       /* Setting default values. */
       this.private_rating = 0;
       this.public_rating = 0;
+      this.watchlist = "";
     }
   
     connectedCallback() {
@@ -80,41 +81,47 @@
       /* The dropdown menu to be shown after the plus button is clicked. */
       const optionsContainer = document.createElement('div');
       optionsContainer.classList.add("item-view__dropdown");
+
+      const watchList = document.createElement("div");
+      watchList.classList.add("item-view__select-bar");
+      headingStretch.appendChild(watchList);
       
-      const option1 = document.createElement("p");
-      option1.innerText = "To Watch";
-      optionsContainer.appendChild(option1);
-      
-      const option2 = document.createElement("p");
-      option2.innerText = "Watching";
-      optionsContainer.appendChild(option2);
-      
-      const option3 = document.createElement("p");
-      option3.innerText = "Watched";
-      optionsContainer.appendChild(option3);
-      
-      const option4 = document.createElement("p");
-      option4.innerText = "Favorites";
-      optionsContainer.appendChild(option4);
-      
-      const option5 = document.createElement("p");
-      option5.innerText = "To Watch";
-      optionsContainer.appendChild(option5);
+      const watchSelectList = document.createElement("select");
+      watchSelectList.addEventListener("change", this.handleSelect.bind(this));
+      watchSelectList.classList.add("item-view__select");
+      watchList.appendChild(watchSelectList);
+
+      /* The chevron down icon to indicate the select list is a list. */
+      const chevronDown = document.createElement("cdb-icon");
+      chevronDown.classList.add("item-view__select-chevron");
+      chevronDown.setAttribute("src", "../src/chevrons.svg#bottom");
+      chevronDown.setAttribute("size", 1.5);
+      chevronDown.setAttribute("colour", "var(--text-colour)");
+      watchList.appendChild(chevronDown);
+
+   
 
 
-      /* Adding button functionality. */
-      addLogo.addEventListener("click", function(){ optionsContainer.classList.toggle("item-view__show");
-      });
-
-
-      /* The div containing the icon. */
-      const plusIcon = document.createElement("div");
-      addLogo.appendChild(plusIcon);
-      addLogo.appendChild(optionsContainer);
-      /* SVG icon component functionality added. */
-      plusIcon.innerHTML = `<cdb-icon slot="icon" src="../src/add.svg#plus" size="4" colour="var(--primary-main)"></cdb-icon>`;
+      const tabs = ["To Watch", "Watching", "Watched"];
       
+      // IF NOT IN LIST
 
+        const option = document.createElement("option");
+        option.classList.add("item-view__select-option");
+        option.toggleAttribute("selected", true);
+        option.textContent = "Select List";
+        watchSelectList.appendChild(option);
+
+      for (const tabName of tabs) {
+            const option = document.createElement("option");
+            option.classList.add("item-view__select-option");
+            // CHECK WHAT WATCHLIST AND SET THE TOGGLE
+            option.toggleAttribute("selected", true);
+            option.setAttribute("id", tabName);
+            option.setAttribute("value", tabName);
+            option.textContent = tabName;
+            watchSelectList.appendChild(option);
+      }
 
       /* The year of the film or series. */
       const year = document.createElement("h1");
@@ -141,7 +148,7 @@
       /* The dropdown menu to be shown when the button is clicked. */
       const dropdownContainer = document.createElement("div");
       dropdownContainer.classList.add("item-view__headerBox");
-      dropdownContainer.classList.add("item-view__dropdown");
+      // dropdownContainer.classList.add("item-view__dropdown");
 
 
       /* The item description. */
@@ -176,7 +183,7 @@
   
     /* Returns the attributes which should be observed. */
     static get observedAttributes() {
-      return ["private_rating", "public_rating", "src", "title", "actors", "description", "year", "duration"];
+      return ["watchlist", "private_rating", "public_rating", "src", "title", "actors", "description", "year", "duration"];
     }
   
     /* Handles attributes changing. */
@@ -226,6 +233,16 @@
         this.descriptionElement.textContent = newValue;
         return;
       }  
+    }
+
+    // CHECK LOGIN . jS FIRE EVENT
+    handleSelect(event) {
+      const customEvent = new CustomEvent("watchlistchange", {
+        detail: {
+          value: event.target.value,
+        },
+      });
+      this.dispatchEvent(customEvent);
     }
   }
   window.customElements.define("item-view", ItemView);

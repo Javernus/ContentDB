@@ -32,6 +32,21 @@
       }
   
       this[name] = newValue;
+
+      if (name === "username" && this.nameElement) {
+        this.nameElement.innerText = this.username;
+        return;
+      }
+
+      if (name === "timestamp" && this.timeElement) {
+        this.timeElement.innerText = this.timestamp;
+        return;
+      }
+      
+      if (name === "content" && this.textElement) {
+        this.textElement.innerText = this.content;
+        return;
+      }
     }
   
     /* Renders the component based on the given attributes. */
@@ -61,8 +76,10 @@
       /* Put the username and timestamp in the comment header. */
       const name = document.createElement('p');
       const time = document.createElement('p');
-      name.innerText = "TEST";
+      name.innerText = this.username;
       time.innerText = this.timestamp;
+      this.nameElement = name;
+      this.timeElement = time;
   
       headerName.appendChild(name);
       headerTime.appendChild(time);
@@ -73,6 +90,7 @@
       /* The comment content. */
       const text = document.createElement('textarea');
       text.innerText = this.content;
+      this.textElement = text;
       text.classList.add("comment__textarea");
       content.appendChild(text);
 

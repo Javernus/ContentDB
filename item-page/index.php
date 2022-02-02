@@ -45,10 +45,65 @@
         <script>
           const FSID = <?php echo $FSID?>;
           const UID = <?php echo $UID?>;
-  
+          
+          /* This function handles watch list changes. */
+          function handleWatchlistChange(event) {
+            const data5 = {fsid: FSID, uid : UID};
+            let watchlist = 0;
+            switch (event.detail.value) {
+              case "To Watch":
+                watchlist = 1;
+                break;
+              case "Watching":
+                watchlist = 2;
+                break;
+              case "Watched":
+                watchlist = 3;
+                break;
+              case "None":
+                watchlist = 4;
+            }
+            const data6 = {fsid: FSID, uid : UID, watchlist : watchlist};
+
+
+            postFetch("../php/FSIDinWatchlist.php", data5, false, (res) => {
+              console.log("RES = " + res);
+              /* Check if user already has this item in this watch list. */
+              if (res == watchlist) {
+                return;
+              }
+
+              /* Remove from watchlist. */
+              if (res != "" && watchlist == 4) {
+                postFetch("../php/removeFSIDfromWatchlist.php", data5, false, (result) => {
+                  console.log(result);
+                });
+                return;
+              }
+
+              /* Move an item from one watch list to another. */
+              if (res != "") {
+                postFetch("../php/removeFSIDfromWatchlist.php", data5, false, (result) => {
+                  console.log(result);
+                });
+                postFetch("../php/addFSIDtoWatchlist.php", data6, false, (result) => {
+                  console.log(result);
+                });
+              }
+
+              /* Add an item to a watch list. */
+              if (res == "") {
+                postFetch("../php/addFSIDtoWatchlist.php", data6, false, (result) => {
+                  console.log(result);
+                });
+              }
+            });
+            }
+
           const data = { fsid: FSID };
 
           const data2 = { fsid : FSID, uid: UID};
+
           let rating = 0;
           if (UID) {
             postFetch("../php/getRating.php", data2, false, (res) => {
@@ -68,16 +123,20 @@
               itemElement.setAttribute("private_rating", rating);
               itemElement.setAttribute("duration", res[5]);
               itemElement.setAttribute("year", res[6]);
-
+              itemElement.addEventListener("watchlistchange", handleWatchlistChange);
               document.getElementById("itemlist").appendChild(itemElement);
             });
+            
           }
+
+
         </script>
       </div>
     </div>
       <div class="comment" id='comment-section'>
         <script>
-          if (UID) {
+          
+          if (<?php echo $UID ?>) {
             /* Div containing the user comment input and button. */
             UserCommentElement = document.createElement("div");
             UserCommentElement.classList.add("comment__user");
@@ -102,14 +161,33 @@
         </script>
       </div>
 
-    <!-- <script>
-      /* Scrips by Timo. Here the comments are loaded in consecutively. */
-      for (let i = 0; i < 5; i++) {
-        const comment_element = document.createElement("div");
-        comment_element.innerHTML = '<movie-comment content="asd" username="test" timestamp="12-02-2019"></movie-comment>';
-        document.getElementById('comment-section').appendChild(comment_element);
-      }
-      </script> -->
+    <script>
+    /* Scripts by Timo. */
+      let count = 0;
+      const data3 = { fsid : <?php echo $FSID; ?>};
+      postFetch("../php/getCommentAmount.php", data3, false, (res) => {
+        count = res;
+      });
+
+      postFetch("../php/getComments.php", data3, true, (res) => {
+        if (res != "false") {
+          for (let i = 0; i < Math.min(20, count); i++) {
+            
+            const commentElement = document.createElement("movie-comment");
+            commentElement.setAttribute("content", res[i]["Comment"]);
+            commentElement.setAttribute("timestamp", res[i]["Date"]);
+
+            let data4 = {"uid" : res[i]["UID"]};
+            postFetch("../php/getUserNameByUID.php", data4, false, (result) => {
+              commentElement.setAttribute("username", result);
+              document.getElementById('comment-section').appendChild(commentElement);
+            });
+          }
+        }
+      });
+      
+
+      </script>
 </div>
 
 
