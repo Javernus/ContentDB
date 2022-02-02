@@ -85,7 +85,7 @@
         	$result = $stmt->fetchAll();
 
 					foreach ($result as $row) {
-						echo "<cdb-browse-card url=$row[Image] src=$row[Image]></cdb-browse-card>";
+						echo "<cdb-browse-card url=$row[Image] src=$row[Image] fsid=$row[0]></cdb-browse-card>";
 					}
 
 					echo "</cdb-browse-row>";
@@ -104,7 +104,7 @@
         	$result = $stmt->fetchAll();
 
 					foreach ($result as $row) {
-						echo "<cdb-browse-card url=$row[Image] src=$row[Image]></cdb-browse-card>";
+						echo "<cdb-browse-card url=$row[Image] src=$row[Image] fsid=$row[0]></cdb-browse-card>";
 					}
 
 					echo "</cdb-browse-row>";

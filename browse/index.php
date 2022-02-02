@@ -27,7 +27,7 @@
 
                         if ($movies->num_rows > 0) {
                             while ($movie = $movies->fetch_assoc()) {
-                                echo "<cdb-browse-card url=$movie[Image] src=$movie[Image]></cdb-browse-card>";
+                                echo "<cdb-browse-card url=$movie[Image] src=$movie[Image] fsid=$movie[FSID]></cdb-browse-card>";
                             }
                         }
                     }
