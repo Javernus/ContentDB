@@ -1,6 +1,6 @@
 <?php
-    // Looing for .env at the root directory
-    // require '/vendor/autoload.php';
+    // // Looing for .env at the root directory
+    // require '../vendor/autoload.php';
 
     // $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
     // $dotenv->load();
@@ -21,4 +21,5 @@
 
     // Turn autocommit off
     $conn -> autocommit(FALSE);
+
 ?>

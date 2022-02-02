@@ -37,10 +37,16 @@ class ImdbScraper():
 
         return self.movies
 
+    def write_tv_shows(self):
+        with open ('tv_shows.json', 'w') as f:
+            json.dump(self.movies, f)
+
     def top_rated_movies(self):
         """
         Returns a list of the top rated movies on imdb
         """
+
+        print('Getting top rated movies')
 
         self.url = 'https://www.imdb.com/chart/top'
         response = self.s.get(self.url, headers=self.headers)
@@ -72,6 +78,43 @@ class ImdbScraper():
 
         self.write_movies()
 
+    def top_rated_series(self):
+        """
+        Returns a list of the top rated tv shows on imdb
+        """
+
+        print('Getting top rated series')
+
+        self.url = 'https://www.imdb.com/chart/toptv/'
+        response = self.s.get(self.url, headers=self.headers)
+
+        self.titles = re.findall(r'title=\".+\" >(.*)</a>', response.text)
+
+        movieactors = re.findall(r'title=\"(.*)\" >.+</a>', response.text)
+
+        for x in movieactors:
+            actors = x.split(', ')
+            self.actors.append(actors)
+
+        self.ratings = re.findall(r'<strong title=\".+\">(.*)</strong>', response.text)
+        self.release_dates = re.findall(r'<span class=\"secondaryInfo\">\((.*)\)</span>', response.text)
+
+        for Id, title in enumerate(self.titles):
+            summary, duration, genre, image = self.get_movie_details(title)
+            self.movies[Id] = {
+                'FSID': Id + 251,
+                'title': title,
+                'actors': self.actors.pop(0),
+                'genre': genre,
+                'image': image,
+                'rating': round(float(self.ratings.pop(0).replace(',', '.')) / 2),
+                'summary': summary,
+                'release_year': int(self.release_dates.pop(0)),
+                'duration': duration
+            }
+
+        self.write_tv_shows()
+
 
     def get_movie_details(self, movie_name):
         """
@@ -99,9 +142,13 @@ class ImdbScraper():
         try:
             # Get the duration of the movie and convert it to minutes
             runtime = re.findall(
-                r'Runtime</span><div class=\"ipc-metadata-list-item__content-container\">(.*?)</div></li><li role=\"presentation\"', r.text)
-            runtime = re.sub(r'\D\W+', '/', runtime[0]).replace('hour', '').replace('minutes', '').split('/')
-            duration = int(runtime[0]) * 60 + int(runtime[2])
+                r'Runtime</span><div class=\"ipc-metadata-list-item__content-container\">(.*?)</div></li>', r.text)
+
+            runtime = re.sub(r'\D\W+', '/', runtime[0]).replace('hour', '').replace('hours', '').replace('minutes', '').split('/')
+            if len(runtime) == 2:
+                duration = int(runtime[0])
+            else:
+                duration = int(runtime[0]) * 60 + int(runtime[2])
 
         except:
             duration = 'No duration available'
@@ -149,4 +196,7 @@ class ImdbScraper():
         return self.movies
 
 scraper = ImdbScraper()
-scraper.top_rated_movies()
+
+##! run functions
+# scraper.top_rated_movies()
+# scraper.top_rated_series()
