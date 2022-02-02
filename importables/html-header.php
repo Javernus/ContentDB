@@ -24,6 +24,7 @@ session_start();
     <script type="text/javascript" src="../components/input/input.js"></script>
     <script type="text/javascript" src="../components/dialog/dialog.js"></script>
     <script type="text/javascript" src="../components/login/login.js"></script>
+    <script type="text/javascript" src="../components/settings/settings.js"></script>
     <script type="text/javascript" src="../components/browse-card/browse-card.js"></script>
     <script type="text/javascript" src="../components/browse-row/browse-row.js"></script>
     <script type="text/javascript" src="../components/watch-item/watch-item.js"></script>
@@ -75,7 +76,6 @@ session_start();
       <cdb-navigation-item slot="items" label="Home" href="/home/"><cdb-icon slot="icon" src="/src/nav.svg#home" size="2" colour="var(--primary-main)"></cdb-icon></cdb-navigation-item>
       <cdb-navigation-item slot="items" label="Browse" href="/browse/"><cdb-icon slot="icon" src="/src/nav.svg#browse" size="2" colour="var(--primary-main)"></cdb-icon></cdb-navigation-item>
       <cdb-navigation-item slot="items" label="Search TBWO" href="/search/"><cdb-icon slot="icon" src="/src/nav.svg#search" size="2" colour="var(--primary-main)"></cdb-icon></cdb-navigation-item>
-      <cdb-navigation-item slot="bottom-items" label="Settings" href="/settings/"><cdb-icon slot="icon" src="/src/nav.svg#settings" size="2" colour="var(--primary-main)"></cdb-icon></cdb-navigation-item>
 
       <script>
         /* Script by Jake. */
@@ -94,6 +94,20 @@ session_start();
         const bar = document.getElementById("navigation-bar");
 
         /* The navigation items. */
+        const settingsItem = document.createElement("cdb-navigation-item");
+        !loggedIn && settingsItem.classList.add("nav-item--hidden");
+        settingsItem.setAttribute("slot", "bottom-items");
+        settingsItem.setAttribute("id", "settings");
+        settingsItem.setAttribute("label", "Settings");
+        settingsItem.addEventListener("click", toggleSettings);
+        bar.appendChild(settingsItem);
+
+        const settingsIcon = document.createElement("cdb-icon");
+        settingsIcon.setAttribute("slot", "icon");
+        settingsIcon.setAttribute("src", "/src/nav.svg#settings");
+        settingsIcon.setAttribute("size", 2);
+        settingsIcon.setAttribute("colour", "var(--primary-main)");
+        settingsItem.appendChild(settingsIcon);
 
         const navItemAdmin = document.createElement("cdb-navigation-item");
         !isAdmin && navItemAdmin.classList.add("nav-item--hidden");
@@ -157,10 +171,16 @@ session_start();
           dialog.toggleAttribute("open");
         }
 
+        function toggleSettings() {
+            settings.toggleAttribute("open");
+            settingsDialog.toggleAttribute("open");
+        }
+
       function signOut() {
         postFetch("../php/logout.php", {}, false, () => {});
 
           navItemAdmin.classList.add("nav-item--hidden");
+          settingsItem.classList.add("nav-item--hidden");
           navItemProfile.classList.add("nav-item--hidden");
           navItemSignOut.classList.add("nav-item--hidden");
           navItemSignIn.classList.remove("nav-item--hidden");
@@ -177,6 +197,7 @@ session_start();
         /* Updates the nav bar and hides the dialog on login. */
         function handleLogin() {
           dialog.removeAttribute("open");
+          settingsItem.classList.remove("nav-item--hidden");
           navItemProfile.classList.remove("nav-item--hidden");
           navItemSignOut.classList.remove("nav-item--hidden");
           navItemSignIn.classList.add("nav-item--hidden");
@@ -196,8 +217,17 @@ session_start();
           }
         }
 
-        /* Create the dialog with login. */
+        /* Create the dialog for settings. */
+        const settingsDialog = document.createElement("cdb-dialog");
+        settingsDialog.setAttribute("id", "settings-dialog");
+        document.body.appendChild(settingsDialog);
 
+        const settings = document.createElement("cdb-settings");
+        settings.setAttribute("id", "settings");
+        settings.setAttribute("open", true);
+        settingsDialog.appendChild(settings);
+
+        /* Create the dialog with login. */
         const dialog = document.createElement("cdb-dialog");
         dialog.setAttribute("id", "login-dialog");
         document.body.appendChild(dialog);

@@ -10,7 +10,7 @@
 
   $sql = 'CALL GetSalt(:p0)';
   $stmt = $db->prepare($sql);
-  $stmt->bindValue(":p0", $email, PDO::PARAM_STR);
+  $stmt->bindValue(":p0", $username, PDO::PARAM_STR);
   $stmt->execute();
   $salt = $stmt->fetch()[0];
 

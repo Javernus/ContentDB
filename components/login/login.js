@@ -199,6 +199,7 @@ class Login extends HTMLElement {
     postFetch("../php/login.php", data, false, (res) => {
       if (res === "true") {
         this.dispatchEvent(new CustomEvent("login"));
+        window.location.href = "/profile";
       } else {
         this.signInUsernameElement.setAttribute("error", true);
         this.signInPasswordElement.setAttribute("error", true);
