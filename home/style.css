@@ -28,14 +28,32 @@
     box-shadow: 0.125rem 0.125rem 0.5rem 0 var(--neutral-2);
 }
 
-@media (max-width : 750px) {
-    .carousels {
+@media (max-width : 811px) {
+    #carousels {
         display: none;
     }
 
     .slideshow {
+        display: block;
+    }
+
+    #page-title {
+        padding-top: 2em;
+    }
+}
+
+@media (min-width : 811px) {
+    #carousels {
         display: flex;
     }
+
+    .slideshow {
+        display: none;
+    }
+}
+
+.slideshow {
+    margin-top: 4em;
 }
 
 .carousels {
