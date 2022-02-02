@@ -3,7 +3,7 @@
 ?>
 
 
-    <h1 class="title">Umbrim your content.</h1>
+    <h1 class="title" id="page-title">Umbrim your content.</h1>
     <div id="account-buttons">
       <script>
         /* Script by Jake. */
@@ -35,41 +35,87 @@
       </script>
     </div>
 
-    <div class="carousels">
-      <div class="carousel-item">
-        <h2>Most Viewed</h2>
-        <cdb-carousel>
-          <cdb-carousel-item src="https://m.media-amazon.com/images/M/MV5BNjViNWRjYWEtZTI0NC00N2E3LTk0NGQtMjY4NTM3OGNkZjY0XkEyXkFqcGdeQXVyMjUxMTY3ODM@._V1_QL75_UX380_CR0,0,380,562_.jpg"></cdb-carousel-item>
-          <cdb-carousel-item src="https://m.media-amazon.com/images/M/MV5BNjViNWRjYWEtZTI0NC00N2E3LTk0NGQtMjY4NTM3OGNkZjY0XkEyXkFqcGdeQXVyMjUxMTY3ODM@._V1_QL75_UX380_CR0,0,380,562_.jpg"></cdb-carousel-item>
-          <cdb-carousel-item src="https://m.media-amazon.com/images/M/MV5BNjViNWRjYWEtZTI0NC00N2E3LTk0NGQtMjY4NTM3OGNkZjY0XkEyXkFqcGdeQXVyMjUxMTY3ODM@._V1_QL75_UX380_CR0,0,380,562_.jpg"></cdb-carousel-item>
-          <cdb-carousel-item src="https://m.media-amazon.com/images/M/MV5BNjViNWRjYWEtZTI0NC00N2E3LTk0NGQtMjY4NTM3OGNkZjY0XkEyXkFqcGdeQXVyMjUxMTY3ODM@._V1_QL75_UX380_CR0,0,380,562_.jpg"></cdb-carousel-item>
-          <cdb-carousel-item src="https://m.media-amazon.com/images/M/MV5BNjViNWRjYWEtZTI0NC00N2E3LTk0NGQtMjY4NTM3OGNkZjY0XkEyXkFqcGdeQXVyMjUxMTY3ODM@._V1_QL75_UX380_CR0,0,380,562_.jpg"></cdb-carousel-item>
-          <cdb-carousel-item src="https://m.media-amazon.com/images/M/MV5BNjViNWRjYWEtZTI0NC00N2E3LTk0NGQtMjY4NTM3OGNkZjY0XkEyXkFqcGdeQXVyMjUxMTY3ODM@._V1_QL75_UX380_CR0,0,380,562_.jpg"></cdb-carousel-item>
-          <cdb-carousel-item src="https://m.media-amazon.com/images/M/MV5BNjViNWRjYWEtZTI0NC00N2E3LTk0NGQtMjY4NTM3OGNkZjY0XkEyXkFqcGdeQXVyMjUxMTY3ODM@._V1_QL75_UX380_CR0,0,380,562_.jpg"></cdb-carousel-item>
-          <cdb-carousel-item src="https://m.media-amazon.com/images/M/MV5BNjViNWRjYWEtZTI0NC00N2E3LTk0NGQtMjY4NTM3OGNkZjY0XkEyXkFqcGdeQXVyMjUxMTY3ODM@._V1_QL75_UX380_CR0,0,380,562_.jpg"></cdb-carousel-item>
-          <cdb-carousel-item src="https://m.media-amazon.com/images/M/MV5BNjViNWRjYWEtZTI0NC00N2E3LTk0NGQtMjY4NTM3OGNkZjY0XkEyXkFqcGdeQXVyMjUxMTY3ODM@._V1_QL75_UX380_CR0,0,380,562_.jpg"></cdb-carousel-item>
-          <cdb-carousel-item src="https://m.media-amazon.com/images/M/MV5BNjViNWRjYWEtZTI0NC00N2E3LTk0NGQtMjY4NTM3OGNkZjY0XkEyXkFqcGdeQXVyMjUxMTY3ODM@._V1_QL75_UX380_CR0,0,380,562_.jpg"></cdb-carousel-item>
-          <cdb-carousel-item src="https://m.media-amazon.com/images/M/MV5BNjViNWRjYWEtZTI0NC00N2E3LTk0NGQtMjY4NTM3OGNkZjY0XkEyXkFqcGdeQXVyMjUxMTY3ODM@._V1_QL75_UX380_CR0,0,380,562_.jpg"></cdb-carousel-item>
-        </cdb-carousel>
+    <div class="carousels" id="carousels">
+			<div class="carousel-item">
+        <h2>New Releases</h2>
+       	<?php
+          include '../php/databaseLogin.php';
+
+					echo "<cdb-carousel>";
+          $sql = 'SELECT * FROM `content` ORDER BY `ReleaseYear` DESC LIMIT 10';
+          $stmt = $db->prepare($sql);
+        	$stmt->execute();
+        	$result = $stmt->fetchAll();
+
+					foreach ($result as $row) {
+						echo "<cdb-carousel-item url=$row[Image] src=$row[Image]></cdb-carousel-item>";
+					}
+
+					echo "</cdb-carousel>";
+
+        ?>
       </div>
 
       <div class="carousel-item">
         <h2>Top Rated</h2>
-        <cdb-carousel>
-          <cdb-carousel-item src="https://m.media-amazon.com/images/M/MV5BNjViNWRjYWEtZTI0NC00N2E3LTk0NGQtMjY4NTM3OGNkZjY0XkEyXkFqcGdeQXVyMjUxMTY3ODM@._V1_QL75_UX380_CR0,0,380,562_.jpg"></cdb-carousel-item>
-          <cdb-carousel-item src="https://m.media-amazon.com/images/M/MV5BNjViNWRjYWEtZTI0NC00N2E3LTk0NGQtMjY4NTM3OGNkZjY0XkEyXkFqcGdeQXVyMjUxMTY3ODM@._V1_QL75_UX380_CR0,0,380,562_.jpg"></cdb-carousel-item>
-          <cdb-carousel-item src="https://m.media-amazon.com/images/M/MV5BNjViNWRjYWEtZTI0NC00N2E3LTk0NGQtMjY4NTM3OGNkZjY0XkEyXkFqcGdeQXVyMjUxMTY3ODM@._V1_QL75_UX380_CR0,0,380,562_.jpg"></cdb-carousel-item>
-          <cdb-carousel-item src="https://m.media-amazon.com/images/M/MV5BNjViNWRjYWEtZTI0NC00N2E3LTk0NGQtMjY4NTM3OGNkZjY0XkEyXkFqcGdeQXVyMjUxMTY3ODM@._V1_QL75_UX380_CR0,0,380,562_.jpg"></cdb-carousel-item>
-          <cdb-carousel-item src="https://m.media-amazon.com/images/M/MV5BNjViNWRjYWEtZTI0NC00N2E3LTk0NGQtMjY4NTM3OGNkZjY0XkEyXkFqcGdeQXVyMjUxMTY3ODM@._V1_QL75_UX380_CR0,0,380,562_.jpg"></cdb-carousel-item>
-          <cdb-carousel-item src="https://m.media-amazon.com/images/M/MV5BNjViNWRjYWEtZTI0NC00N2E3LTk0NGQtMjY4NTM3OGNkZjY0XkEyXkFqcGdeQXVyMjUxMTY3ODM@._V1_QL75_UX380_CR0,0,380,562_.jpg"></cdb-carousel-item>
-          <cdb-carousel-item src="https://m.media-amazon.com/images/M/MV5BNjViNWRjYWEtZTI0NC00N2E3LTk0NGQtMjY4NTM3OGNkZjY0XkEyXkFqcGdeQXVyMjUxMTY3ODM@._V1_QL75_UX380_CR0,0,380,562_.jpg"></cdb-carousel-item>
-          <cdb-carousel-item src="https://m.media-amazon.com/images/M/MV5BNjViNWRjYWEtZTI0NC00N2E3LTk0NGQtMjY4NTM3OGNkZjY0XkEyXkFqcGdeQXVyMjUxMTY3ODM@._V1_QL75_UX380_CR0,0,380,562_.jpg"></cdb-carousel-item>
-          <cdb-carousel-item src="https://m.media-amazon.com/images/M/MV5BNjViNWRjYWEtZTI0NC00N2E3LTk0NGQtMjY4NTM3OGNkZjY0XkEyXkFqcGdeQXVyMjUxMTY3ODM@._V1_QL75_UX380_CR0,0,380,562_.jpg"></cdb-carousel-item>
-          <cdb-carousel-item src="https://m.media-amazon.com/images/M/MV5BNjViNWRjYWEtZTI0NC00N2E3LTk0NGQtMjY4NTM3OGNkZjY0XkEyXkFqcGdeQXVyMjUxMTY3ODM@._V1_QL75_UX380_CR0,0,380,562_.jpg"></cdb-carousel-item>
-          <cdb-carousel-item src="https://m.media-amazon.com/images/M/MV5BNjViNWRjYWEtZTI0NC00N2E3LTk0NGQtMjY4NTM3OGNkZjY0XkEyXkFqcGdeQXVyMjUxMTY3ODM@._V1_QL75_UX380_CR0,0,380,562_.jpg"></cdb-carousel-item>
-        </cdb-carousel>
+        <?php
+          include '../php/databaseLogin.php';
+
+					echo "<cdb-carousel>";
+          $sql = 'SELECT * FROM `content` ORDER BY `FSID` ASC LIMIT 15';
+          $stmt = $db->prepare($sql);
+        	$stmt->execute();
+        	$result = $stmt->fetchAll();
+
+					foreach ($result as $row) {
+						echo "<cdb-carousel-item url=$row[Image] src=$row[Image]></cdb-carousel-item>";
+					}
+
+					echo "</cdb-carousel>";
+
+        ?>
       </div>
     </div>
+
+		<div class="slideshow">
+			<div class="slide-item">
+       	<?php
+          include '../php/databaseLogin.php';
+
+					echo "<cdb-browse-row label='New Releases'>";
+          $sql = 'SELECT * FROM `content` ORDER BY `ReleaseYear` DESC LIMIT 10';
+          $stmt = $db->prepare($sql);
+        	$stmt->execute();
+        	$result = $stmt->fetchAll();
+
+					foreach ($result as $row) {
+						echo "<cdb-browse-card url=$row[Image] src=$row[Image]></cdb-browse-card>";
+					}
+
+					echo "</cdb-browse-row>";
+
+        ?>
+			</div>
+
+				<div class="slide-item">
+       	<?php
+          include '../php/databaseLogin.php';
+
+					echo "<cdb-browse-row label='Top rated'>";
+          $sql = 'SELECT * FROM `content` ORDER BY `FSID` ASC LIMIT 15';
+          $stmt = $db->prepare($sql);
+        	$stmt->execute();
+        	$result = $stmt->fetchAll();
+
+					foreach ($result as $row) {
+						echo "<cdb-browse-card url=$row[Image] src=$row[Image]></cdb-browse-card>";
+					}
+
+					echo "</cdb-browse-row>";
+
+        ?>
+			</div>
+		</div>
 
 <?php
   include '../importables/html-footer.php';
