@@ -26,7 +26,7 @@
   <div class="explanation">Administrator accounts or admin accounts reserve the right to prescreen, monitor and remove user content and accounts if applicable. Admins have no obligation to do so, but require a valid issue concerning the user's content or account.</div>
 
   <div class="sub-design">5.   CONTACT</div>
-  <div class="explanation">If you have any questions concerning any individual item on umbrim.com or if you have any questions concerning this agreement, you may comment on contact support@umbrim.com.</div>
+  <div class="explanation">If you have any questions concerning any individual item on umbrim.com or if you have any questions concerning this agreement, you may contact support@umbrim.com.</div>
 </div>
 
 <?php
