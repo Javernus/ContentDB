@@ -39,6 +39,12 @@ class Rating extends HTMLElement {
     if (this.ratable === 'true') {
       this.setAttribute("rating", event.target.getAttribute("index"));
     }
+    const customEvent = new CustomEvent("ratingchange", {
+      detail: {
+        value: event.target.getAttribute("index"),
+      },
+    });
+    this.dispatchEvent(customEvent);
   }
 
   /* Renders the component based on the given attributes. */

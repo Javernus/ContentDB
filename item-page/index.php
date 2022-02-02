@@ -47,6 +47,7 @@
           const UID = <?php echo $UID?>;
           
           /* This function handles watch list changes. */
+
           function handleWatchlistChange(event) {
             const data5 = {fsid: FSID, uid : UID};
             let watchlist = 0;
@@ -101,6 +102,23 @@
             });
             }
 
+            /* This function handles rating changes. */
+            function handleRatingChange(event) {
+              alert("TEST");
+              alert(<?php echo $UID ?>);
+              if (UID) {
+                alert(event.details.value)
+                const data6 = {fsid:FSID, uid:UID, rating: event.details.value};
+                postFetch("../php/setRating.php", data6, false, (result) => {
+                  console.log(result);
+                });
+              }
+              else {
+                return;
+              }
+            }
+
+
           const data = { fsid: FSID };
 
           const data2 = { fsid : FSID, uid: UID};
@@ -109,6 +127,7 @@
           if (UID) {
             postFetch("../php/getRating.php", data2, false, (res) => {
               rating = res;
+              console.log(rating);
             });
           }
           else {
@@ -125,6 +144,7 @@
               itemElement.setAttribute("duration", res[5]);
               itemElement.setAttribute("year", res[6]);
               itemElement.addEventListener("watchlistchange", handleWatchlistChange);
+              itemElement.addEventListener("ratingchange", handleRatingChange);
               document.getElementById("itemlist").appendChild(itemElement);
             });
             

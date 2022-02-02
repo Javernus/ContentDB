@@ -43,6 +43,13 @@
       image.style.backgroundImage = `url(${this.src})`;
       this.shadow.appendChild(image);
       this.imageElement = image;
+
+      /* Favorites button. */
+      const favorite = document.createElement("cbd-icon");
+      favorite.setAttribute("src", "/src/nav.svg#home")
+      favorite.classList.add("item-view__favorite");
+      favorite.addEventListener("click", toggleFavorite);
+      image.appendChild(favorite);
   
       /* The div containing all textual info of the film or series. */
       const textualInfo = document.createElement("div");
@@ -220,7 +227,9 @@
       }  
     }
 
-    // CHECK LOGIN . jS FIRE EVENT
+    /* Create a custom event to be caught in item-page/index.php
+     * so that the watch lists can be changed appropriately.
+     */
     handleSelect(event) {
       const customEvent = new CustomEvent("watchlistchange", {
         detail: {

@@ -160,3 +160,8 @@ h3 {
   .item-view__select-chevron {
     display: flex;
   }
+
+  .item-view__favorite {
+    position: absolute;
+    z-index: 999;
+  }
