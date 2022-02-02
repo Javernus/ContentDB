@@ -60,7 +60,7 @@
               case "Watched":
                 watchlist = 3;
                 break;
-              case "None":
+              default:
                 watchlist = 4;
             }
             const data6 = {fsid: FSID, uid : UID, watchlist : watchlist};
@@ -68,13 +68,22 @@
 
             postFetch("../php/FSIDinWatchlist.php", data5, false, (res) => {
               console.log("RES = " + res);
+
               /* Check if user already has this item in this watch list. */
-              if (res == watchlist) {
+              if ((res == watchlist) || (res == "" && watchlist == 4)) {
                 return;
               }
 
+              /* Add an item to a watch list. */
+
+              if (res == "") {
+                postFetch("../php/addFSIDtoWatchlist.php", data6, false, (result) => {
+                  console.log(result);
+                });
+                return;
+              }
               /* Remove from watchlist. */
-              if (res != "" && watchlist == 4) {
+              if (watchlist == 4) {
                 postFetch("../php/removeFSIDfromWatchlist.php", data5, false, (result) => {
                   console.log(result);
                 });
@@ -82,21 +91,13 @@
               }
 
               /* Move an item from one watch list to another. */
-              if (res != "") {
-                postFetch("../php/removeFSIDfromWatchlist.php", data5, false, (result) => {
-                  console.log(result);
-                });
-                postFetch("../php/addFSIDtoWatchlist.php", data6, false, (result) => {
-                  console.log(result);
-                });
-              }
-
-              /* Add an item to a watch list. */
-              if (res == "") {
-                postFetch("../php/addFSIDtoWatchlist.php", data6, false, (result) => {
-                  console.log(result);
-                });
-              }
+              postFetch("../php/removeFSIDfromWatchlist.php", data5, false, (result) => {
+                console.log(result);
+              });
+              postFetch("../php/addFSIDtoWatchlist.php", data6, false, (result) => {
+                console.log(result);
+              });
+              return;
             });
             }
 

@@ -71,12 +71,6 @@
       headingStretch.classList.add("item-view__heading");
       headingStretch.classList.add("item-view__headingStretch");
       heading.appendChild(headingStretch);
-      
-
-      /* The div containing the add to list icon and the text. */
-      const addLogo = document.createElement("div");
-      addLogo.classList.add("item-view__button");
-      headingStretch.appendChild(addLogo);
 
       /* The dropdown menu to be shown after the plus button is clicked. */
       const optionsContainer = document.createElement('div');
@@ -103,14 +97,12 @@
 
 
       const tabs = ["To Watch", "Watching", "Watched"];
-      
-      // IF NOT IN LIST
 
-        const option = document.createElement("option");
-        option.classList.add("item-view__select-option");
-        option.toggleAttribute("selected", true);
-        option.textContent = "Select List";
-        watchSelectList.appendChild(option);
+      const option = document.createElement("option");
+      option.classList.add("item-view__select-option");
+      option.toggleAttribute("selected", true);
+      option.textContent = "Add to list...";
+      watchSelectList.appendChild(option);
 
       for (const tabName of tabs) {
             const option = document.createElement("option");
@@ -139,17 +131,10 @@
       const durationContainer = document.createElement("div");
       durationContainer.classList.add("item-view__headerBox");
       
-      duration.textContent = this.duration + " min";
+      duration.textContent = this.duration + "min";
       durationContainer.appendChild(duration);
       headingStretch.appendChild(durationContainer);
       this.durationElement = duration;
-
-      
-      /* The dropdown menu to be shown when the button is clicked. */
-      const dropdownContainer = document.createElement("div");
-      dropdownContainer.classList.add("item-view__headerBox");
-      // dropdownContainer.classList.add("item-view__dropdown");
-
 
       /* The item description. */
       const description = document.createElement("p");

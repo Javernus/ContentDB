@@ -85,7 +85,7 @@ h3 {
 }
 
 .item-view__headerBox {
-    background-color: var(--primary-1);
+    background-color: var(--primary-4);
     position: static;
     padding: 0 5rem 0 5rem;
     border: var(--neutral-5);
@@ -123,7 +123,7 @@ h3 {
     border-color: var(--primary-1);
   }
   
-  .item-view__select__chevron {
+  .item-view__select-chevron {
     position: absolute;
     right: 0.5rem;
     top: 0.25rem;
@@ -141,9 +141,8 @@ h3 {
     position: relative;
     display: flex;
     flex-direction: row;
-    width: 100%;
     min-width: 16rem;
-    width: 40vw;
+    width: 15vw;
     max-width: 30rem;
     height: fit-content;
     justify-content: center;
