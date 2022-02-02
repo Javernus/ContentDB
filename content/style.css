@@ -1,11 +1,10 @@
-.center {
+.item-page {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-}
-
-.left {
-  display: flex;
-  justify-content: left;
+  align-content: center;
+  align-items: center;
+  margin-top: 2rem;
 }
 
 .tab-bar {
@@ -140,4 +139,3 @@ h1 {
     color: var(--text-colour);
     font-size: 300%;
 }
-

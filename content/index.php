@@ -2,7 +2,7 @@
   ini_set( 'error_reporting', E_ALL );
   ini_set( 'display_errors', true );
 
- 
+
 
   $url = $_SERVER['REQUEST_URI'];
 
@@ -15,7 +15,7 @@
     // st ring passed via URL
     parse_str($url_components['query'], $web_params);
 
-    $FSID = (int) $web_params["FSID"];    
+    $FSID = (int) $web_params["FSID"];
   }
 
   if (isset($_COOKIE["UserID"])) {
@@ -35,17 +35,13 @@
   include '../importables/html-header.php';
 ?>
 
-<div style='justify-content:left; padding-left: 5%; padding-right: 5%;' class="item-page" id="item-page">
-    <div class='title'>
-        <h1>Movie Name</h1>
-    </div>
+<div class="item-page" id="item-page">
     <div id='itemlist' class="item-view">
-      <div>
 
         <script>
           const FSID = <?php echo $FSID?>;
           const UID = <?php echo $UID?>;
-          
+
           /* This function handles watch list changes. */
 
           function handleWatchlistChange(event) {
@@ -164,10 +160,11 @@
               itemElement.addEventListener("favouriteschange", handleFavouritesChange);
               document.getElementById("itemlist").appendChild(itemElement);
             });
+
           }
 
-            /* 
-            * Create a comment client side, and send the comment data to the database. 
+            /*
+            * Create a comment client side, and send the comment data to the database.
             * Written by Timo.
             */
 
@@ -192,7 +189,7 @@
     </div>
       <div class="comment" id='comment-section'>
         <script>
-          
+
           if (<?php echo $UID ?>) {
             /* Div containing the user comment input and button. */
             UserCommentElement = document.createElement("div");
@@ -229,7 +226,7 @@
       postFetch("../php/getComments.php", data3, true, (res) => {
         if (res != "false") {
           for (let i = 0; i < Math.min(20, count); i++) {
-            
+
             const commentElement = document.createElement("movie-comment");
             commentElement.setAttribute("content", res[i]["Comment"]);
             commentElement.setAttribute("timestamp", res[i]["Date"]);
@@ -242,12 +239,7 @@
           }
         }
       });
-      
-
       </script>
-</div>
-
-
 <?php
   include '../importables/html-footer.php';
 ?>

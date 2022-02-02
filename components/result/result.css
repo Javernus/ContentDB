@@ -26,7 +26,6 @@ h3 {
 .result__image {
     background-size: contain;
     background-position: center;
-    background-size: 50% 50%;
     background-color: gray;
     width: 3.5rem;
     height: 5.25rem;
