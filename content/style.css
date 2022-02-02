@@ -4,73 +4,11 @@
   justify-content: center;
   align-content: center;
   align-items: center;
-  margin-top: 2rem;
-}
-
-.tab-bar {
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  height: fit-content;
-  justify-content: center;
-  margin-bottom: 1rem;
-}
-
-.tab-bar::before {
-  width: 80%;
-  height: 0;
-  position: absolute;
-  content: " ";
-  bottom: 0;
-  border: var(--neutral-1) solid 0.0625rem;
-  border-radius: 0.5rem;
-}
-
-.tab {
-  position: relative;
-  margin: 0.5rem 2rem 0.5rem 2rem;
-  cursor: pointer;
-  font-size: 1.25rem;
-}
-
-.tab--active::before {
-  width: 110%;
-  height: 0;
-  position: absolute;
-  content: " ";
-  bottom: -0.5625rem;
-  left: -5%;
-  border: var(--neutral-1) solid 0.125rem;
-  border-radius: 0.5rem;
-}
-
-.tab:hover {
-  color: var(--text-colour-active);
-}
-
-.title {
-  display: flex;
-  justify-content: center;
-  margin-top: 2rem;
-}
-
-.trans-btn {
-    background-color: Transparent;
-    background-repeat: no-repeat;
-    border: none;
-    cursor: pointer;
-    overflow: hidden;
-    outline: none;
-    font-size: x-large;
-    color: var(--text-colour);
-    padding-left: 50px; padding-right: 50px;
-}
-
-.divider {
-    width: 110%;
-    margin-right: 50%;
-    size: 5;
+  max-width: 80rem;
+  width: 95%;
+  min-width: 20rem;
+  margin: 0 auto;
+  margin-top: 4rem;
 }
 
 .list-view {
@@ -96,43 +34,27 @@
 }
 
 .comment__user {
-  overflow: clip;
   display:flex;
   flex-direction: row;
+  width: 100%;
 }
 
-.comment__input {
-  display: block;
-  resize: none;
-  outline: none;
-  width: 50%;
-  height: 100%;
-  background-color: var(--neutral-5);
-  font-size: 1rem;
-  color: var(--text-colour);
+.comment__user cdb-input {
+  width: 100%;
 }
 
-.comment__input::placeholder {
-  font-size: 1rem;
-  color: var(--text-colour);
+.comment__user cdb-button {
+  width: 8rem;
 }
 
-.comment__submit {
-  position: relative;
-  height: auto;
-  box-sizing: border-box;
+#comment-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column-reverse;
 }
 
-button {
-    cursor: pointer;
-    color: var(--neutal-4);
-    border: var(--neutral-5);
-    padding: 16px;
-    background-color: var(--primary-1);
-}
-
-button:hover {
-    background-color: var(--primary-3);
+.commentheading {
+  margin-top: 4rem;
 }
 
 h1 {
