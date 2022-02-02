@@ -40,6 +40,12 @@
   font-weight: bold;
 }
 
+.login__status {
+    padding: 0 0 1rem 0;
+    font-size: .9rem;
+    color: transparent;
+}
+
 .login__inputs {
   display: none;
   flex-direction: column;
