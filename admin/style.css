@@ -1,0 +1,14 @@
+.centrer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+
+#add-movie {
+  max-width: 32rem;
+  width: 80vw;
+  min-width: 18rem;
+  height: fit-content;
+}

@@ -6,4 +6,40 @@
   display: flex;
   flex-direction: row;
   height: 2rem;
+  align-items: center;
+}
+
+.rating__number {
+  margin: 0;
+  padding-left: 0.125rem;
+  color: var(--primary-main);
+  display: none;
+  color: var(--text-colour);
+  text-decoration: none;
+}
+
+:host(.rating--small) .rating__star {
+  display: none;
+}
+
+:host(.rating--small) .rating__star--first {
+  display: block;
+}
+
+:host(.rating--small) .rating__number {
+  display: block;
+}
+
+@media (max-width : 750px) {
+  .rating__star {
+    display: none;
+  }
+
+  .rating__star--first {
+    display: block;
+  }
+
+  .rating__number {
+    display: block;
+  }
 }

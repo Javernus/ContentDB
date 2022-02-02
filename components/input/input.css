@@ -1,12 +1,13 @@
 :host {
   width: 100%;
-  margin: 0.25rem;
+  box-sizing: border-box;
+  margin: 0.25rem 0;
   display: block;
 }
 
 .input {
   background-color: var(--neutral-3);
-  border: var(--primary-1) solid 0.0625rem;
+  border: var(--primary-2) solid 0.0625rem;
   border-radius: 0.5rem;
   box-sizing: border-box;
   padding: 0.5rem;

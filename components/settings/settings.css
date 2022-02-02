@@ -1,0 +1,159 @@
+.settings__tabs {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: fit-content;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.settings__tabs::before {
+    width: 16rem;
+    height: 0;
+    position: absolute;
+    content: " ";
+    bottom: 0;
+    border: var(--primary-2) solid 0.0625rem;
+    border-radius: 0.5rem;
+
+}
+
+.settings__tab {
+    position: relative;
+    margin: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+.settings__tab::before {
+    width: 110%;
+    height: 0;
+    position: absolute;
+    content: " ";
+    bottom: -0.5625rem;
+    left: -5%;
+    border: var(--primary-2) solid 0.125rem;
+    border-radius: 0.5rem;
+}
+
+.settings__inputs {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 5%;
+}
+
+.settings__inputs--active {
+    display: flex;
+}
+
+.settings__input {
+    background-color: var(--neutral-3);
+    border: var(--primary-2) solid 0.0625rem;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    box-sizing: border-box;
+    width: 100%;
+    color: var(--text-colour);
+    margin: 0.25rem;
+    outline: none;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.settings__input--error {
+    border-color: var(--signal);
+}
+
+.settings__input::placeholder {
+    color: var(--text-colour-muted);
+}
+
+.settings__input:focus {
+    box-shadow: 0.125rem 0.125rem 0.5rem 0 var(--neutral-2);
+}
+
+.settings__cookies {
+    width: 100%;
+    display: flex;
+    padding: 0.5rem;
+    margin-top: 2rem;
+}
+
+.settings__cookies--text {
+    padding: auto;
+    margin: auto;
+    margin-left: 0;
+    padding-left: 0;
+    font-size: 1.3rem;
+}
+
+/* The switch - the box around the slider */
+.settings__switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.settings__switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.settings__slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--neutral-2);
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    outline: none;
+}
+
+.settings__slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: var(--primary-1);
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+}
+
+input:checked + .settings__slider {
+    background-color: var(--signal);
+}
+
+input:focus + .settings__slider {
+    box-shadow: 0 0 1px var(--neutral-3);
+}
+
+input:checked + .settings__slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+.settings__delete {
+    margin-top: 1.5rem;
+    border: var(--signal) solid 0.0625rem;
+    color: var(--text-colour);
+    background-color: var(--signal);
+}
+
+.settings__slider:before {
+    border-radius: 50%;
+}
+
+.settings__slider {
+    border-radius: 34px;
+}

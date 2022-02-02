@@ -44,6 +44,17 @@ body .content {
   scrollbar-color: var(--text-colour) transparent;
 }
 
+@media (max-width : 750px) {
+  body {
+    flex-direction: column;
+  }
+
+  body .content {
+    height: calc(100vh - 4rem);
+    width: 100%;
+  }
+}
+
 .nav-item--hidden {
   display: none;
 }
@@ -57,12 +68,14 @@ body .content {
   justify-content: center;
   align-content: center;
   align-items: center;
+  text-align: center;
   background-color: var(--neutral-main);
   z-index: 1000;
   opacity: 1;
   transition: opacity cubic-bezier(.6, .01, .4, .99) 0.5s;
   transition-delay: 2s;
   cursor: progress;
+  text-align: center;
 }
 
 #splash-screen.disappear {
@@ -106,9 +119,14 @@ body .content {
   display: flex;
   flex-direction: column;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   justify-content: center;
   align-content: center;
   align-items: center;
   background-color: var(--neutral-main);
+  text-align: center;
+}
+
+p {
+  margin: 0;
 }

@@ -14,7 +14,7 @@ class Login extends HTMLElement {
 
     /* The link component for the css. */
     const link = document.createElement("link");
-    link.setAttribute("href", "../components/login/login.css");
+    link.setAttribute("href", "/components/login/login.css");
     link.setAttribute("rel", "stylesheet");
     this.shadow.appendChild(link);
 
@@ -54,14 +54,22 @@ class Login extends HTMLElement {
     /* Save a reference of the signInInputs container for dynamic state change. */
     this.signInInputsElement = signInInputs;
 
-    /* The email input. */
-    const signInEmailInput = document.createElement("cdb-input");
-    signInEmailInput.setAttribute("placeholder", "Enter your email...");
-    signInEmailInput.addEventListener("input", this.handleLoginChange.bind(this));
-    signInInputs.appendChild(signInEmailInput);
+    /* Placeholder div for status text */
+    const status = document.createElement("div");
+    status.classList.add("login__status");
+    status.textContent = "status";
+    signInInputs.appendChild(status);
 
-    /* Save a reference of the signInEmailInput for dynamic state change. */
-    this.signInEmailElement = signInEmailInput;
+    this.signInStatus = status;
+
+    /* The username input. */
+    const signInUsernameInput = document.createElement("cdb-input");
+    signInUsernameInput.setAttribute("placeholder", "Enter your username...");
+    signInUsernameInput.addEventListener("input", this.handleLoginChange.bind(this));
+    signInInputs.appendChild(signInUsernameInput);
+
+    /* Save a reference of the signInUsernameInput for dynamic state change. */
+    this.signInUsernameElement = signInUsernameInput;
 
     /* The password input. */
     const signInPasswordInput = document.createElement("cdb-input");
@@ -88,6 +96,14 @@ class Login extends HTMLElement {
     /* Save a reference of the signUpInputs container for dynamic state change. */
     this.signUpInputsElement = signUpInputs;
 
+		/* Placeholder div for status text */
+    const signUpStatus = document.createElement("div");
+    signUpStatus.classList.add("login__status");
+    signUpStatus.textContent = "status";
+    signUpInputs.appendChild(signUpStatus);
+
+    this.signUpStatus = signUpStatus;
+
     /* The username input. */
     const signUpUsernameInput = document.createElement("cdb-input");
     signUpUsernameInput.setAttribute("placeholder", "Enter a username...");
@@ -96,15 +112,6 @@ class Login extends HTMLElement {
 
     /* Save a reference of the signUpUsernameInput for dynamic state change. */
     this.signUpUsernameElement = signUpUsernameInput;
-
-    /* The email input. */
-    const signUpEmailInput = document.createElement("cdb-input");
-    signUpEmailInput.setAttribute("placeholder", "Enter your email...");
-    signUpEmailInput.addEventListener("change", this.handleEmail.bind(this));
-    signUpInputs.appendChild(signUpEmailInput);
-
-    /* Save a reference of the signUpEmailInput for dynamic state change. */
-    this.signUpEmailElement = signUpEmailInput;
 
     /* The passwerd input. */
     const signUpPasswordInput = document.createElement("cdb-input");
@@ -137,7 +144,8 @@ class Login extends HTMLElement {
   }
 
   handleLoginChange() {
-    this.signInEmailElement.removeAttribute("error");
+    this.signInStatus.style.color = "transparent";
+    this.signInUsernameElement.removeAttribute("error");
     this.signInPasswordElement.removeAttribute("error");
   }
 
@@ -151,60 +159,20 @@ class Login extends HTMLElement {
     this.setAttribute("signup", true);
   }
 
-  handleEmail() {
-    const email = this.signUpEmailElement.value;
-
-    const data = { email: email };
-
-    fetch("../php/emailExists.php", {
-      method: "post",
-      body: JSON.stringify(data),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        return response.text();
-      })
-      .then((res) => {
-        if (res === "true") {
-          this.signUpEmailElement.setAttribute("error", true);
-        } else if (res === "false") {
-          this.signUpEmailElement.removeAttribute("error");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
   handleUsername() {
     const username = this.signUpUsernameElement.value;
 
     const data = { username: username };
 
-    fetch("../php/usernameExists.php", {
-      method: "post",
-      body: JSON.stringify(data),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        return response.text();
-      })
-      .then((res) => {
-        if (res === "true") {
-          this.signUpUsernameElement.setAttribute("error", true);
-        } else if (res === "false") {
-          this.signUpUsernameElement.removeAttribute("error");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    postFetch("../php/usernameExists.php", data, false, (res) => {
+      if (res === "true") {
+				this.signUpStatus.style.color = "red";
+				this.signUpStatus.textContent = "Username already exists.";
+        this.signUpUsernameElement.setAttribute("error", true);
+      } else if (res === "false") {
+        this.signUpUsernameElement.removeAttribute("error");
+      }
+    });
   }
 
   handlePassword() {
@@ -213,90 +181,54 @@ class Login extends HTMLElement {
 
     if (password !== passwordTwo && passwordTwo !== "") {
       this.signUpPasswordTwoElement.setAttribute("error", true);
+			this.signUpStatus.style.color = "red";
+			this.signUpStatus.textContent = "Passwords do not match.";
     } else {
+			this.signUpStatus.style.color = "transparent";
       this.signUpPasswordTwoElement.removeAttribute("error");
     }
   }
 
   signUp() {
     const username = this.signUpUsernameElement.value;
-    const email = this.signUpEmailElement.value;
     const password = this.signUpPasswordElement.value;
     const passwordTwo = this.signUpPasswordTwoElement.value;
 
-    if (
-      password != passwordTwo ||
-      this.signUpUsernameElement.getAttribute("error") ||
-      this.signUpEmailElement.getAttribute("error")
-    ) {
+    if (password != passwordTwo || this.signUpUsernameElement.getAttribute("error")) {
       return;
     }
 
-    const data = { username: username, email: email, password: password };
+    const data = { username: username, password: password };
 
-    fetch("../php/signUp.php", {
-      method: "post",
-      body: JSON.stringify(data),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        return response.text();
-      })
-      .then((res) => {
-        switch (res) {
-          case "success":
-            this.dispatchEvent(new CustomEvent("signup"));
-            break;
-          case "limitreached":
-            // Add text to indicate waiting
-            // this.dispatchEvent(new CustomEvent("signup"));
-            break;
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    postFetch("../php/signUp.php", data, false, (res) => {
+      switch (res) {
+        case "success":
+          this.dispatchEvent(new CustomEvent("signup"));
+          break;
+        case "limitreached":
+          // Add text to indicate waiting
+          break;
+      }
+    });
   }
 
   signIn() {
-    const email = this.signInEmailElement.value;
+    const username = this.signInUsernameElement.value;
     const password = this.signInPasswordElement.value;
 
-    // const hashedPassword = hash();
+    const data = { username: username, password: password };
 
-    const data = { email: email, password: password };
-
-    fetch("../php/login.php", {
-      method: "post",
-      body: JSON.stringify(data),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        return response.text();
-      })
-      .then((res) => {
-        if (res === "true") {
-          const event = new CustomEvent("login", {
-            detail: {
-              successful: res,
-            },
-          });
-
-          this.dispatchEvent(event);
-        } else {
-          this.signInEmailElement.setAttribute("error", true);
-          this.signInPasswordElement.setAttribute("error", true);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    postFetch("../php/login.php", data, false, (res) => {
+      if (res === "true") {
+        this.dispatchEvent(new CustomEvent("login"));
+        window.location.href = "/profile";
+      } else {
+        this.signInStatus.textContent = "Incorrect username or password.";
+        this.signInStatus.style.color = "red";
+        this.signInUsernameElement.setAttribute("error", true);
+        this.signInPasswordElement.setAttribute("error", true);
+      }
+    });
   }
 
   /* Returns the attributes which should be observed. */

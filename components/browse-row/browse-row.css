@@ -22,8 +22,8 @@
   margin: 0 0 -.7em .5em;
 }
 
-@media (max-width : 400px) {
-  cdb-icon.browse__chevron {
+@media (max-width : 750px) {
+  cdb-icon-responsive.browse__chevron {
     display: none;
   }
 }
@@ -34,7 +34,7 @@
   top: 44%;
   cursor: pointer;
   border-radius: 25%;
-  border: 0.0625rem solid var(--primary-1);
+  border: 0.0625rem solid var(--primary-2);
   background-color: var(--neutral-3);
   opacity: 0.8;
   width: 5vh;

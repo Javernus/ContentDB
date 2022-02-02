@@ -37,6 +37,9 @@ class DBConnector():
         with open('movies.json', 'r') as f:
             self.top_rated_movies = json.load(f)
 
+        with open('tv_shows.json', 'r') as f:
+            self.top_rated_series = json.load(f)
+
     def insert_movie_tables(self):
         self.insert_movie_table()
         self.insert_movie_genres()
@@ -60,7 +63,10 @@ class DBConnector():
         sql = "INSERT INTO content (FSID, Title, Image, Description, Rating, Duration, ReleaseYear) VALUES (%s, %s, %s, %s, %s, %s,%s)"
 
         for FSID, movie in self.top_rated_movies.items():
-            val_list.append((int(FSID) + 1, movie['title'], movie['image'], movie['summary'], movie['rating'], movie['duration'], movie['release_year']))
+            val_list.append((movie['FSID'], movie['title'], movie['image'], movie['summary'], movie['rating'], movie['duration'], movie['release_year']))
+
+        for FSID, series in self.top_rated_series.items():
+            val_list.append((series['FSID'], series['title'], series['image'], series['summary'], series['rating'], series['duration'], series['release_year']))
 
         mycursor.executemany(sql, val_list)
 
@@ -100,7 +106,14 @@ class DBConnector():
         for FSID, movie in self.top_rated_movies.items():
             for genre in movie['genre']:
                 if genre in self.genres:
-                    val_list.append((int(FSID) + 1, genre, GID))
+                    val_list.append((movie['FSID'], genre, GID))
+                    GID += 1
+
+        # loop trough every genre per series
+        for FSID, series in self.top_rated_series.items():
+            for genre in series['genre']:
+                if genre in self.genres:
+                    val_list.append((series['FSID'], genre, GID))
                     GID += 1
 
 
@@ -129,7 +142,13 @@ class DBConnector():
         for FSID, movie in self.top_rated_movies.items():
             for actor in movie['actors']:
                 if "(dir.)" not in actor:
-                    val_list.append((int(FSID) + 1, actor, AID))
+                    val_list.append((movie['FSID'], actor, AID))
+                    AID += 1
+
+        for FSID, series in self.top_rated_series.items():
+            for actor in series['actors']:
+                if "(dir.)" not in actor:
+                    val_list.append((series['FSID'], actor, AID))
                     AID += 1
 
         mycursor.executemany(sql, val_list)
@@ -137,21 +156,6 @@ class DBConnector():
         self.mydb.commit()
 
         print(mycursor.rowcount, "records inserted.")
-
-    def insert_user_table(self):
-        pass
-
-    def insert_user_type(self):
-        pass
-
-    def insert_user_comments(self):
-        pass
-
-    def insert_user_lists(self):
-        pass
-
-    def insert_user_favorites(self):
-        pass
 
 
 database = DBConnector(MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PASSWORD)

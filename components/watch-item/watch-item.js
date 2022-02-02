@@ -3,7 +3,7 @@
  * Attributes
  *  - rating: the rating of the film or series.
  *  - src: the src for the image.
- *  - title: the title of the movie.
+ *  - label: the title of the movie.
  *
  * Slots
  *  - default: the description.
@@ -18,13 +18,14 @@ class WatchItem extends HTMLElement {
     /* The defaults for the attributes. */
     this.rating = 1;
     this.src = "";
-    this.title = "";
+    this.label = "";
+    this.url = "";
   }
 
   connectedCallback() {
     /* The link component for the css. */
     const link = document.createElement("link");
-    link.setAttribute("href", "../components/watch-item/watch-item.css");
+    link.setAttribute("href", "/components/watch-item/watch-item.css");
     link.setAttribute("rel", "stylesheet");
     this.shadow.appendChild(link);
 
@@ -50,13 +51,22 @@ class WatchItem extends HTMLElement {
 
     /* The title heading. */
     const title = document.createElement("h1");
-    title.textContent = this.title;
+    title.textContent = this.label;
     heading.appendChild(title);
     this.titleElement = title;
+
+    /* the url in title */
+    const url = document.createElement("a");
+    url.classList.add("watch-item__url");
+    url.setAttribute("href", this.url);
+    url.textContent = this.title;
+    title.appendChild(url);
 
     /* The cdb-rating component for the rating of the film or series. */
     const rating = document.createElement("cdb-rating");
     rating.setAttribute("rating", this.rating);
+		rating.setAttribute("ratable", true);
+		rating.addEventListener("ratingchange", this.handleRatingChange.bind(this));
     heading.appendChild(rating);
     this.ratingElement = rating;
 
@@ -69,10 +79,38 @@ class WatchItem extends HTMLElement {
     description.appendChild(slot);
   }
 
+	getCookie(name) {
+		const value = `; ${document.cookie}`;
+		const parts = value.split(`; ${name}=`);
+		if (parts.length === 2) return parts.pop().split(';').shift();
+	}
+
+	handleRatingChange(event) {
+		const fsid = this.fsid;
+		const uid = this.getCookie("UserID");
+		const contentData = { fsid: fsid, uid: uid };
+
+		postFetch("../php/getRating.php", contentData, false, (result) => {
+			const userData = { fsid: fsid, uid: uid, rating: event.detail.value};
+			if (result=="") {
+				postFetch("../php/setRating.php", userData, false, (result) => {
+					return;
+				});
+			}
+			else {
+				postFetch("../php/updateRating.php", userData, false, (result) => {
+					return;
+				});
+			}
+		});
+	}
+
   /* Returns the attributes which should be observed. */
   static get observedAttributes() {
-    return ["rating", "src", "title"];
+    return ["rating", "src", "label", "url", "fsid"];
   }
+
+
 
   /* Handles attributes changing. */
   attributeChangedCallback(name, oldValue, newValue) {
@@ -92,9 +130,11 @@ class WatchItem extends HTMLElement {
       this.imageElement.style.backgroundImage = `url(${newValue})`;
     }
 
-    if (name === "title" && this.titleElement) {
+    if (name === "label" && this.titleElement) {
       this.titleElement.textContent = newValue;
     }
   }
 }
+
+/* Defines the custom element. */
 window.customElements.define("watch-item", WatchItem);
