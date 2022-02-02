@@ -6,7 +6,7 @@ This project entails the creation of a service where users can keep track of the
 
 The group consists of
 Jake Jongejans - 13622552
-Mario Patroza - StudentID
+Mario Patroza - 14128837
 Montijn van den Beukel - StudentID
 Timo Doherty - StudentID
 

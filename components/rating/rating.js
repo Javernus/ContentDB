@@ -9,11 +9,17 @@
 class Rating extends HTMLElement {
   constructor() {
     super();
+
+    this.shadow = this.attachShadow({ mode: "open" });
+
+    /* Setting the defaults of the attributes. */
+    this.rating = 1;
+    this.small = false;
   }
 
   /* Returns the attributes which should be observed. */
   static get observedAttributes() {
-    return ["rating", "ratable"];
+    return ["rating", "ratable", "small"];
   }
 
   /* Handles attributes changing. */
@@ -33,12 +39,21 @@ class Rating extends HTMLElement {
         }
       }
     }
+
+    if (name === "small" && this.star1Element) {
+      if (newValue === "true" || newValue === "") {
+        this.classList.add("rating--small");
+      } else {
+        this.classList.remove("rating--small");
+      }
+    }
   }
 
   ratingChange(event) {
-    if (this.ratable === 'true') {
+    if (this.ratable === "true") {
       this.setAttribute("rating", event.target.getAttribute("index"));
     }
+
     const customEvent = new CustomEvent("ratingchange", {
       detail: {
         value: event.target.getAttribute("index"),
@@ -49,8 +64,8 @@ class Rating extends HTMLElement {
 
   /* Renders the component based on the given attributes. */
   connectedCallback() {
+    this.small && this.classList.add("rating--small");
 
-    this.shadow = this.attachShadow({ mode: "open" });
     const link = document.createElement("link");
     link.href = "../components/rating/rating.css";
     link.rel = "stylesheet";
@@ -62,8 +77,9 @@ class Rating extends HTMLElement {
 
     for (let i = 0; i < 5; i++) {
       const starIcon = document.createElement("cdb-icon");
-      starIcon.classList.add("star");
-      starIcon.setAttribute("index", i+1);
+      starIcon.classList.add("rating__star");
+      starIcon.setAttribute("index", i + 1);
+      i === 0 && starIcon.classList.add("rating__star--first");
       starIcon.addEventListener("click", this.ratingChange.bind(this));
       starIcon.setAttribute("cursor", "pointer");
 
@@ -78,6 +94,12 @@ class Rating extends HTMLElement {
       container.appendChild(starIcon);
       this[`star${i}Element`] = starIcon;
     }
+
+    const number = document.createElement("h3");
+    number.classList.add("rating__number");
+    number.textContent = this.rating;
+    container.appendChild(number);
+    this.numberElement = number;
   }
 }
 
