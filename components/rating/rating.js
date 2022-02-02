@@ -27,9 +27,9 @@ class Rating extends HTMLElement {
     if (name === "rating" && this.star1Element) {
       for (let i = 0; i < 5; i++) {
         if (i < this.rating) {
-          this[`star${i}Element`].setAttribute("src", "../src/star-filled.svg#star-filled");
+          this[`star${i}Element`].setAttribute("src", "../src/star.svg#filled");
         } else {
-          this[`star${i}Element`].setAttribute("src", "../src/star.svg#star");
+          this[`star${i}Element`].setAttribute("src", "../src/star.svg#outline");
         }
       }
     }
@@ -68,9 +68,9 @@ class Rating extends HTMLElement {
       starIcon.setAttribute("cursor", "pointer");
 
       if (i < this.rating) {
-        starIcon.setAttribute("src", "../src/star-filled.svg#star-filled");
+        starIcon.setAttribute("src", "../src/star.svg#filled");
       } else {
-        starIcon.setAttribute("src", "../src/star.svg#star");
+        starIcon.setAttribute("src", "../src/star.svg#outline");
       }
 
       starIcon.setAttribute("size", 2);

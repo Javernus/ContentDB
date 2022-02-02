@@ -28,7 +28,6 @@
     <script type="text/javascript" src="../components/watch-item/watch-item.js"></script>
     <script type="text/javascript" src="../components/rating/rating.js"></script>
     <script type="text/javascript" src="../components/comment/comment.js"></script>
-    <script type="text/javascript" src="../item-page/functions/addComment.js"></script>
 
 
     <script>

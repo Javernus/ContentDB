@@ -104,12 +104,14 @@
 
             /* This function handles rating changes. */
             function handleRatingChange(event) {
+              alert("test2");
               const data7 = {fsid:<?php echo $FSID; ?>, uid:<?php echo $UID; ?>};
+              console.log(data7);
               postFetch("../php/getRating.php", data7, false, (result) => {
                 const data6 = {fsid:FSID, uid:UID, rating: event.detail.value};
                 if (result=="") {
-                  // alert(event.detail.value)
                   postFetch("../php/setRating.php", data6, false, (result) => {
+                    console.log(result);
                     return;
                   });
                 }
@@ -124,9 +126,21 @@
 
             /* Handles a favourites change. */
             function handleFavouritesChange(event) {
-              alert("TEST");
+              const data = {fsid: FSID, uid:UID};
+              postFetch("../php/checkFavourite.php", data, false, (res) => {
+                console.log(res);
+                if (res) {
+                  postFetch("../php/removeFavourite.php", data, false, (res) => {
+                    return;
+                  });
+                }
+                else {
+                  postFetch("../php/addFavourite.php", data, false, (res) => {
+                    return;
+                  });
+                }
+              });
             }
-
 
           const data = { fsid: FSID };
 

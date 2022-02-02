@@ -24,6 +24,7 @@
       this.public_rating = 0;
       this.watchlist = "";
       this.logged_in = "false";
+      this.favourite = "false";
     }
   
     connectedCallback() {
@@ -50,7 +51,6 @@
       fav.classList.add("fav");
       this.shadow.appendChild(fav);
       fav.addEventListener("click", this.toggleFavourite.bind(this));
-      fav.setAttribute("onclick", this.toggleFavouriteVisibility.bind(this));
 
       if (this.logged_in != "true") {
         fav.classList.add("item-view__hide");
@@ -58,7 +58,7 @@
 
       /* Favourites button. */
       const favourite = document.createElement("cbd-icon");
-      favourite.setAttribute("src", "/src/star.svg#home");
+      favourite.setAttribute("src", "/src/favourite.svg#outline");
       favourite.setAttribute("size", "4");
       favourite.setAttribute("colour", "var(--primary-main)");
       favourite.classList.add("item-view__favourite");
@@ -269,8 +269,13 @@
     }
 
     toggleFavourite(event) {
-      alert("yes");
-      // favouriteElement.setAttribute("src", "");
+      if (this.favouriteElement.src == "/src/favourite.svg#outline") {
+        this.favouriteElement.setAttribute("src", "/src/favourite.svg#filled");
+      } 
+      else {
+        this.favouriteElement.setAttribute("src", "/src/favourite.svg#outline");
+      }
+
       const customEvent = new CustomEvent("favouriteschange", {
         detail: {
           value: event.target.value,
