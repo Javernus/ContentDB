@@ -14,8 +14,6 @@
     <script type="text/javascript" src="../components/nav-item/nav-item.js"></script>
     <script type="text/javascript" src="../components/icon/icon.js"></script>
     <script type="text/javascript" src="../components/item-view/item-view.js"></script>
-    <script type="text/javascript" src="../components/rating/private-rating.js"></script>
-    <script type="text/javascript" src="../components/rating/rating-functions.js"></script>
     <script type="text/javascript" src="../components/icon/responsive-icon.js"></script>
     <script type="text/javascript" src="../components/carousel/carousel.js"></script>
     <script type="text/javascript" src="../components/carousel-item/carousel-item.js"></script>
@@ -29,6 +27,9 @@
     <script type="text/javascript" src="../components/browse-row/browse-row.js"></script>
     <script type="text/javascript" src="../components/watch-item/watch-item.js"></script>
     <script type="text/javascript" src="../components/rating/rating.js"></script>
+    <script type="text/javascript" src="../components/comment/comment.js"></script>
+    <script type="text/javascript" src="../item-page/functions/addComment.js"></script>
+
 
     <script>
       function postFetch(url, data, json, callback) {

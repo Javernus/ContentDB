@@ -19,7 +19,7 @@
   }
 
   if (isset($_COOKIE["UserID"])) {
-    $UID = $_COOKIE;
+    $UID = $_COOKIE["UserID"];
   }
   else {
     $UID = "null";
@@ -33,19 +33,7 @@
   }
 
   include '../importables/html-header.php';
-?> 
-
-
-<script>
-  const FSID = <?php echo $FSID?>;
-  const UID = <?php echo $UID?>;
-  
- // CHECK IF FSID EXISTS 
- data = { FSID : FSID};
-  postFetch("../php/checkFSID.php", data, false, (res) => {
-    alert(res);
-  });
-</script>
+?>
 
 <div style='justify-content:left; padding-left: 5%; padding-right: 5%;' class="item-page" id="item-page">
     <div class='title'>
@@ -55,23 +43,23 @@
       <div>
 
         <script>
-          const data = { FSID: FSID };
+          const FSID = <?php echo $FSID?>;
+          const UID = <?php echo $UID?>;
+  
+          const data = { fsid: FSID };
 
-          const data2 = { FSID:FSID, UID:UID};
+          const data2 = { fsid : FSID, uid: UID};
           let rating = 0;
           if (UID) {
             postFetch("../php/getRating.php", data2, false, (res) => {
-              console.log(res);
               rating = res;
             });
           }
           else {
             rating = 0;
           }
-
           if (FSID) {
             postFetch("../php/getContent.php", data, true, (res) => {
-              console.log(res);
               const itemElement = document.createElement("item-view");
               itemElement.setAttribute("title", res[1]);
               itemElement.setAttribute("src", res[2]);
@@ -87,26 +75,32 @@
         </script>
       </div>
     </div>
+      <div class="comment" id='comment-section'>
+        <script>
+          if (UID) {
+            /* Div containing the user comment input and button. */
+            UserCommentElement = document.createElement("div");
+            UserCommentElement.classList.add("comment__user");
+            document.getElementById("comment-section").appendChild(UserCommentElement);
 
-    <div class="comment" id='comment-section'>
-      <?php 
-        $HTML = '<div class="comment__user">';
-        $HTML .= '<textarea type="text" class="comment__input"';
-        $HTML .= 'placeholder="Write a comment." id="commentInput"></textarea>';
-        $HTML .= '<button onclick="addComment(' . strval($UID) . ' , ';
-        $HTML .= 'document.getElementById(`commentInput`).value)"';
-        $HTML .= 'class=`comment__submit` type="submit">Add Comment';
-        $HTML .= '</button></div>';
-        echo $HTML;
-        ?>  
-              
-        <!-- // if ($UID) {
-        //   echo `<div class="comment__user">
-        //   <textarea type="text" class="comment__input" placeholder="Write a comment." id="commentInput"></textarea><button onclick="addComment(, document.getElementById('commentInput').value)" class='comment__submit' type="submit">Add Comment</button>
-        // </div>`;
-        // } -->
-      
-    </div>
+            /* Textarea in which the user can type. */
+            UserInputElement = document.createElement("textarea");
+            UserInputElement.classList.add("comment__input");
+            UserInputElement.setAttribute("type", "text");
+            UserInputElement.setAttribute("placeholder", "Write a comment.");
+            UserInputElement.id = "commentInput";
+            UserCommentElement.appendChild(UserInputElement);
+
+            /* Button to post the comment. */
+            PostButtonElement = document.createElement("button");
+            PostButtonElement.classList.add("comment__submit");
+            PostButtonElement.setAttribute("type", "submit");
+            PostButtonElement.textContent = "Add Comment";
+            PostButtonElement.addEventListener("click", function() {addComment(UserInputElement.value, <?php echo $UID ?>, <?php echo $FSID ?>)});
+            UserCommentElement.appendChild(PostButtonElement);
+          }
+        </script>
+      </div>
 
     <!-- <script>
       /* Scrips by Timo. Here the comments are loaded in consecutively. */

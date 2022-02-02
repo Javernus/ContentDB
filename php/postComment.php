@@ -2,16 +2,17 @@
     include_once("../php/databaseLogin.php");
 
     $data = json_decode(file_get_contents("php://input"));
-    $Comment = data->Comment;
-    $FSID = data->FSID;
-    $uid = data->uid;
+    $comment = $data->comment;
+    $FSID = $data->FSID;
+    $UID = $data->uid;
     
 
-    $sql = 'CALL fsPostComment(:p0, p1, p2)';
+    $sql = 'CALL PostComment(:p0, :p1, :p2)';
     $stmt = $db->prepare($sql);
-    $stmt->bindValue(":p0", $Comment, PDO::PARAM_STR);
-    $stmt->bindValue(":p0", $FSID, PDO::PARAM_STR);
-    $stmt->bindValue(":p0", $uid, PDO::PARAM_STR);
+    $stmt->bindValue(":p0", $FSID, PDO::PARAM_INT);
+    $stmt->bindValue(":p1", $comment, PDO::PARAM_STR);
+    $stmt->bindValue(":p2", $UID, PDO::PARAM_INT);
     $stmt->execute();
-    // $success = $stmt->fetch()[0];
+    $result = $stmt->fetch()[0];
+    echo $result;
 ?>
