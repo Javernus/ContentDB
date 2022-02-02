@@ -6,17 +6,22 @@
     <h1 class="title">Umbrim your content.</h1>
     <div id="account-buttons">
       <script>
+        /* Script by Jake. */
         const buttonsContainer = document.getElementById("account-buttons");
 
-        const SUbutton = document.createElement("cdb-button");
-        SUbutton.setAttribute("label", "Sign In");
-        SUbutton.addEventListener("click", showLogin);
-        buttonsContainer.appendChild(SUbutton);
-
         const SIbutton = document.createElement("cdb-button");
-        SIbutton.setAttribute("label", "Sign Up");
-        SIbutton.addEventListener("click", showSignUp);
+        SIbutton.setAttribute("label", "Sign In");
+        SIbutton.setAttribute("id", "homesignin");
+        loggedIn && SIbutton.classList.add("button--hidden");
+        SIbutton.addEventListener("click", showLogin);
         buttonsContainer.appendChild(SIbutton);
+
+        const SUbutton = document.createElement("cdb-button");
+        SUbutton.setAttribute("label", "Sign Up");
+        SUbutton.setAttribute("id", "homesignup");
+        loggedIn && SUbutton.classList.add("button--hidden");
+        SUbutton.addEventListener("click", showSignUp);
+        buttonsContainer.appendChild(SUbutton);
 
         function showLogin() {
           login.removeAttribute("signup");

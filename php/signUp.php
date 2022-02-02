@@ -1,4 +1,5 @@
 <?php
+  /* PHP by Jake. */
   include_once("../php/databaseLogin.php");
   session_start();
 
@@ -12,10 +13,10 @@
     $password = $data->password;
     $salt = bin2hex(random_bytes(16));
 
-    $sql = 'CALL AddUser(:p0,:p1,:p2,:p3)';
+    $sql = 'CALL AddUser(:p0,:p2,:p3)';
     $stmt = $db->prepare($sql);
     $stmt->bindValue(":p0", $username, PDO::PARAM_STR);
-    $stmt->bindValue(":p1", $email, PDO::PARAM_STR);
+    // $stmt->bindValue(":p1", $email, PDO::PARAM_STR);
     $stmt->bindValue(":p2", $password.$salt, PDO::PARAM_STR);
     $stmt->bindValue(":p3", $salt, PDO::PARAM_STR);
     $success = $stmt->execute();
@@ -23,13 +24,13 @@
     if ($success) {
       $sql = 'CALL GetSalt(:p0)';
       $stmt = $db->prepare($sql);
-      $stmt->bindValue(":p0", $email, PDO::PARAM_STR);
+      $stmt->bindValue(":p0", $username, PDO::PARAM_STR);
       $stmt->execute();
       $salt = $stmt->fetch();
 
       $sql = 'CALL Login(:p0,:p1)';
       $stmt = $db->prepare($sql);
-      $stmt->bindValue(":p0", $email, PDO::PARAM_STR);
+      $stmt->bindValue(":p0", $username, PDO::PARAM_STR);
       $stmt->bindValue(":p1", $password.$salt[0], PDO::PARAM_STR);
       $success = $stmt->execute();
       $uid = $stmt->fetch()[0];

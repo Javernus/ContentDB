@@ -25,7 +25,7 @@
         chevronDown.setAttribute("colour", "var(--text-colour)");
         watchList.appendChild(chevronDown);
 
-        const tabs = ["To Watch", "Watching", "Watched", "Favourites", "Friends", "Comments"]
+        const tabs = ["To Watch", "Watching", "Watched", "Favourites", "Friends", "Comments"];
 
         /* Handles clicking a tab. */
         function showTab(event) {

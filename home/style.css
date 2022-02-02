@@ -11,6 +11,10 @@
     width: 10rem;
 }
 
+.button--hidden {
+    display: none;
+}
+
 .button > p {
     margin: 0;
     -webkit-user-select: none; /* Safari */

@@ -82,11 +82,32 @@ session_start();
 
         /* Set whether you are logged in for JS. */
         const loggedIn = <?php echo isset($_COOKIE["UserID"]) ? "true" : "false"; ?>;
+        const isAdmin = <?php
+          if (!isset($_COOKIE["UserID"])) {
+            echo "false";
+          } else {
+            include("../php/isAdmin.php");
+          }
+        ?>;
 
         /* Get the navigation bar to append children to it for changes based on login state. */
         const bar = document.getElementById("navigation-bar");
 
         /* The navigation items. */
+
+        const navItemAdmin = document.createElement("cdb-navigation-item");
+        !isAdmin && navItemAdmin.classList.add("nav-item--hidden");
+        navItemAdmin.setAttribute("slot", "items");
+        navItemAdmin.setAttribute("label", "Add Content");
+        navItemAdmin.setAttribute("href", "/admin/");
+        bar.appendChild(navItemAdmin);
+
+        const navIconAdmin = document.createElement("cdb-icon");
+        navIconAdmin.setAttribute("slot", "icon");
+        navIconAdmin.setAttribute("src", "/src/plus.svg#plus");
+        navIconAdmin.setAttribute("size", 2);
+        navIconAdmin.setAttribute("colour", "var(--primary-main)");
+        navItemAdmin.appendChild(navIconAdmin);
 
         const navItemProfile = document.createElement("cdb-navigation-item");
         !loggedIn && navItemProfile.classList.add("nav-item--hidden");
@@ -139,9 +160,18 @@ session_start();
       function signOut() {
         postFetch("../php/logout.php", {}, false, () => {});
 
+          navItemAdmin.classList.add("nav-item--hidden");
           navItemProfile.classList.add("nav-item--hidden");
           navItemSignOut.classList.add("nav-item--hidden");
           navItemSignIn.classList.remove("nav-item--hidden");
+
+          const SUButton = document.getElementById("homesignup");
+          const SIButton = document.getElementById("homesignin");
+
+          if (SUButton && SIButton) {
+            SUButton.classList.remove("button--hidden");
+            SIButton.classList.remove("button--hidden");
+          }
         }
 
         /* Updates the nav bar and hides the dialog on login. */
@@ -150,6 +180,20 @@ session_start();
           navItemProfile.classList.remove("nav-item--hidden");
           navItemSignOut.classList.remove("nav-item--hidden");
           navItemSignIn.classList.add("nav-item--hidden");
+
+          postFetch("../php/isAdmin.php", {}, false, (res) => {
+            if (res === "true") {
+              navItemAdmin.classList.remove("nav-item--hidden");
+            }
+          });
+
+          const SUButton = document.getElementById("homesignup");
+          const SIButton = document.getElementById("homesignin");
+
+          if (SUButton && SIButton) {
+            SUButton.classList.add("button--hidden");
+            SIButton.classList.add("button--hidden");
+          }
         }
 
         /* Create the dialog with login. */

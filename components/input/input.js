@@ -1,7 +1,12 @@
 /**
- * The Input component. An interface item made for the dialog to allow a person to log in or sign up.
+ * The Input component. An interface item to allow users to type.
  * Attributes
- *  - signup: determines whether to show the sign in or sign up page.
+ *  - error: determines whether to show a red error outline.
+ *  - type: the input type of the input.
+ *  - value: the value that updates as the user is typing.
+ *  - placeholder: the placeholder in the input.
+ *
+ * Made by Jake.
  */
 class Input extends HTMLElement {
   constructor() {
@@ -12,6 +17,7 @@ class Input extends HTMLElement {
     this.error = false;
     this.type = "text";
     this.value = "";
+    this.placeholder = "";
   }
 
   connectedCallback() {
@@ -36,6 +42,7 @@ class Input extends HTMLElement {
     this.inputElement = input;
   }
 
+  /* Handles the <input> updating so the value attribute stays up to date. Sends out a `change` event. */
   handleChange() {
     this.value = this.inputElement.value;
 
@@ -48,6 +55,7 @@ class Input extends HTMLElement {
     this.dispatchEvent(event);
   }
 
+  /* Handles the <input> changing so the value attribute stays up to date. Sends out an `input` event. */
   handleInput() {
     this.value = this.inputElement.value;
 
