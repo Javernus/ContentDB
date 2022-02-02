@@ -1,12 +1,13 @@
 <?php
     // Looing for .env at the root directory
-    // require '/vendor/autoload.php';
+    // require '../vendor/autoload.php';
 
     // $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
     // $dotenv->load();
 
-    // // Retrive env variable
+    // Retrive env variable
     // $host = $_ENV['MYSQL_HOST'];
+    // $port = $_ENV['MYSQL_PORT'];
     // $username = $_ENV['MYSQL_USER'];
     // $password = $_ENV['MYSQL_PASSWORD'];
     // $database = $_ENV['MYSQL_DATABASE'];

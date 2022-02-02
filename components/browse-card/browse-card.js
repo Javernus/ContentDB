@@ -6,6 +6,7 @@ class BrowseCard extends HTMLElement {
     this.url = "/images/placeholder.png";
     this.src = "";
     this.srcset = "";
+    this.fsid = 0;
   }
 
   connectedCallback() {
@@ -18,6 +19,7 @@ class BrowseCard extends HTMLElement {
     /* The div showing the icons always and text on hover. */
     const anchor = document.createElement("a");
     anchor.classList.add("browse__anchor");
+    anchor.setAttribute("href", "/content/?FSID=" + this.fsid);
     this.shadow.appendChild(anchor);
     this.anchorElement = anchor;
 
@@ -37,7 +39,7 @@ class BrowseCard extends HTMLElement {
 
   /* Returns the attributes which should be observed. */
   static get observedAttributes() {
-    return ["url", "src", "srcset"];
+    return ["url", "src", "srcset", "fsid"];
   }
 
   /* Handles attributes changing. */
@@ -51,14 +53,22 @@ class BrowseCard extends HTMLElement {
     /* Updates only the necessary parts of the component on update. */
     if (name === "url" && this.anchorElement) {
       this.anchorElement.setAttribute("href", newValue);
+      return;
     }
 
     if (name === "src" && this.cardElement) {
       card.setAttribute("src", this.src);
+      return;
     }
 
     if (name === "srcset" && this.cardElement) {
       card.setAttribute("srcset", this.srcset);
+      return;
+    }
+
+    if (name === "fsid" && this.cardElement) {
+      this.anchorElementor.setAttribute("href", "/content/?FSID=" + this.fsid);
+      return;
     }
   }
 }
