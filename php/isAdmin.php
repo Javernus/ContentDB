@@ -6,7 +6,7 @@
   $stmt = $db->prepare($sql);
   $stmt->bindValue(":p0", $_COOKIE["UserID"], PDO::PARAM_STR);
   $stmt->execute();
-  $admin = $stmt->fetch()[0] === "Admin";
+  $admin = $stmt->fetch() === "Admin";
 
   if ($admin) {
     echo "true";
