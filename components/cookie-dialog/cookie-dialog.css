@@ -1,0 +1,49 @@
+:host(.dialog-corner) {
+  position: fixed;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  width: 35rem;
+  height: fit-content;
+  flex-direction: column;
+  z-index: 100;
+  background-color: var(--neutral-4-50);
+}
+
+.dialog {
+  width: 35rem;
+  height: fit-content;
+
+  z-index: 10;
+
+  background-color: var(--neutral-3);
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 2rem;
+  margin: 2em;
+
+  border: var(--primary-2) solid 0.0625rem;
+  border-radius: 1rem;
+
+  box-shadow: 0 0 0.75rem 0.25rem var(--neutral-3);
+}
+
+.dialog__policy-link {
+    color: var(--neutral-1);
+}
+
+:host(.dialog-corner--open) {
+  display: flex;
+}
+
+.dialog__exit {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  cursor: pointer;
+}
