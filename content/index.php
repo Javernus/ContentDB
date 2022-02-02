@@ -83,6 +83,7 @@
                 });
                 return;
               }
+
               /* Remove from watchlist. */
               if (watchlist == 4) {
                 postFetch("../php/removeFSIDfromWatchlist.php", data5, false, (result) => {
@@ -93,10 +94,10 @@
 
               /* Move an item from one watch list to another. */
               postFetch("../php/removeFSIDfromWatchlist.php", data5, false, (result) => {
-                console.log(result);
+                console.log("REMOVED");
               });
               postFetch("../php/addFSIDtoWatchlist.php", data6, false, (result) => {
-                console.log(result);
+                console.log("ADDED");
               });
               return;
             });
@@ -108,6 +109,7 @@
               const data7 = {fsid:<?php echo $FSID; ?>, uid:<?php echo $UID; ?>};
               console.log(data7);
               postFetch("../php/getRating.php", data7, false, (result) => {
+                console.log(result);
                 const data6 = {fsid:FSID, uid:UID, rating: event.detail.value};
                 if (result=="") {
                   postFetch("../php/setRating.php", data6, false, (result) => {
@@ -117,6 +119,7 @@
                 }
                 else {
                   postFetch("../php/updateRating.php", data6, false, (result) => {
+                    console.log("TEST");
                     return;
                   });
                 }
@@ -126,9 +129,10 @@
 
             /* Handles a favourites change. */
             function handleFavouritesChange(event) {
+              console.log(UID);
               const data = {fsid: FSID, uid:UID};
               postFetch("../php/checkFavourite.php", data, false, (res) => {
-                console.log(res);
+                console.log("res = " + res);
                 if (res) {
                   postFetch("../php/removeFavourite.php", data, false, (res) => {
                     return;

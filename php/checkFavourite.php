@@ -14,6 +14,6 @@
     $stmt->bindValue(":p0", $FSID, PDO::PARAM_INT);
     $stmt->bindValue(":p1", $UID, PDO::PARAM_INT);
     $stmt->execute();
-    $result->fetch()[0];
+    $result = $stmt->fetch()[0];
     echo $result;
 ?>
