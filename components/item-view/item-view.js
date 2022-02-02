@@ -249,7 +249,6 @@
       }
 
       if (name === "logged_in" && this.favouriteElement) {
-        alert("TEST");
         this.toggleFavouriteVisibility();
         this.toggleRatingVisibility();
         return;
@@ -285,7 +284,6 @@
     }
 
     handlePrivateRatingChange(event) {
-      alert("TEST");
       const customEvent = new CustomEvent("ratingchange", {
         detail: {
           value: event.detail.value,

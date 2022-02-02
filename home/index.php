@@ -38,42 +38,38 @@
     <div class="carousels" id="carousels">
 			<div class="carousel-item">
         <h2>New Releases</h2>
+        <cdb-carousel>
        	<?php
           include '../php/databaseLogin.php';
 
-					echo "<cdb-carousel>";
           $sql = 'CALL GetNewContent()';
           $stmt = $db->prepare($sql);
         	$stmt->execute();
         	$result = $stmt->fetchAll();
 
 					foreach ($result as $row) {
-						echo "<cdb-carousel-item url=$row[Image] src=$row[Image]></cdb-carousel-item>";
+						echo "<cdb-carousel-item url=$row[Image] src=$row[Image] fsid=$row[0]></cdb-carousel-item>";
 					}
 
-					echo "</cdb-carousel>";
-
         ?>
+        </cdb-carousel>
       </div>
 
       <div class="carousel-item">
         <h2>Top Rated</h2>
+        <cdb-carousel>
         <?php
           include '../php/databaseLogin.php';
-
-					echo "<cdb-carousel>";
           $sql = 'CALL GetTopContent()';
           $stmt = $db->prepare($sql);
         	$stmt->execute();
         	$result = $stmt->fetchAll();
 
 					foreach ($result as $row) {
-						echo "<cdb-carousel-item url=$row[Image] src=$row[Image]></cdb-carousel-item>";
+						echo "<cdb-carousel-item url=$row[Image] src=$row[Image] fsid=$row[0]></cdb-carousel-item>";
 					}
-
-					echo "</cdb-carousel>";
-
         ?>
+        </cdb-carousel>
       </div>
     </div>
 

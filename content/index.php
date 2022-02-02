@@ -68,7 +68,6 @@
 
 
             postFetch("../php/FSIDinWatchlist.php", data5, false, (res) => {
-              console.log("RES = " + res);
 
               /* Check if user already has this item in this watch list. */
               if ((res == watchlist) || (res == "" && watchlist == 4)) {
@@ -79,7 +78,6 @@
 
               if (res == "") {
                 postFetch("../php/addFSIDtoWatchlist.php", data6, false, (result) => {
-                  console.log(result);
                 });
                 return;
               }
@@ -87,17 +85,15 @@
               /* Remove from watchlist. */
               if (watchlist == 4) {
                 postFetch("../php/removeFSIDfromWatchlist.php", data5, false, (result) => {
-                  console.log(result);
+                  consolelog(result);
                 });
                 return;
               }
 
               /* Move an item from one watch list to another. */
               postFetch("../php/removeFSIDfromWatchlist.php", data5, false, (result) => {
-                console.log("REMOVED");
               });
               postFetch("../php/addFSIDtoWatchlist.php", data6, false, (result) => {
-                console.log("ADDED");
               });
               return;
             });
@@ -105,21 +101,16 @@
 
             /* This function handles rating changes. */
             function handleRatingChange(event) {
-              alert("test2");
               const data7 = {fsid:<?php echo $FSID; ?>, uid:<?php echo $UID; ?>};
-              console.log(data7);
               postFetch("../php/getRating.php", data7, false, (result) => {
-                console.log(result);
                 const data6 = {fsid:FSID, uid:UID, rating: event.detail.value};
                 if (result=="") {
                   postFetch("../php/setRating.php", data6, false, (result) => {
-                    console.log(result);
                     return;
                   });
                 }
                 else {
                   postFetch("../php/updateRating.php", data6, false, (result) => {
-                    console.log("TEST");
                     return;
                   });
                 }
@@ -129,10 +120,8 @@
 
             /* Handles a favourites change. */
             function handleFavouritesChange(event) {
-              console.log(UID);
               const data = {fsid: FSID, uid:UID};
               postFetch("../php/checkFavourite.php", data, false, (res) => {
-                console.log("res = " + res);
                 if (res) {
                   postFetch("../php/removeFavourite.php", data, false, (res) => {
                     return;
@@ -154,7 +143,6 @@
           if (UID) {
             postFetch("../php/getRating.php", data2, false, (res) => {
               rating = res;
-              console.log(rating);
             });
           }
           else {
@@ -170,14 +158,12 @@
               itemElement.setAttribute("private_rating", rating);
               itemElement.setAttribute("duration", res[5]);
               itemElement.setAttribute("year", res[6]);
-              alert(<?php echo $UID ? "true" : "false" ?>);
               itemElement.setAttribute("logged_in", <?php echo $UID ? "true" : "false" ?>);
               itemElement.addEventListener("watchlistchange", handleWatchlistChange);
               itemElement.addEventListener("ratingchange", handleRatingChange);
               itemElement.addEventListener("favouriteschange", handleFavouritesChange);
               document.getElementById("itemlist").appendChild(itemElement);
             });
-            
           }
 
             /* 
