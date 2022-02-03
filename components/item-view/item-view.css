@@ -46,6 +46,7 @@ h3 {
   padding: 0.4rem;
   border: var(--primary-2) solid 0.0625rem;
   border-radius: 0.5rem;
+  min-inline-size: fit-content;
 }
 
 .item-view__middle {

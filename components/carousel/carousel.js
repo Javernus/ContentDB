@@ -42,6 +42,7 @@ class Carousel extends HTMLElement {
 
         if (this.currentItem === undefined) {
           item.classList.add("current");
+          item.toggleAttribute("link", true);
           this.currentItem = 0;
         }
 
@@ -63,14 +64,22 @@ class Carousel extends HTMLElement {
 
   /* A function to update the slotted cdb-carousel-item's state (previous, current, next). */
   updateCarousel(event) {
+    if (event.target.classList.contains("next") || event.target.classList.contains("previous")) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      event.stopPropagation();
+    }
+
     if (event.target.classList.contains("next")) {
       this.children[this.previousItem].classList.remove("previous");
       this.previousItem = this.currentItem;
       this.children[this.currentItem].classList.add("previous");
       this.children[this.currentItem].classList.remove("current");
+      this.children[this.currentItem].toggleAttribute("link", false);
       this.currentItem = this.nextItem;
       this.children[this.nextItem].classList.add("current");
       this.children[this.nextItem].classList.remove("next");
+      this.children[this.nextItem].toggleAttribute("link", true);
       this.nextItem = this.nextItem + 1 === this.itemCount ? 0 : this.nextItem + 1;
       this.children[this.nextItem].classList.add("next");
     } else if (event.target.classList.contains("previous")) {
@@ -78,8 +87,10 @@ class Carousel extends HTMLElement {
       this.nextItem = this.currentItem;
       this.children[this.currentItem].classList.add("next");
       this.children[this.currentItem].classList.remove("current");
+      this.children[this.currentItem].toggleAttribute("link", false);
       this.currentItem = this.previousItem;
       this.children[this.previousItem].classList.add("current");
+      this.children[this.previousItem].toggleAttribute("link", true);
       this.children[this.previousItem].classList.remove("previous");
       this.previousItem = this.previousItem === 0 ? this.itemCount - 1 : this.previousItem - 1;
       this.children[this.previousItem].classList.add("previous");

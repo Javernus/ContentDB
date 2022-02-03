@@ -19,12 +19,13 @@
   $stmt->bindValue(":p0", $username, PDO::PARAM_STR);
   $stmt->bindValue(":p1", $password.$salt, PDO::PARAM_STR);
   $success = $stmt->execute();
-  $uid = $stmt->fetch()[0];
 
-  if ($uid) {
-    setcookie("UserID", $uid, time() + (86400 * 30), "/");
+
+    if ($stmt) {
+	$uid = $stmt->fetch()[0];
+     setcookie("UserID", $uid, time() + (86400 * 30), "/");
     echo "true";
-  } else {
-    echo "false";
-  }
+    } else {
+        echo "false";
+    }
 ?>

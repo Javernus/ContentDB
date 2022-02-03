@@ -12,6 +12,7 @@ class CarouselItem extends HTMLElement {
     this.alt = "";
     this.src = "";
     this.fsid = 0;
+    this.link = false;
   }
 
   connectedCallback() {
@@ -29,16 +30,15 @@ class CarouselItem extends HTMLElement {
 
     /* <a> element containing the link to the corresponding movie page. */
     const imageA = document.createElement("a");
-    imageA.setAttribute("href", "/content/?FSID=" + this.fsid);
+    this.link && imageA.setAttribute("href", "/content/?FSID=" + this.fsid);
     imageA.appendChild(image);
     this.shadow.appendChild(imageA);
     this.imageaElement = imageA;
-
   }
 
   /* Returns the attributes which should be observed. */
   static get observedAttributes() {
-    return ["alt", "src", "fsid"];
+    return ["alt", "src", "fsid", "link"];
   }
 
   /* Handles attributes changing. */
@@ -66,11 +66,19 @@ class CarouselItem extends HTMLElement {
       }
     }
 
-    if  (name === "fsid" && this.imageElement) {
+    if (name === "fsid" && this.imageElement) {
       if (!!newValue) {
         this.imageAElement.setAttribute("href", "/contents/?FSID=" + newValue);
       } else {
         this.imageElement.removeAttribute("alt");
+      }
+    }
+
+    if (name === "link" && this.imageaElement) {
+      if (newValue === "true" || newValue === "") {
+        this.imageaElement.setAttribute("href", "/content/?FSID=" + this.fsid);
+      } else {
+        this.imageaElement.removeAttribute("href");
       }
     }
   }
