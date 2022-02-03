@@ -78,7 +78,7 @@ class Input extends HTMLElement {
 
   /* Returns the attributes which should be observed. */
   static get observedAttributes() {
-    return ["error", "id", "type", "placeholder"];
+    return ["autocomplete", "error", "id", "type", "placeholder", "value"];
   }
 
   /* Handles attributes changing. */

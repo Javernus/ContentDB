@@ -1,7 +1,8 @@
 <?php
   /* PHP by Jake. */
   include_once("../php/databaseLogin.php");
-  session_start();
+  include_once("../php/setSession.php");
+
 
     $data = json_decode(file_get_contents("php://input"));
 

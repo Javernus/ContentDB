@@ -6,6 +6,7 @@
  *  - username: the username to be shown.
  *  - timestamp: the timestamp to be shown.
  *  - content: the text to be shown.
+ *  - cid: the cid of the comment. Shows delete option if given.
  */
 
 class MovieComment extends HTMLElement {
@@ -18,11 +19,12 @@ class MovieComment extends HTMLElement {
     this.username = "";
     this.timestamp = "";
     this.content = "";
+    this.cid;
   }
 
   /* Returns the attributes which should be observed. */
   static get observedAttributes() {
-    return ["username", "timestamp", "content"];
+    return ["username", "timestamp", "content", "cid"];
   }
 
   /* Handles attributes changing. */
@@ -45,6 +47,15 @@ class MovieComment extends HTMLElement {
 
     if (name === "content" && this.textElement) {
       this.textElement.innerText = this.content;
+      return;
+    }
+
+    if (name === "cid" && this.trashCanElement) {
+      if (this.cid) {
+        this.trashCanElement.classList.remove("delete--hidden");
+      } else {
+        this.trashCanElement.classList.add("delete--hidden");
+      }
       return;
     }
   }
@@ -92,6 +103,24 @@ class MovieComment extends HTMLElement {
     content.classList.add("comment__content");
 
     comment.appendChild(content);
+
+    const trashCan = document.createElement("cdb-icon");
+    trashCan.setAttribute("src", "/src/trash-can.svg#trash-can");
+    trashCan.setAttribute("size", 1.5);
+    trashCan.setAttribute("colour", "var(--primary-2)");
+    trashCan.classList.add("delete");
+    !this.cid && trashCan.classList.add("delete--hidden");
+    trashCan.addEventListener("click", this.deleteComment.bind(this));
+    content.appendChild(trashCan);
+    this.trashCanElement = trashCan;
+  }
+
+  deleteComment() {
+    postFetch("../php/deleteComment.php", { cid: this.cid }, false, (res) => {
+      if (res) {
+        this.remove();
+      }
+    });
   }
 }
 

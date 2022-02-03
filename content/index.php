@@ -37,10 +37,13 @@
 
 <div class="item-page" id="item-page">
     <div id='itemlist' class="item-view">
+    </div>
+    <h2 class="commentheading">Comments</h2>
+
 
         <script>
-          const FSID = <?php echo $FSID?>;
-          const UID = <?php echo $UID?>;
+          const FSID = <?php echo $FSID; ?>;
+          const UID = <?php echo $UID; ?>;
 
           /* This function handles watch list changes. */
 
@@ -94,6 +97,41 @@
               return;
             });
             }
+
+
+          if (<?php echo $UID ?>) {
+            /* Div containing the user comment input and button. */
+            const userCommentElement = document.createElement("div");
+            userCommentElement.classList.add("comment__user");
+            document.getElementById("item-page").appendChild(userCommentElement);
+
+            /* Textarea in which the user can type. */
+            const commentInput = document.createElement("cdb-input");
+            commentInput.setAttribute("type", "text");
+            commentInput.setAttribute("placeholder", "Write a comment...");
+            commentInput.id = "commentInput";
+            userCommentElement.appendChild(commentInput);
+
+            /* Button to post the comment. */
+            const postButtonElement = document.createElement("cdb-button");
+            postButtonElement.setAttribute("label", "Submit!");
+
+            /* Comment on enter. */
+            commentInput.addEventListener("keypress", function(event) {
+              if (event.keyCode == 13) {
+                addComment(commentInput.value, <?php echo $UID ?>, <?php echo $FSID ?>)
+                commentInput.setAttribute("value", "");
+              }
+            });
+
+            /* Comment on enter. */
+            postButtonElement.addEventListener("click", function() {
+              addComment(commentInput.value, <?php echo $UID ?>, <?php echo $FSID ?>)
+              commentInput.setAttribute("value", "");
+            });
+
+            userCommentElement.appendChild(postButtonElement);
+          }
 
             /* This function handles rating changes. */
             function handleRatingChange(event) {
@@ -169,8 +207,9 @@
             */
 
           function addComment(comment, uid, fsid) {
-            commentElement = document.createElement('movie-comment');
+            commentElement = document.createElement('cdb-comment');
             commentElement.setAttribute("content", comment);
+            commentElement.setAttribute("timestamp", "now");
             /* Get username by UID. */
             const data = {uid : uid};
             postFetch("../php/getUserNameByUID.php", data, false, (res) => {
@@ -183,66 +222,36 @@
             postFetch("../php/postComment.php", data2, false, (res) => {
             });
           }
-          </script>
 
-    </div>
-    <h2 class="commentheading">Comments</h2>
-          <script>
-
-          if (<?php echo $UID ?>) {
-            /* Div containing the user comment input and button. */
-            const userCommentElement = document.createElement("div");
-            userCommentElement.classList.add("comment__user");
-            document.getElementById("item-page").appendChild(userCommentElement);
-
-            /* Textarea in which the user can type. */
-            const commentInput = document.createElement("cdb-input");
-            commentInput.setAttribute("type", "text");
-            commentInput.setAttribute("placeholder", "Write a comment...");
-            commentInput.id = "commentInput";
-            userCommentElement.appendChild(commentInput);
-
-            /* Button to post the comment. */
-            const postButtonElement = document.createElement("cdb-button");
-            postButtonElement.setAttribute("label", "Submit!");
-
-            postButtonElement.addEventListener("click", function() {
-              addComment(commentInput.value, <?php echo $UID ?>, <?php echo $FSID ?>)
+          /* Scripts by Timo. */
+            let count = 0;
+            const data3 = { fsid : <?php echo $FSID ? $FSID : -1; ?>};
+            postFetch("../php/getCommentAmount.php", data3, false, (res) => {
+              count = res;
             });
 
-            userCommentElement.appendChild(postButtonElement);
-          }
+            postFetch("../php/getComments.php", data3, true, (res) => {
+              if (res != "false") {
+                for (let i = 0; i < Math.min(20, count); i++) {
+
+                  const commentElement = document.createElement("cdb-comment");
+                  commentElement.setAttribute("content", res[i]["Comment"]);
+                  commentElement.setAttribute("timestamp", res[i]["Date"]);
+                  (res[i]["UID"] === UID || isAdmin) && commentElement.setAttribute("cid", res[i]["CID"]);
+
+                  let data4 = {"uid" : res[i]["UID"]};
+                  postFetch("../php/getUserNameByUID.php", data4, false, (result) => {
+                    commentElement.setAttribute("username", result);
+                    document.getElementById('comment-section').appendChild(commentElement);
+                  });
+                }
+              }
+            });
         </script>
+
         <div id="comment-section">
-      </div>
-      </div>
-
-
-    <script>
-    /* Scripts by Timo. */
-      let count = 0;
-      const data3 = { fsid : <?php echo $FSID ? $FSID : -1; ?>};
-      postFetch("../php/getCommentAmount.php", data3, false, (res) => {
-        count = res;
-      });
-
-      postFetch("../php/getComments.php", data3, true, (res) => {
-        if (res != "false") {
-          for (let i = 0; i < Math.min(20, count); i++) {
-
-            const commentElement = document.createElement("cdb-comment");
-            commentElement.setAttribute("content", res[i]["Comment"]);
-            commentElement.setAttribute("timestamp", res[i]["Date"]);
-
-            let data4 = {"uid" : res[i]["UID"]};
-            postFetch("../php/getUserNameByUID.php", data4, false, (result) => {
-              commentElement.setAttribute("username", result);
-              document.getElementById('comment-section').appendChild(commentElement);
-            });
-          }
-        }
-      });
-      </script>
+    </div>
+  </div>
 <?php
   include '../importables/html-footer.php';
 ?>

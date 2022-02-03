@@ -2,9 +2,7 @@
   const show_stuff =
 <?php
   /* PHP by Jake. */
-  if (!isset($_SESSION)) {
-    session_start();
-  }
+  include_once("../php/setSession.php");
 
   if (!isset($_COOKIE["UserID"])) {
     echo ";</script>";
@@ -14,7 +12,11 @@
 
   include("../php/isAdmin.php");
 
-
+  if (!$admin) {
+    echo ";</script>";
+    include("../error/404.php");
+    exit();
+  }
 ?>
 ;</script>
 

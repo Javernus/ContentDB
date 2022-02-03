@@ -2,9 +2,9 @@
   const show_stuff =
 <?php
   /* PHP by Jake. */
-  if (!isset($_SESSION)) {
-    session_start();
-  }
+  include_once("../php/setSession.php");
+
+
 
   if (!isset($_COOKIE["UserID"])) {
     echo ";</script>";

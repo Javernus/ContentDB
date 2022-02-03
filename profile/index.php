@@ -1,4 +1,10 @@
 <?php
+  include_once("../php/setSession.php");
+  if (!isset($_COOKIE["UserID"])) {
+    include("../error/404.php");
+    exit();
+  }
+
   include '../importables/html-header.php';
 ?>
 
@@ -135,7 +141,7 @@ $user;
 
                 if (isset($_COOKIE["UserID"])) {
                     $user = intval($_COOKIE["UserID"]);
-                } else {    
+                } else {
                     $user = -1;
                 }
                 $state = 1;
@@ -182,7 +188,7 @@ $user;
 
                 if (isset($_COOKIE["UserID"])) {
                     $user = intval($_COOKIE["UserID"]);
-                } else {    
+                } else {
                     $user = -1;
                 }
 
@@ -229,7 +235,7 @@ $user;
 
                 if (isset($_COOKIE["UserID"])) {
                     $user = intval($_COOKIE["UserID"]);
-                } else {    
+                } else {
                     $user = -1;
                 }
              $state = 3;
@@ -275,7 +281,7 @@ $user;
 
                 if (isset($_COOKIE["UserID"])) {
                     $user = intval($_COOKIE["UserID"]);
-                } else {    
+                } else {
                     $user = -1;
                 }
 
@@ -319,7 +325,7 @@ $user;
 
                 if (isset($_COOKIE["UserID"])) {
                     $user = intval($_COOKIE["UserID"]);
-                } else {    
+                } else {
                     $user = -1;
                 }
 
@@ -330,7 +336,7 @@ $user;
                 $result = $stmt->fetchAll();
 
                 foreach ($result as $row) {
-                    echo "<movie-comment username='$userresult[Username]' timestamp='$row[Date]' content='$row[Comment]'></movie-comment>";
+                    echo "<cdb-comment username='$userresult[Username]' timestamp='$row[Date]' content='$row[Comment]' cid='$row[CID]'></cdb-comment>";
                 }
             ?>
         </div>

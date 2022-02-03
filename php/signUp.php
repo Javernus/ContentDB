@@ -1,7 +1,8 @@
 <?php
   /* PHP by Jake. */
   include_once("../php/databaseLogin.php");
-  session_start();
+  include_once("../php/setSession.php");
+
 
   if (isset($_SESSION['signuptime']) && $_SESSION['signuptime'] > time() - 300) {
     echo "limitreached";

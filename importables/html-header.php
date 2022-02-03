@@ -77,11 +77,9 @@
     <?php
         // show cookie dialog if there is no session yet
         if (!isset($_COOKIE['cookie-dialog'])) {
-            echo '<cdb-cookie-dialog open="true"></cdb-cookie-dialog>';
+          echo '<cdb-cookie-dialog open="true"></cdb-cookie-dialog>';
         } else {
-            if (!isset($_SESSION)) {
-              session_start();
-            }
+          include_once("../php/setSession.php");
         }
     ?>
 
