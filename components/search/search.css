@@ -42,6 +42,8 @@
   min-height: 12rem;
   overflow-y: scroll;
   overflow-x: hidden;
+  scrollbar-color: var(--primary-2) var(--neutral-4-50);
+  scrollbar-width: thin;
 }
 
 .result-list a {
