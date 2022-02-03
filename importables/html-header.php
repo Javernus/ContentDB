@@ -295,6 +295,6 @@
 
         window.addEventListener("load", hideSplashScreen);
       </script>
-      <cdb-navigation-item slot="bottom-items" label="ToS & Privacy" href="/ToS/"><cdb-icon slot="icon" src="/src/tos.svg#tos" size="2" colour="var(--primary-main)"></cdb-icon></cdb-navigation-item>
+      <cdb-navigation-item slot="bottom-items" label="ToS & Privacy" href="/tos/"><cdb-icon slot="icon" src="/src/tos.svg#tos" size="2" colour="var(--primary-main)"></cdb-icon></cdb-navigation-item>
     </cdb-navigation-bar>
     <div class="content">

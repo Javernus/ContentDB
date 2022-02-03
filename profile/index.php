@@ -21,7 +21,7 @@
             $stmt->execute();
             $userresult = $stmt->fetch();
 
-            echo "<h1>".$userresult['Username']."'s profile</h1>";
+            echo "<h1>".$userresult['Username']."'s Profile</h1>";
         ?>
     </div>
     <script>

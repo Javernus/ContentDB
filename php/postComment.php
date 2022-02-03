@@ -14,6 +14,16 @@
     $stmt->bindValue(":p2", $comment, PDO::PARAM_STR);
 
     $stmt->execute();
-    $result = $stmt->fetch()[0];
-    echo $result;
+
+    if ($stmt) {
+        $result = $stmt->fetch();
+
+        if ($result) {
+            echo $result[0];
+        } else {
+            echo "false";
+        }
+    } else {
+        echo "false";
+    }
 ?>

@@ -191,7 +191,6 @@ class ItemView extends HTMLElement {
     private_rating.setAttribute("rating", this.private_rating);
     ratingPrivate.appendChild(private_rating);
     private_rating.addEventListener("ratingchange", this.handlePrivateRatingChange.bind(this));
-    private_rating.addEventListener("click", this.toggleRatingVisibility.bind(this));
     this.privateratingElement = private_rating;
 
     if (this.logged_in != "true") {

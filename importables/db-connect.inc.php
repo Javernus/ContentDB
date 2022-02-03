@@ -1,9 +1,9 @@
 <?php
     // Retrive env variable
-    $host = $_ENV['MYSQL_HOST'];
-    $username = $_ENV['MYSQL_USER'];
-    $password = $_ENV['MYSQL_PASSWORD'];
-    $database = $_ENV['MYSQL_DATABASE'];
+    $host = $_SERVER['MYSQL_HOST'];
+    $username = $_SERVER['MYSQL_USER'];
+    $password = $_SERVER['MYSQL_PASSWORD'];
+    $database = $_SERVER['MYSQL_DATABASE'];
 
     // Create connection
     $conn = new mysqli($host, $username, $password, $database);

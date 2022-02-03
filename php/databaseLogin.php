@@ -1,8 +1,8 @@
 <?php
-  $host = $_ENV["MYSQL_HOST"]
-  $dbname = $_ENV["MYSQL_DBNAME"]
-  $user = $_ENV["MYSQL_USER"]
-  $pass = $_ENV["MYSQL_PASS"]
+  $host = $_SERVER["MYSQL_HOST"];
+  $dbname = $_SERVER["MYSQL_DATABASE"];
+  $user = $_SERVER["MYSQL_USER"];
+  $pass = $_SERVER["MYSQL_PASSWORD"];
 
-  $db = new PDO('mysql:host=$host;dbname=$dbname;charset=utf8', $user, $pass);
+  $db = new PDO('mysql:host='.$host.';dbname='.$dbname.';charset=utf8', $user, $pass);
 ?>
