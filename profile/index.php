@@ -21,7 +21,7 @@
             $stmt->execute();
             $userresult = $stmt->fetch();
 
-            echo "<h1>".$userresult['Username']."'s profile</h1>";
+            echo "<h1>".$userresult['Username']."'s Profile</h1>";
         ?>
     </div>
     <script>
@@ -131,8 +131,13 @@
     <div class='list-container'>
         <div id='towatchlist' class="list-view list-view--active">
             <?php
+$user;
 
-                $user = intval($_COOKIE['UserID']);
+                if (isset($_COOKIE["UserID"])) {
+                    $user = intval($_COOKIE["UserID"]);
+                } else {    
+                    $user = -1;
+                }
                 $state = 1;
 
                 $sql = 'CALL GetWatchlist(:p0,:p1);';
@@ -173,7 +178,14 @@
         <div id='watchinglist' class="list-view">
             <?php
 
-                $user = intval($_COOKIE['UserID']);
+$user;
+
+                if (isset($_COOKIE["UserID"])) {
+                    $user = intval($_COOKIE["UserID"]);
+                } else {    
+                    $user = -1;
+                }
+
                 $state = 2;
 
                 $sql = 'CALL GetWatchlist(:p0,:p1);';
@@ -213,9 +225,14 @@
     <div class='list-container'>
         <div id='watchedlist' class="list-view">
             <?php
+$user;
 
-                $user = intval($_COOKIE['UserID']);
-                $state = 3;
+                if (isset($_COOKIE["UserID"])) {
+                    $user = intval($_COOKIE["UserID"]);
+                } else {    
+                    $user = -1;
+                }
+             $state = 3;
 
                 $sql = 'CALL GetWatchlist(:p0,:p1);';
                 $stmt = $db->prepare($sql);
@@ -254,8 +271,13 @@
     <div class='list-container'>
         <div id='favouriteslist' class="list-view">
             <?php
+$user;
 
-                $user = intval($_COOKIE['UserID']);
+                if (isset($_COOKIE["UserID"])) {
+                    $user = intval($_COOKIE["UserID"]);
+                } else {    
+                    $user = -1;
+                }
 
                 $sql = 'CALL GetFavourites(:p0);';
                 $stmt = $db->prepare($sql);
@@ -293,8 +315,13 @@
     <div class='list-container'>
         <div id='commentslist' class="list-view">
             <?php
+$user;
 
-                $user = intval($_COOKIE['UserID']);
+                if (isset($_COOKIE["UserID"])) {
+                    $user = intval($_COOKIE["UserID"]);
+                } else {    
+                    $user = -1;
+                }
 
                 $sql = 'CALL GetCommentsByUID(:p0);';
                 $stmt = $db->prepare($sql);

@@ -18,6 +18,17 @@
     $stmt->bindValue(":p0", $fsid, PDO::PARAM_INT);
     $stmt->bindValue(":p1", $uid, PDO::PARAM_INT);
     $stmt->execute();
-    $result = $stmt->fetch()[0];
-    echo $result;
+
+
+    if ($stmt) {
+        $result = $stmt->fetch();
+
+        if ($result) {
+            echo $result[0];
+        } else {
+            echo "false";
+        }
+    } else {
+        echo "false";
+    }
 ?>

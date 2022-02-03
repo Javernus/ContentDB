@@ -79,7 +79,9 @@
         if (!isset($_COOKIE['cookie-dialog'])) {
             echo '<cdb-cookie-dialog open="true"></cdb-cookie-dialog>';
         } else {
-            session_start();
+            if (!isset($_SESSION)) {
+              session_start();
+            }
         }
     ?>
 
@@ -295,6 +297,6 @@
 
         window.addEventListener("load", hideSplashScreen);
       </script>
-      <cdb-navigation-item slot="bottom-items" label="ToS & Privacy" href="/ToS/"><cdb-icon slot="icon" src="/src/tos.svg#tos" size="2" colour="var(--primary-main)"></cdb-icon></cdb-navigation-item>
+      <cdb-navigation-item slot="bottom-items" label="ToS & Privacy" href="/tos/"><cdb-icon slot="icon" src="/src/tos.svg#tos" size="2" colour="var(--primary-main)"></cdb-icon></cdb-navigation-item>
     </cdb-navigation-bar>
     <div class="content">

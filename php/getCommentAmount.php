@@ -11,6 +11,11 @@
     $stmt = $db->prepare($sql);
     $stmt->bindValue(":p0", $FSID, PDO::PARAM_INT);
     $stmt->execute();
-    $result = $stmt->fetch()[0];
-    echo $result;
+
+    if ($stmt) {
+        $result = $stmt->fetch()[0];
+        echo $result;
+    } else {
+        echo "false";
+    }
 ?>

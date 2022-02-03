@@ -135,7 +135,7 @@
 
           const data2 = { fsid : FSID, uid: UID};
 
-          let rating = 0;
+          let rating = 1;
           if (UID) {
             postFetch("../php/getRating.php", data2, false, (res) => {
               rating = res;
@@ -221,7 +221,7 @@
     <script>
     /* Scripts by Timo. */
       let count = 0;
-      const data3 = { fsid : <?php echo $FSID; ?>};
+      const data3 = { fsid : <?php echo $FSID ? $FSID : -1; ?>};
       postFetch("../php/getCommentAmount.php", data3, false, (res) => {
         count = res;
       });
