@@ -79,7 +79,9 @@
         if (!isset($_COOKIE['cookie-dialog'])) {
             echo '<cdb-cookie-dialog open="true"></cdb-cookie-dialog>';
         } else {
-            session_start();
+            if (!isset($_SESSION)) {
+              session_start();
+            }
         }
     ?>
 

@@ -14,5 +14,7 @@
     $result = $stmt->fetchAll();
     if ($result) {
         echo json_encode($result);
+    } else {
+        echo "false";
     }
 ?>

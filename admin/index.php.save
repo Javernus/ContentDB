@@ -14,7 +14,11 @@
 
   include("../php/isAdmin.php");
 
-
+  if (!$admin) {
+    echo ";</script>";
+    include("../error/404.php");
+    exit();
+  }
 ?>
 ;</script>
 

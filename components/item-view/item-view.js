@@ -19,8 +19,8 @@ class ItemView extends HTMLElement {
     super();
 
     /* Setting default values. */
-    this.private_rating = 0;
-    this.public_rating = 0;
+    this.private_rating = 1;
+    this.public_rating = 1;
     this.watchlist = "";
     this.logged_in = "false";
     this.favourite = "false";
@@ -122,7 +122,7 @@ class ItemView extends HTMLElement {
     for (const tabName of tabs) {
       const option = document.createElement("option");
       option.classList.add("item-view__select-option");
-      option.toggleAttribute("selected", true);
+//      option.toggleAttribute("selected", true);
       option.setAttribute("id", tabName);
       option.setAttribute("value", tabName);
       option.textContent = tabName;
