@@ -75,6 +75,14 @@ class CarouselItem extends HTMLElement {
         this.imageElement.removeAttribute("href");
       }
     }
+
+    if (name === "link" && this.imageaElement) {
+      if (newValue === "true" || newValue === "") {
+        this.imageaElement.setAttribute("href", "/content/?FSID=" + this.fsid);
+      } else {
+        this.imageaElement.removeAttribute("href");
+      }
+    }
   }
 }
 
