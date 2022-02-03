@@ -21,6 +21,17 @@ h3 {
     width: 10.8rem;
     height: 16rem;
     flex: none;
+    position: relative;
+}
+
+.item-view__favourite {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+}
+
+.item-view__favourite--hidden {
+  display: none;
 }
 
 .item-view__info {

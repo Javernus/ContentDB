@@ -22,8 +22,8 @@ class ItemView extends HTMLElement {
     this.private_rating = 1;
     this.public_rating = 1;
     this.watchlist = "";
-    this.logged_in = "false";
-    this.favourite = "false";
+    this.logged_in = false;
+    this.favourite = false;
   }
 
   connectedCallback() {
@@ -65,25 +65,6 @@ class ItemView extends HTMLElement {
     watchList.classList.add("item-view__select-bar");
     heading.appendChild(watchList);
 
-    /* Favourites div. */
-    const fav = document.createElement("div");
-    fav.classList.add("fav");
-    this.shadow.appendChild(fav);
-    fav.addEventListener("click", this.toggleFavourite.bind(this));
-
-    if (this.logged_in != "true") {
-      fav.classList.add("item-view__hide");
-    }
-
-    /* Favourites button. */
-    const favourite = document.createElement("cbd-icon");
-    favourite.setAttribute("src", "/src/favourite.svg#outline");
-    favourite.setAttribute("size", "4");
-    favourite.setAttribute("colour", "var(--primary-main)");
-    favourite.classList.add("item-view__favourite");
-    fav.appendChild(favourite);
-    this.favouriteElement = favourite;
-
     /* The div containing all textual info of the film or series. */
     const textualInfo = document.createElement("div");
     textualInfo.classList.add("item-view__info");
@@ -122,7 +103,7 @@ class ItemView extends HTMLElement {
     for (const tabName of tabs) {
       const option = document.createElement("option");
       option.classList.add("item-view__select-option");
-//      option.toggleAttribute("selected", true);
+      //      option.toggleAttribute("selected", true);
       option.setAttribute("id", tabName);
       option.setAttribute("value", tabName);
       option.textContent = tabName;
@@ -144,6 +125,21 @@ class ItemView extends HTMLElement {
     image.style.backgroundImage = `url(${this.src})`;
     middle.appendChild(image);
     this.imageElement = image;
+
+    /* Favourites button. */
+    const favourite = document.createElement("cdb-icon");
+    if (this.favourite) {
+      favourite.setAttribute("src", "/src/favourite.svg#filled");
+    } else {
+      favourite.setAttribute("src", "/src/favourite.svg#outline");
+    }
+    favourite.setAttribute("size", 2);
+    favourite.setAttribute("colour", "var(--signal)");
+    favourite.classList.add("item-view__favourite");
+    !this.logged_in && favourite.classList.add("item-view__favourite--hidden");
+    favourite.addEventListener("click", this.toggleFavourite.bind(this));
+    image.appendChild(favourite);
+    this.favouriteElement = favourite;
 
     /* The div containing the title, duration and year of the film or series. */
     const middleLeft = document.createElement("div");
@@ -278,7 +274,11 @@ class ItemView extends HTMLElement {
     }
 
     if (name === "favourite" && this.favouriteElement) {
-      // change icon
+      if (this.favourite) {
+        this.favouriteElement.setAttribute("src", "/src/favourite.svg#filled");
+      } else {
+        this.favouriteElement.setAttribute("src", "/src/favourite.svg#outline");
+      }
       return;
     }
 
