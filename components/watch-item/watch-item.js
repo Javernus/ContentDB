@@ -93,7 +93,6 @@ class WatchItem extends HTMLElement {
 
     postFetch("../php/getRating.php", contentData, false, (result) => {
       const userData = { fsid: fsid, uid: uid, rating: event.detail.value };
-      console.log(userData, result);
       if (result == "" || result == "false") {
         postFetch("../php/setRating.php", userData, false, (result) => {
           return;

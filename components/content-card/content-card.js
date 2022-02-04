@@ -102,7 +102,6 @@ class ContentCard extends HTMLElement {
       option.setAttribute("value", tabName);
       option.textContent = tabName;
       watchSelectList.appendChild(option);
-      console.log(index + 1, `watch${index + 1}Element`);
       this[`watch${index + 1}Element`] = option;
     }
 
@@ -267,7 +266,6 @@ class ContentCard extends HTMLElement {
 
     if (name === "watchlist" && this.watch0Element) {
       for (let i = 0; i < 4; i++) {
-        console.log(i, this.watchlist, this[`watch${i}Element`]);
         this[`watch${i}Element`].toggleAttribute("selected", i == this.watchlist);
       }
 

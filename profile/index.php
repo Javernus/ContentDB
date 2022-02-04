@@ -93,7 +93,6 @@
                 }
 
                 if (tab.id === event.target.value.replace("option", "tab")) {
-                    console.log(tab);
                     tab.classList.add("tab--active");
                 }
             }
