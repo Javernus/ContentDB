@@ -2,7 +2,7 @@
 namespace Api;
 
 require "../init.php";
-require "./src/Handler.php";
+require "./src/handler.php";
 
 use Api\Connect\Handler;
 
