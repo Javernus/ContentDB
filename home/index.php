@@ -1,14 +1,14 @@
-<!-- This is the home page. This page shows Umbrim's slogan, the sign in and sign up buttons and 
-     two carousels of movies and series, which represent "New Releases" and "Top Rated". 
+<!-- This is the home page. This page shows Umbrim's slogan, the sign in and sign up buttons and
+     two carousels of movies and series, which represent "New Releases" and "Top Rated".
 
-     Made by Mario. 
+     Made by Mario.
 -->
 
 <?php
   include '../importables/html-header.php';
 ?>
 
-  
+
     <h1 class="title" id="page-title">Umbrim your content.</h1>
     <div id="account-buttons">
       <script>
@@ -74,7 +74,7 @@
         	$result = $stmt->fetchAll();
 
 					foreach ($result as $row) {
-						echo "<cdb-carousel-item url=$row[Image] src=$row[Image] fsid=$row[0]></cdb-carousel-item>";
+						echo "<cdb-carousel-item url=$row[Image] src=$row[Image] href='/content/?FSID=$row[0]'></cdb-carousel-item>";
 					}
         ?>
         </cdb-carousel>
