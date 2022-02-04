@@ -1,4 +1,9 @@
 <?php
+
+/* Made by Timo.
+ * - This function gets and returns the content of a given FSID.
+ */
+
     include_once("../php/databaseLogin.php");
     $data = json_decode(file_get_contents("php://input"));
     $FSID = $data->fsid;

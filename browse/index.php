@@ -2,7 +2,7 @@
         include '../importables/html-header.php';
     ?>
 
-
+    <!-- Page that contains all available movies and tv shows sorted by genre, made by Montijn -->
     <script type="text/javascript" src="scripts.js"></script>
     <h1 class="page-title">Browse</h1>
     <div class="browse" id="browse">

@@ -1,8 +1,13 @@
 <?php
-  ini_set( 'error_reporting', E_ALL );
-  ini_set( 'display_errors', true );
-
-
+/*
+ * This is the main file associated with the page shown when a movie or series is clicked.
+ * It makes use of custom web components in order to provide scalability and portability.
+ * Eventlisteners are used to catch events dispatched in these components, so that the changes
+ * can be reflected in the database.
+ *
+ * Written by Timo.
+ * 
+ */
 
   $url = $_SERVER['REQUEST_URI'];
 
@@ -11,6 +16,7 @@
   // contains its various components
   if (parse_url($url, PHP_URL_QUERY)) {
     $url_components = parse_url($url);
+
     // Use parse_str() function to parse the
     // st ring passed via URL
     parse_str($url_components['query'], $web_params);

@@ -1,4 +1,8 @@
 <?php
+/* Made by Timo.
+ * - This function determines whether a given FSID exists or not.
+ */
+
   include_once("../php/databaseLogin.php");
 
   $sql = 'CALL CheckIfFSIDExists(:p0)';

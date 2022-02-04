@@ -35,6 +35,7 @@
       </script>
     </div>
 
+		<!-- Dynamic loading by Montijn -->
     <div class="carousels" id="carousels">
 			<div class="carousel-item">
         <h2>New Releases</h2>
@@ -93,7 +94,7 @@
         ?>
 			</div>
 
-				<div class="slide-item">
+			<div class="slide-item">
        	<?php
           include '../php/databaseLogin.php';
 

@@ -35,6 +35,11 @@
   box-sizing: border-box;
 }
 
+.result-contain {
+  width: auto;
+  border-radius: 10pt;
+  overflow: hidden;
+}
 .result-list {
   width: 100%;
   max-height: 36rem;
@@ -42,6 +47,8 @@
   min-height: 12rem;
   overflow-y: scroll;
   overflow-x: hidden;
+  scrollbar-color: var(--primary-2) var(--neutral-4-50);
+  scrollbar-width: thin;
 }
 
 .result-list a {
@@ -66,4 +73,20 @@
   border-radius: 0.5rem;
   box-sizing: border-box;
   z-index: 1;
+}
+
+.result-list::-webkit-scrollbar {
+  width: 10px;
+}
+
+.result-list::-webkit-scrollbar-track {
+  background-color: var(--neutral-4-50);
+}
+
+.result-list::-webkit-scrollbar-thumb {
+  background-color: var(--primary-2);
+}
+
+.result-list::-webkit-scrollbar-button {
+  display: none;
 }
