@@ -1,6 +1,11 @@
 <?php
 namespace Api;
 
+// API that can be used to obtain information about all movies in the database.
+// See the README for more information.
+
+// Made by Montijn.
+
 require "../init.php";
 require "./src/Handler.php";
 
