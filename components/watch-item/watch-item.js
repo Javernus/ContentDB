@@ -9,6 +9,7 @@
  *  - default: the description.
  *
  * Made by Timo, refactored by Jake.
+ * 
  */
 class WatchItem extends HTMLElement {
   constructor() {
@@ -109,8 +110,6 @@ class WatchItem extends HTMLElement {
   static get observedAttributes() {
     return ["rating", "src", "label", "url", "fsid"];
   }
-
-
 
   /* Handles attributes changing. */
   attributeChangedCallback(name, oldValue, newValue) {

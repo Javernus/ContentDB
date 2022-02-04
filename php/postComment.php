@@ -1,4 +1,8 @@
 <?php
+
+// Made by Timo.
+// - This function puts a user's comment in the database.
+
     include_once("../php/databaseLogin.php");
 
     $data = json_decode(file_get_contents("php://input"));

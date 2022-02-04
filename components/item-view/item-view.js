@@ -122,16 +122,11 @@ class ItemView extends HTMLElement {
     for (const tabName of tabs) {
       const option = document.createElement("option");
       option.classList.add("item-view__select-option");
-//      option.toggleAttribute("selected", true);
       option.setAttribute("id", tabName);
       option.setAttribute("value", tabName);
       option.textContent = tabName;
       watchSelectList.appendChild(option);
     }
-
-    //
-    //
-    //
 
     /* The div containing the title, duration and year of the film or series. */
     const middle = document.createElement("div");
@@ -292,6 +287,7 @@ class ItemView extends HTMLElement {
   /* Create a custom event to be caught in item-page/index.php
    * so that the watch lists can be changed appropriately.
    */
+
   handleSelect(event) {
     const customEvent = new CustomEvent("watchlistchange", {
       detail: {

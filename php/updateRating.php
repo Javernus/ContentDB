@@ -1,6 +1,6 @@
 <?php
 
-//     Made by Timo.
+// Made by Timo.
 // - This function changes the current rating for a given FSID/UID pair.
 
     include_once("../php/databaseLogin.php");
