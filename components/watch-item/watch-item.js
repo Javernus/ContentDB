@@ -9,6 +9,7 @@
  *  - default: the description.
  *
  * Made by Timo, refactored by Jake.
+ * 
  */
 class WatchItem extends HTMLElement {
   constructor() {

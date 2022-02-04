@@ -36,8 +36,10 @@ class Search extends HTMLElement {
     this.shadow.appendChild(searchInput);
     this.searchInputElement = searchInput;
 
+    /* The result list. */
     const resultList = document.createElement("div");
     resultList.classList.add("result-list");
+    resultList.setAttribute("tabindex", "-1");
     this.shadow.appendChild(resultList);
     this.resultListElement = resultList;
   }

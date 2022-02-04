@@ -1,8 +1,7 @@
 <?php
 
-//     Made by Timo.
-// - This function gets and returns
-// the personal rating for a given FSID.
+// Made by Timo.
+// - This function gets and returns the private rating for a given FSID/UID pair.
 
     include_once("../php/databaseLogin.php");
 

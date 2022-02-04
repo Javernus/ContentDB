@@ -1,4 +1,9 @@
 <?php
+
+/* Made by Timo.
+ * - This function checks if a given FSID exists or not.
+ */
+
     include_once("../php/databaseLogin.php");
 
     $data = json_decode(file_get_contents("php://input"));
