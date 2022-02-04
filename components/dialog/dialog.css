@@ -12,8 +12,8 @@
 }
 
 .dialog {
-  width: 24rem;
-  height: fit-content;
+  max-width: 24rem;
+  width: 100vw;
 
   z-index: 10;
 

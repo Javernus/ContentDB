@@ -44,12 +44,14 @@
         <script>
           const FSID = <?php echo $FSID; ?>;
           const UID = <?php echo $UID; ?>;
+          const dataUF = {fsid: FSID, uid : UID};
+
 
           /* This function handles watch list changes. */
 
           function handleWatchlistChange(event) {
-            const data5 = {fsid: FSID, uid : UID};
             let watchlist = 0;
+
             switch (event.detail.value) {
               case "To Watch":
                 watchlist = 1;
@@ -63,37 +65,30 @@
               default:
                 watchlist = 4;
             }
-            const data6 = {fsid: FSID, uid : UID, watchlist : watchlist};
 
+            const dataUFW = { fsid: FSID, uid: UID, watchlist: watchlist };
 
-            postFetch("../php/FSIDinWatchlist.php", data5, false, (res) => {
-
+            postFetch("../php/FSIDinWatchlist.php", dataUF, false, (res) => {
               /* Check if user already has this item in this watch list. */
               if ((res == watchlist) || (res == "" && watchlist == 4)) {
                 return;
               }
 
               /* Add an item to a watch list. */
-
               if (res == "") {
-                postFetch("../php/addFSIDtoWatchlist.php", data6, false, (result) => {
-                });
+                postFetch("../php/addFSIDtoWatchlist.php", dataUFW, false, (result) => {});
                 return;
               }
 
               /* Remove from watchlist. */
               if (watchlist == 4) {
-                postFetch("../php/removeFSIDfromWatchlist.php", data5, false, (result) => {
-                  consolelog(result);
-                });
+                postFetch("../php/removeFSIDfromWatchlist.php", dataUF, false, (result) => {});
                 return;
               }
 
               /* Move an item from one watch list to another. */
-              postFetch("../php/removeFSIDfromWatchlist.php", data5, false, (result) => {
-              });
-              postFetch("../php/addFSIDtoWatchlist.php", data6, false, (result) => {
-              });
+              postFetch("../php/removeFSIDfromWatchlist.php", dataUF, false, (result) => {});
+              postFetch("../php/addFSIDtoWatchlist.php", dataUFW, false, (result) => {});
               return;
             });
             }
@@ -119,14 +114,14 @@
             /* Comment on enter. */
             commentInput.addEventListener("keypress", function(event) {
               if (event.keyCode == 13) {
-                addComment(commentInput.value, <?php echo $UID ?>, <?php echo $FSID ?>)
+                addComment(commentInput.value, UID, FSID);
                 commentInput.setAttribute("value", "");
               }
             });
 
             /* Comment on enter. */
             postButtonElement.addEventListener("click", function() {
-              addComment(commentInput.value, <?php echo $UID ?>, <?php echo $FSID ?>)
+              addComment(commentInput.value, UID, FSID);
               commentInput.setAttribute("value", "");
             });
 
@@ -135,16 +130,16 @@
 
             /* This function handles rating changes. */
             function handleRatingChange(event) {
-              const data7 = {fsid:<?php echo $FSID; ?>, uid:<?php echo $UID; ?>};
-              postFetch("../php/getRating.php", data7, false, (result) => {
-                const data6 = {fsid:FSID, uid:UID, rating: event.detail.value};
-                if (result=="") {
-                  postFetch("../php/setRating.php", data6, false, (result) => {
+              postFetch("../php/getRating.php", dataUF, false, (result) => {
+                const ratingData = { fsid: FSID, uid: UID, rating: event.detail.value };
+                console.log(result);
+
+                if (result === "" || result === "false") {
+                  postFetch("../php/setRating.php", ratingData, false, (result) => {
                     return;
                   });
-                }
-                else {
-                  postFetch("../php/updateRating.php", data6, false, (result) => {
+                } else {
+                  postFetch("../php/updateRating.php", ratingData, false, (result) => {
                     return;
                   });
                 }
@@ -154,45 +149,44 @@
 
             /* Handles a favourites change. */
             function handleFavouritesChange(event) {
-              const data = {fsid: FSID, uid:UID};
-              postFetch("../php/checkFavourite.php", data, false, (res) => {
+              postFetch("../php/checkFavourite.php", dataUF, false, (res) => {
                 if (res) {
-                  postFetch("../php/removeFavourite.php", data, false, (res) => {
+                  postFetch("../php/removeFavourite.php", dataUF, false, (res) => {
                     return;
                   });
                 }
                 else {
-                  postFetch("../php/addFavourite.php", data, false, (res) => {
+                  postFetch("../php/addFavourite.php", dataUF, false, (res) => {
                     return;
                   });
                 }
               });
             }
 
-          const data = { fsid: FSID };
-
-          const data2 = { fsid : FSID, uid: UID};
-
-          let rating = 1;
-          if (UID) {
-            postFetch("../php/getRating.php", data2, false, (res) => {
-              rating = res;
-            });
-          }
-          else {
-            rating = 0;
-          }
           if (FSID) {
-            postFetch("../php/getContent.php", data, true, (res) => {
-              const itemElement = document.createElement("item-view");
+            postFetch("../php/getContent.php", dataUF, true, (res) => {
+              const itemElement = document.createElement("cdb-content-card");
               itemElement.setAttribute("title", res[1]);
               itemElement.setAttribute("src", res[2]);
               itemElement.setAttribute("description", res[3]);
               itemElement.setAttribute("public_rating", res[4]);
-              itemElement.setAttribute("private_rating", rating);
+
+              UID && postFetch("../php/getRating.php", dataUF, false, (res) => {
+                itemElement.setAttribute("private_rating", rating = res ? res : 0);
+              });
+
+              UID && postFetch("../php/getWatchlistState.php", dataUF, false, (res) => {
+                itemElement.setAttribute("watchlist", res ? res : 2);
+              });
+
               itemElement.setAttribute("duration", res[5]);
               itemElement.setAttribute("year", res[6]);
-              itemElement.setAttribute("logged_in", <?php echo $UID ? "true" : "false" ?>);
+              itemElement.setAttribute("logged_in", UID ? true : false);
+
+              postFetch("../php/checkFavourite.php", dataUF, false, (res) => {
+                itemElement.setAttribute("favourite", res);
+              });
+
               itemElement.addEventListener("watchlistchange", handleWatchlistChange);
               itemElement.addEventListener("ratingchange", handleRatingChange);
               itemElement.addEventListener("favouriteschange", handleFavouritesChange);
@@ -210,37 +204,31 @@
             commentElement = document.createElement('cdb-comment');
             commentElement.setAttribute("content", comment);
             commentElement.setAttribute("timestamp", "now");
-            /* Get username by UID. */
-            const data = {uid : uid};
-            postFetch("../php/getUserNameByUID.php", data, false, (res) => {
+
+            postFetch("../php/getUserNameByUID.php", { uid: uid }, false, (res) => {
                 commentElement.setAttribute("username", res);
             });
+
             document.getElementById("comment-section").appendChild(commentElement);
             /* Send comment data to the database. */
 
-            const data2 = {content:comment, uid:uid, fsid:fsid};
-            postFetch("../php/postComment.php", data2, false, (res) => {
-            });
+            postFetch("../php/postComment.php", { content: comment, uid: uid, fsid: fsid }, false, () => {});
           }
 
-          /* Scripts by Timo. */
             let count = 0;
-            const data3 = { fsid : <?php echo $FSID ? $FSID : -1; ?>};
-            postFetch("../php/getCommentAmount.php", data3, false, (res) => {
-              count = res;
+            postFetch("../php/getCommentAmount.php", dataUF, false, (res) => {
+              count = res ? res : 0;
             });
 
-            postFetch("../php/getComments.php", data3, true, (res) => {
+            postFetch("../php/getComments.php", dataUF, true, (res) => {
               if (res != "false") {
                 for (let i = 0; i < Math.min(20, count); i++) {
-
                   const commentElement = document.createElement("cdb-comment");
                   commentElement.setAttribute("content", res[i]["Comment"]);
                   commentElement.setAttribute("timestamp", res[i]["Date"]);
                   (res[i]["UID"] === UID || isAdmin) && commentElement.setAttribute("cid", res[i]["CID"]);
 
-                  let data4 = {"uid" : res[i]["UID"]};
-                  postFetch("../php/getUserNameByUID.php", data4, false, (result) => {
+                  postFetch("../php/getUserNameByUID.php", { uid: res[i]["UID"] }, false, (result) => {
                     commentElement.setAttribute("username", result);
                     document.getElementById('comment-section').appendChild(commentElement);
                   });

@@ -1,5 +1,5 @@
 /**
- * The item-view component. Displays a film or series on a page specifically
+ * The content-card component. Displays a film or series on a page specifically
  * meant to show more about this item.
  * Attributes
  *  - public-rating: the public rating of the film or series.
@@ -14,14 +14,14 @@
  * Made by Timo.
  */
 
-class ItemView extends HTMLElement {
+class ContentCard extends HTMLElement {
   constructor() {
     super();
 
     /* Setting default values. */
     this.private_rating = 1;
     this.public_rating = 1;
-    this.watchlist = "";
+    this.watchlist = 0;
     this.logged_in = false;
     this.favourite = false;
   }
@@ -31,16 +31,16 @@ class ItemView extends HTMLElement {
 
     /* The link component for the css. */
     const link = document.createElement("link");
-    link.href = "../components/item-view/item-view.css";
+    link.href = "../components/content-card/content-card.css";
     link.rel = "stylesheet";
     this.shadow.appendChild(link);
 
     /* The watch-item container. */
-    this.classList.add("item-view");
+    this.classList.add("content-card");
 
     /* The div containing the title, duration and year of the film or series. */
     const heading = document.createElement("div");
-    heading.classList.add("item-view__top");
+    heading.classList.add("content-card__top");
     this.shadow.appendChild(heading);
 
     /* The title heading. */
@@ -62,31 +62,32 @@ class ItemView extends HTMLElement {
     this.durationElement = duration;
 
     const watchList = document.createElement("div");
-    watchList.classList.add("item-view__select-bar");
+    watchList.classList.add("content-card__select-bar");
     heading.appendChild(watchList);
 
     /* The div containing all textual info of the film or series. */
     const textualInfo = document.createElement("div");
-    textualInfo.classList.add("item-view__info");
+    textualInfo.classList.add("content-card__info");
     this.shadow.appendChild(textualInfo);
 
     /* The div containing the body of the film description. */
     const body = document.createElement("div");
-    body.classList.add("item-view__body");
+    body.classList.add("content-card__body");
     textualInfo.appendChild(body);
-
-    /* The dropdown menu to be shown after the plus button is clicked. */
-    const optionsContainer = document.createElement("div");
-    optionsContainer.classList.add("item-view__dropdown");
 
     const watchSelectList = document.createElement("select");
     watchSelectList.addEventListener("change", this.handleSelect.bind(this));
-    watchSelectList.classList.add("item-view__select");
+    watchSelectList.classList.add("content-card__select");
     watchList.appendChild(watchSelectList);
+    this.watchSelectElement = watchSelectList;
+
+    if (this.logged_in != "true") {
+      watchList.classList.add("content-card__hide");
+    }
 
     /* The chevron down icon to indicate the select list is a list. */
     const chevronDown = document.createElement("cdb-icon");
-    chevronDown.classList.add("item-view__select-chevron");
+    chevronDown.classList.add("content-card__select-chevron");
     chevronDown.setAttribute("src", "../src/chevrons.svg#bottom");
     chevronDown.setAttribute("size", 1.5);
     chevronDown.setAttribute("colour", "var(--text-colour)");
@@ -94,20 +95,23 @@ class ItemView extends HTMLElement {
 
     const tabs = ["To Watch", "Watching", "Watched"];
 
-    const option = document.createElement("option");
-    option.classList.add("item-view__select-option");
-    option.toggleAttribute("selected", true);
-    option.textContent = "Add to list...";
-    watchSelectList.appendChild(option);
+    const defaultOption = document.createElement("option");
+    defaultOption.classList.add("content-card__select-option");
+    this.watchlist === 0 && defaultOption.toggleAttribute("selected", true);
+    defaultOption.textContent = "Add to list...";
+    watchSelectList.appendChild(defaultOption);
+    this.watch0Element = defaultOption;
 
-    for (const tabName of tabs) {
-      const option = document.createElement("option");
-      option.classList.add("item-view__select-option");
-      //      option.toggleAttribute("selected", true);
+    for (const [index, tabName] of tabs.entries()) {
+      let option = document.createElement("option");
+      option.classList.add("content-card__select-option");
+      this.watchlist > 0 && tabName === tabs[this.watchlist - 1] && option.toggleAttribute("selected", true);
       option.setAttribute("id", tabName);
       option.setAttribute("value", tabName);
       option.textContent = tabName;
       watchSelectList.appendChild(option);
+      console.log(index + 1, `watch${index + 1}Element`);
+      this[`watch${index + 1}Element`] = option;
     }
 
     //
@@ -116,12 +120,12 @@ class ItemView extends HTMLElement {
 
     /* The div containing the title, duration and year of the film or series. */
     const middle = document.createElement("div");
-    middle.classList.add("item-view__middle");
+    middle.classList.add("content-card__middle");
     this.shadow.appendChild(middle);
 
     /* The poster image. */
     const image = document.createElement("div");
-    image.classList.add("item-view__image");
+    image.classList.add("content-card__image");
     image.style.backgroundImage = `url(${this.src})`;
     middle.appendChild(image);
     this.imageElement = image;
@@ -135,26 +139,26 @@ class ItemView extends HTMLElement {
     }
     favourite.setAttribute("size", 2);
     favourite.setAttribute("colour", "var(--signal)");
-    favourite.classList.add("item-view__favourite");
-    !this.logged_in && favourite.classList.add("item-view__favourite--hidden");
+    favourite.classList.add("content-card__favourite");
+    !this.logged_in && favourite.classList.add("content-card__favourite--hidden");
     favourite.addEventListener("click", this.toggleFavourite.bind(this));
     image.appendChild(favourite);
     this.favouriteElement = favourite;
 
     /* The div containing the title, duration and year of the film or series. */
     const middleLeft = document.createElement("div");
-    middleLeft.classList.add("item-view__middle-left");
+    middleLeft.classList.add("content-card__middle-left");
     middle.appendChild(middleLeft);
 
     /* The div containing the title, duration and year of the film or series. */
     const ratings = document.createElement("div");
-    ratings.classList.add("item-view__ratings");
+    ratings.classList.add("content-card__ratings");
     middleLeft.appendChild(ratings);
 
     /* The div containing the title, duration and year of the film or series. */
     const ratingPublic = document.createElement("div");
-    ratingPublic.classList.add("item-view__rating");
-    ratingPublic.classList.add("item-view__rating--public");
+    ratingPublic.classList.add("content-card__rating");
+    ratingPublic.classList.add("content-card__rating--public");
     ratings.appendChild(ratingPublic);
 
     /* The text indicating the public rating. */
@@ -171,8 +175,8 @@ class ItemView extends HTMLElement {
 
     /* The div containing the title, duration and year of the film or series. */
     const ratingPrivate = document.createElement("div");
-    ratingPrivate.classList.add("item-view__rating");
-    ratingPrivate.classList.add("item-view__rating--private");
+    ratingPrivate.classList.add("content-card__rating");
+    ratingPrivate.classList.add("content-card__rating--private");
     ratings.appendChild(ratingPrivate);
     this.ratingPrivateElement = ratingPrivate;
 
@@ -190,20 +194,20 @@ class ItemView extends HTMLElement {
     this.privateratingElement = private_rating;
 
     if (this.logged_in != "true") {
-      private_rating.classList.add("item-view__hide");
+      ratingPrivate.classList.add("content-card__hide");
     }
 
     /* The item description. */
     const description = document.createElement("p");
     description.textContent = this.description;
-    description.classList.add("item-view__description");
+    description.classList.add("content-card__description");
     middleLeft.appendChild(description);
     this.descriptionElement = description;
 
     /* The star actors of the film or series. */
     const actors = document.createElement("p");
     actors.textContent = this.actors;
-    actors.classList.add("item-view__actors");
+    actors.classList.add("content-card__actors");
     body.appendChild(actors);
     this.actorsElement = actors;
   }
@@ -232,6 +236,7 @@ class ItemView extends HTMLElement {
     }
 
     this[name] = newValue;
+
     /* Updates only the necessary parts of the component on update. */
     if (name === "public_rating" && this.publicratingElement) {
       this.publicratingElement.setAttribute("rating", newValue);
@@ -282,6 +287,15 @@ class ItemView extends HTMLElement {
       return;
     }
 
+    if (name === "watchlist" && this.watch0Element) {
+      for (let i = 0; i < 4; i++) {
+        console.log(i, this.watchlist, this[`watch${i}Element`]);
+        this[`watch${i}Element`].toggleAttribute("selected", i == this.watchlist);
+      }
+
+      return;
+    }
+
     if (name === "logged_in" && this.favouriteElement) {
       this.toggleFavouriteVisibility();
       this.toggleRatingVisibility();
@@ -292,12 +306,15 @@ class ItemView extends HTMLElement {
   /* Create a custom event to be caught in item-page/index.php
    * so that the watch lists can be changed appropriately.
    */
-  handleSelect(event) {
+  handleSelect() {
+    this.watchlist = this.watchSelectElement.value;
+
     const customEvent = new CustomEvent("watchlistchange", {
       detail: {
-        value: event.target.value,
+        value: this.watchSelectElement.value,
       },
     });
+
     this.dispatchEvent(customEvent);
   }
 
@@ -326,11 +343,11 @@ class ItemView extends HTMLElement {
   }
 
   toggleRatingVisibility() {
-    this.ratingPrivateElement.classList.toggle("item-view__hide");
+    this.ratingPrivateElement.classList.toggle("content-card__hide");
   }
 
   toggleFavouriteVisibility() {
-    this.favouriteElement.classList.toggle("item-view__hide");
+    this.favouriteElement.classList.toggle("content-card__hide");
   }
 }
-window.customElements.define("item-view", ItemView);
+window.customElements.define("cdb-content-card", ContentCard);

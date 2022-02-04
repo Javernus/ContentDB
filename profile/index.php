@@ -183,8 +183,7 @@ $user;
     <div class='list-container'>
         <div id='watchinglist' class="list-view">
             <?php
-
-$user;
+                $user;
 
                 if (isset($_COOKIE["UserID"])) {
                     $user = intval($_COOKIE["UserID"]);
@@ -231,7 +230,7 @@ $user;
     <div class='list-container'>
         <div id='watchedlist' class="list-view">
             <?php
-$user;
+                $user;
 
                 if (isset($_COOKIE["UserID"])) {
                     $user = intval($_COOKIE["UserID"]);
@@ -277,7 +276,7 @@ $user;
     <div class='list-container'>
         <div id='favouriteslist' class="list-view">
             <?php
-$user;
+                $user;
 
                 if (isset($_COOKIE["UserID"])) {
                     $user = intval($_COOKIE["UserID"]);
@@ -321,7 +320,7 @@ $user;
     <div class='list-container'>
         <div id='commentslist' class="list-view">
             <?php
-$user;
+                $user;
 
                 if (isset($_COOKIE["UserID"])) {
                     $user = intval($_COOKIE["UserID"]);

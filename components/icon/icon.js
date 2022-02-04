@@ -26,8 +26,8 @@ class Icon extends HTMLElement {
     /* The svg element. */
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttributeNS("null", "viewPort", "0 0 24 24");
-    svg.setAttribute("width", this.size + "rem");
-    svg.setAttribute("height", this.size + "rem");
+    svg.style.width = this.size + "rem";
+    svg.style.height = this.size + "rem";
     this.shadow.appendChild(svg);
 
     /* Save a reference of the svg for dynamic state change. */
@@ -75,8 +75,8 @@ class Icon extends HTMLElement {
 
       this.setAttribute("width", this.size + "rem");
       this.setAttribute("height", this.size + "rem");
-      this.svgElement.setAttribute("width", this.size + "rem");
-      this.svgElement.setAttribute("height", this.size + "rem");
+      this.svgElement.style.width = this.size + "rem";
+      this.svgElement.style.height = this.size + "rem";
       this.useElement.setAttribute("width", this.size + "rem");
       this.useElement.setAttribute("height", this.size + "rem");
     }
