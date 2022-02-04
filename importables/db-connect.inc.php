@@ -5,7 +5,6 @@
     $password = $_SERVER['MYSQL_PASSWORD'];
     $database = $_SERVER['MYSQL_DATABASE'];
 
-    // Create connection
     $conn = new mysqli($host, $username, $password, $database);
 
     // Check connection

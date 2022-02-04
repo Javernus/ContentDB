@@ -6,6 +6,8 @@
  *  - username: the username to be shown.
  *  - timestamp: the timestamp to be shown.
  *  - content: the text to be shown.
+ * 
+ * Written by Timo.
  */
 
 class MovieComment extends HTMLElement {
