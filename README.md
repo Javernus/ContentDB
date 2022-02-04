@@ -32,6 +32,7 @@ This way the server returns information about either the genres or top actors re
 All responses are in JSON format so the information is easy to use. Here is an example of a simple python script that sends an api request and returns the information:
 ```py
 import requests
+import json
 
 def get_api_data(url):
     response = requests.get(url)
