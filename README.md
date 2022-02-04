@@ -16,8 +16,31 @@ You can find the website at https://www.umbrim.com/. Have a sublime stay!
 
 ## Admin account
 
-Username: TBD
-Password: TBD
+On Umbrim.com, the admin account credentials are:
+
+Username: admin
+Password: SuperSecret
+
+## Local machine testing
+
+In phpmyadmin:
+To import the database on a local lamp server, create a database named umbrimdb and click Import up top.
+Upload the .sql file in the root of the zip and import it.
+Then add a user account by clicking on the house in the top left, clicking User Accounts, Add User Account and then
+adding a user with the username 'Server' and password '63!NSjMRQwwYyZ7a'.
+That's all for phpmyadmin.
+
+To make sure you can use the website on a local machine, add these Apache Environment Variables to your installation:
+
+```
+SetEnv MYSQL_HOST 127.0.0.1
+SetEnv MYSQL_USER "Server"
+SetEnv MYSQL_PASSWORD "63!NSjMRQwwYyZ7a"
+SetEnv MYSQL_DATABASE umbrimdb
+```
+
+These can be added to `/etc/apache2/conf-available/mysql_credentials.conf`. Make sure to enable them using
+`sudo a2enconf mysql_credentials` and restart Apache.
 
 ## API guide
 
