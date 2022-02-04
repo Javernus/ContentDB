@@ -191,7 +191,7 @@ class Login extends HTMLElement {
 
     postFetch("../php/usernameExists.php", data, false, (res) => {
       if (res === "true") {
-        this.signUpStatus.style.color = "red";
+        this.signUpStatus.style.color = "var(--signal)";
         this.signUpStatus.textContent = "Username already exists.";
         this.signUpUsernameElement.setAttribute("error", true);
       } else if (res === "false") {
@@ -207,7 +207,7 @@ class Login extends HTMLElement {
 
     if (password !== passwordTwo && passwordTwo !== "") {
       this.signUpPasswordTwoElement.setAttribute("error", true);
-      this.signUpStatus.style.color = "red";
+      this.signUpStatus.style.color = "var(--signal)";
       this.signUpStatus.textContent = "Passwords do not match.";
     } else {
       this.signUpStatus.style.color = "transparent";
@@ -239,7 +239,7 @@ class Login extends HTMLElement {
           break;
         case "limitreached":
           this.signUpStatus.textContent = "You reached a sign up limit.";
-          this.signUpStatus.style.color = "red";
+          this.signUpStatus.style.color = "var(--signal)";
           break;
       }
     });
@@ -263,7 +263,7 @@ class Login extends HTMLElement {
         window.location.href = "/profile";
       } else {
         this.signInStatus.textContent = "Incorrect username or password.";
-        this.signInStatus.style.color = "red";
+        this.signInStatus.style.color = "var(--signal)";
         this.signInUsernameElement.setAttribute("error", true);
         this.signInPasswordElement.setAttribute("error", true);
       }
