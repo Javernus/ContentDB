@@ -41,7 +41,7 @@
       </script>
     </div>
 
-    <!-- Creates a carousel for "New Releases". -->
+		<!-- Dynamic loading by Montijn -->
     <div class="carousels" id="carousels">
 			<div class="carousel-item">
         <h2>New Releases</h2>
