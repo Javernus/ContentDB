@@ -4,8 +4,11 @@
  * adding a personal rating to the corresponding item.
  * Attributes
  *  - rating: the amount of filled stars.
- *  - ratable: bool of whether the user can change the index or not.
+ *  - ratable: bool to determine whether the user can change the index or not.
+ * 
+ * Written by Timo.
  */
+
 class Rating extends HTMLElement {
   constructor() {
     super();
