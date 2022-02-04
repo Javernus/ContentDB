@@ -2,6 +2,8 @@
  * The Login component. An interface item made for the dialog to allow a person to log in or sign up.
  * Attributes
  *  - signup: determines whether to show the sign in or sign up page.
+ *
+ * Made by Jake.
  */
 class Login extends HTMLElement {
   constructor() {
@@ -10,8 +12,9 @@ class Login extends HTMLElement {
 
     /* Setting the defaults of the attributes. */
     this.signup = false;
-    this.open = false;
+  }
 
+  connectedCallback() {
     /* The link component for the css. */
     const link = document.createElement("link");
     link.setAttribute("href", "/components/login/login.css");
@@ -193,6 +196,7 @@ class Login extends HTMLElement {
         this.signUpUsernameElement.setAttribute("error", true);
       } else if (res === "false") {
         this.signUpUsernameElement.removeAttribute("error");
+        this.signUpStatus.style.color = "transparent";
       }
     });
   }
@@ -234,7 +238,8 @@ class Login extends HTMLElement {
           this.dispatchEvent(new CustomEvent("signup"));
           break;
         case "limitreached":
-          // Add text to indicate waiting
+          this.signUpStatus.textContent = "You reached a sign up limit.";
+          this.signUpStatus.style.color = "red";
           break;
       }
     });
@@ -279,7 +284,7 @@ class Login extends HTMLElement {
     this[name] = newValue;
 
     /* Updates only the necessary parts of the component on update. */
-    if (name === "signup") {
+    if (name === "signup" && this.signInElement) {
       if (newValue == "true") {
         this.signInElement.classList.remove("login__tab--active");
         this.signUpElement.classList.add("login__tab--active");

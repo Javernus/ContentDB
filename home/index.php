@@ -48,7 +48,7 @@
         	$result = $stmt->fetchAll();
 
 					foreach ($result as $row) {
-						echo "<cdb-carousel-item url=$row[Image] src=$row[Image] fsid=$row[0]></cdb-carousel-item>";
+						echo "<cdb-carousel-item url=$row[Image] src=$row[Image] href='/content/?FSID=$row[0]'></cdb-carousel-item>";
 					}
 
         ?>

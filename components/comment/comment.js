@@ -7,6 +7,8 @@
  *  - timestamp: the timestamp to be shown.
  *  - content: the text to be shown.
  *  - cid: the cid of the comment. Shows delete option if given.
+ *
+ * Made by Timo, updated by Jake.
  */
 
 class MovieComment extends HTMLElement {
@@ -35,6 +37,7 @@ class MovieComment extends HTMLElement {
 
     this[name] = newValue;
 
+    /* Dynamically update the necessary parts of the component. */
     if (name === "username" && this.nameElement) {
       this.nameElement.innerText = this.username;
       return;
@@ -84,6 +87,7 @@ class MovieComment extends HTMLElement {
     commentHeader.appendChild(headerTime);
     headerName.classList.add("left");
     headerTime.classList.add("right");
+
     /* Put the username and timestamp in the comment header. */
     const name = document.createElement("p");
     const time = document.createElement("p");
@@ -97,13 +101,12 @@ class MovieComment extends HTMLElement {
 
     /* The comment content. */
     const content = document.createElement("div");
-
     content.textContent = this.content;
     this.textElement = content;
     content.classList.add("comment__content");
-
     comment.appendChild(content);
 
+    /* The trash can icon to delete the comment. */
     const trashCan = document.createElement("cdb-icon");
     trashCan.setAttribute("src", "/src/trash-can.svg#trash-can");
     trashCan.setAttribute("size", 1.5);
@@ -115,6 +118,7 @@ class MovieComment extends HTMLElement {
     this.trashCanElement = trashCan;
   }
 
+  /* A function to delete the comment. */
   deleteComment() {
     postFetch("../php/deleteComment.php", { cid: this.cid }, false, (res) => {
       if (res) {

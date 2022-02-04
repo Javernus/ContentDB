@@ -11,7 +11,7 @@
  *  - description: the description of the movie or series.
  *  - actors: the most prominent actors playing in the movie or series.
  *
- * Made by Timo.
+ * Made by Timo, updated by Jake.
  */
 
 class ContentCard extends HTMLElement {
@@ -35,10 +35,10 @@ class ContentCard extends HTMLElement {
     link.rel = "stylesheet";
     this.shadow.appendChild(link);
 
-    /* The watch-item container. */
+    /* The content-card container. */
     this.classList.add("content-card");
 
-    /* The div containing the title, duration and year of the film or series. */
+    /* The div containing the title, duration and year of the content, and list dropdown. */
     const heading = document.createElement("div");
     heading.classList.add("content-card__top");
     this.shadow.appendChild(heading);
@@ -61,29 +61,19 @@ class ContentCard extends HTMLElement {
     heading.appendChild(duration);
     this.durationElement = duration;
 
+    /* The container for the watchlist dropdown. */
     const watchList = document.createElement("div");
     watchList.classList.add("content-card__select-bar");
+    !this.logged_in && watchList.classList.add("content-card__hide");
     heading.appendChild(watchList);
+    this.watchListElement = watchList;
 
-    /* The div containing all textual info of the film or series. */
-    const textualInfo = document.createElement("div");
-    textualInfo.classList.add("content-card__info");
-    this.shadow.appendChild(textualInfo);
-
-    /* The div containing the body of the film description. */
-    const body = document.createElement("div");
-    body.classList.add("content-card__body");
-    textualInfo.appendChild(body);
-
+    /* The select tag for the dropdown. */
     const watchSelectList = document.createElement("select");
     watchSelectList.addEventListener("change", this.handleSelect.bind(this));
     watchSelectList.classList.add("content-card__select");
     watchList.appendChild(watchSelectList);
     this.watchSelectElement = watchSelectList;
-
-    if (this.logged_in != "true") {
-      watchList.classList.add("content-card__hide");
-    }
 
     /* The chevron down icon to indicate the select list is a list. */
     const chevronDown = document.createElement("cdb-icon");
@@ -93,7 +83,7 @@ class ContentCard extends HTMLElement {
     chevronDown.setAttribute("colour", "var(--text-colour)");
     watchList.appendChild(chevronDown);
 
-    const tabs = ["To Watch", "Watching", "Watched"];
+    /* The options for the dropdown. */
 
     const defaultOption = document.createElement("option");
     defaultOption.classList.add("content-card__select-option");
@@ -101,6 +91,8 @@ class ContentCard extends HTMLElement {
     defaultOption.textContent = "Add to list...";
     watchSelectList.appendChild(defaultOption);
     this.watch0Element = defaultOption;
+
+    const tabs = ["To Watch", "Watching", "Watched"];
 
     for (const [index, tabName] of tabs.entries()) {
       let option = document.createElement("option");
@@ -113,10 +105,6 @@ class ContentCard extends HTMLElement {
       console.log(index + 1, `watch${index + 1}Element`);
       this[`watch${index + 1}Element`] = option;
     }
-
-    //
-    //
-    //
 
     /* The div containing the title, duration and year of the film or series. */
     const middle = document.createElement("div");
@@ -145,17 +133,17 @@ class ContentCard extends HTMLElement {
     image.appendChild(favourite);
     this.favouriteElement = favourite;
 
-    /* The div containing the title, duration and year of the film or series. */
-    const middleLeft = document.createElement("div");
-    middleLeft.classList.add("content-card__middle-left");
-    middle.appendChild(middleLeft);
+    /* The div containing the ratings and description. */
+    const middleRight = document.createElement("div");
+    middleRight.classList.add("content-card__middle-left");
+    middle.appendChild(middleRight);
 
-    /* The div containing the title, duration and year of the film or series. */
+    /* The div containing the ratings. */
     const ratings = document.createElement("div");
     ratings.classList.add("content-card__ratings");
-    middleLeft.appendChild(ratings);
+    middleRight.appendChild(ratings);
 
-    /* The div containing the title, duration and year of the film or series. */
+    /* The div containing the public rating. */
     const ratingPublic = document.createElement("div");
     ratingPublic.classList.add("content-card__rating");
     ratingPublic.classList.add("content-card__rating--public");
@@ -173,7 +161,7 @@ class ContentCard extends HTMLElement {
     ratingPublic.appendChild(public_rating);
     this.publicratingElement = public_rating;
 
-    /* The div containing the title, duration and year of the film or series. */
+    /* The div containing the private rating. */
     const ratingPrivate = document.createElement("div");
     ratingPrivate.classList.add("content-card__rating");
     ratingPrivate.classList.add("content-card__rating--private");
@@ -187,29 +175,19 @@ class ContentCard extends HTMLElement {
 
     /* The cdb-rating component for the private rating of the film or series. */
     const private_rating = document.createElement("cdb-rating");
+    !this.logged_in && ratingPrivate.classList.add("content-card__hide");
     private_rating.setAttribute("ratable", true);
     private_rating.setAttribute("rating", this.private_rating);
     ratingPrivate.appendChild(private_rating);
     private_rating.addEventListener("ratingchange", this.handlePrivateRatingChange.bind(this));
     this.privateratingElement = private_rating;
 
-    if (this.logged_in != "true") {
-      ratingPrivate.classList.add("content-card__hide");
-    }
-
     /* The item description. */
     const description = document.createElement("p");
     description.textContent = this.description;
     description.classList.add("content-card__description");
-    middleLeft.appendChild(description);
+    middleRight.appendChild(description);
     this.descriptionElement = description;
-
-    /* The star actors of the film or series. */
-    const actors = document.createElement("p");
-    actors.textContent = this.actors;
-    actors.classList.add("content-card__actors");
-    body.appendChild(actors);
-    this.actorsElement = actors;
   }
 
   /* Returns the attributes which should be observed. */
@@ -299,13 +277,12 @@ class ContentCard extends HTMLElement {
     if (name === "logged_in" && this.favouriteElement) {
       this.toggleFavouriteVisibility();
       this.toggleRatingVisibility();
+      this.toggleWatchListVisibility();
       return;
     }
   }
 
-  /* Create a custom event to be caught in item-page/index.php
-   * so that the watch lists can be changed appropriately.
-   */
+  /* Create a custom event to indicate a watchlist was chosen. */
   handleSelect() {
     this.watchlist = this.watchSelectElement.value;
 
@@ -318,6 +295,7 @@ class ContentCard extends HTMLElement {
     this.dispatchEvent(customEvent);
   }
 
+  /* Sends out an event to indicate the favourite has been selected or deselected. */
   toggleFavourite(event) {
     if (this.favouriteElement.src == "/src/favourite.svg#outline") {
       this.favouriteElement.setAttribute("src", "/src/favourite.svg#filled");
@@ -333,6 +311,7 @@ class ContentCard extends HTMLElement {
     this.dispatchEvent(customEvent);
   }
 
+  /* Emits an event on rating change. */
   handlePrivateRatingChange(event) {
     const customEvent = new CustomEvent("ratingchange", {
       detail: {
@@ -342,12 +321,20 @@ class ContentCard extends HTMLElement {
     this.dispatchEvent(customEvent);
   }
 
+  /* Toggles the visibility of the private rating. */
   toggleRatingVisibility() {
     this.ratingPrivateElement.classList.toggle("content-card__hide");
   }
 
+  /* Toggles the visibility of the favourite button. */
   toggleFavouriteVisibility() {
     this.favouriteElement.classList.toggle("content-card__hide");
   }
+
+  /* Toggles the visibility of the favourite button. */
+  toggleWatchListVisibility() {
+    this.watchListElement.classList.toggle("content-card__hide");
+  }
 }
+
 window.customElements.define("cdb-content-card", ContentCard);

@@ -3,7 +3,7 @@
  * Attributes
  *  - open: determines whether the dialog is visible.
  *
- * Made by Jake.
+ * Made by Montijn.
  */
 class CookieDialog extends HTMLElement {
   constructor() {
