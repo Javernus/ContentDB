@@ -8,7 +8,7 @@
  * Slots
  *  - default: the description.
  *
- * Made by Timo, refactored by Jake.
+ * Made by Mario.
  */
 class Result extends HTMLElement {
   constructor() {
