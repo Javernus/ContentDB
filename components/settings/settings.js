@@ -136,7 +136,6 @@ class Settings extends HTMLElement {
     let data = { oldpassword: oldPassword, newpassword: newPassword };
 
     postFetch("../php/changePassword.php", data, false, (res) => {
-      console.log(res);
       if (res) {
         this.passwordMessage.style.color = "var(--green-signal)";
         this.passwordMessage.textContent = "Password changed successfully";
@@ -159,7 +158,6 @@ class Settings extends HTMLElement {
 
     postFetch("../php/deleteUser.php", data, true, (res) => {
       res = JSON.parse(res);
-      console.log(res);
       this.logout();
     });
   }

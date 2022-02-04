@@ -132,7 +132,6 @@
             function handleRatingChange(event) {
               postFetch("../php/getRating.php", dataUF, false, (result) => {
                 const ratingData = { fsid: FSID, uid: UID, rating: event.detail.value };
-                console.log(result);
 
                 if (result === "" || result === "false") {
                   postFetch("../php/setRating.php", ratingData, false, (result) => {

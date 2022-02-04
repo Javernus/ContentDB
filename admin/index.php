@@ -55,8 +55,6 @@
             releaseyear: inputs[inputEntries[5]].value,
           }
 
-          console.log(data);
-
           postFetch("../php/addContent.php", data, false, () => {})
         }
       </script>
