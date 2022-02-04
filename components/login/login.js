@@ -163,11 +163,6 @@ class Login extends HTMLElement {
 
     /* Save a reference of the signUpSubmitButton for dynamic state change. */
     this.signUpSubmitButtonElement = signUpSubmitButton;
-
-    const inputSubmit = document.createElement("input");
-    inputSubmit.setAttribute("type", "submit");
-    inputSubmit.classList.add("input-submit");
-    form.appendChild(inputSubmit);
   }
 
   handleLoginChange() {
