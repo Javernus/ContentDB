@@ -1,7 +1,7 @@
 /**
- * The Search component. An interface item made for the dialog to allow a person to log in or sign up.
- * Attributes
- *  - signup: determines whether to show the sign in or sign up page.
+ * The Search component. An interface item made for the dialog to allow a person to search for an item in the database.
+ * 
+ * Made by Mario.
  */
 class Search extends HTMLElement {
   constructor() {
@@ -22,7 +22,7 @@ class Search extends HTMLElement {
     searchTabs.classList.add("search__tabs");
     this.shadow.appendChild(searchTabs);
 
-    /* The div button for the sign in page. */
+    /* The div button for the search page. */
     const searchTab = document.createElement("div");
     searchTab.textContent = "Search";
     searchTab.classList.add("search__tab");

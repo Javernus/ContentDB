@@ -5,7 +5,7 @@
  *  - src: the image source.
  *  - href: the page to link to.
  *
- * Made by Jake.
+ *  Made by Mario.
  */
 class CarouselItem extends HTMLElement {
   constructor() {

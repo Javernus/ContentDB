@@ -1,3 +1,9 @@
+<!-- This is the Terms and Conditions page. This page depicts all of Umbrim's rules and
+     what measures will be taken in case those rules get broken.
+
+     Made by Mario.
+-->
+
 <?php
   include '../importables/html-header.php';
 ?>

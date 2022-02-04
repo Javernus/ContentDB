@@ -1,8 +1,14 @@
+<!-- This is the home page. This page shows Umbrim's slogan, the sign in and sign up buttons and 
+     two carousels of movies and series, which represent "New Releases" and "Top Rated". 
+
+     Made by Mario. 
+-->
+
 <?php
   include '../importables/html-header.php';
 ?>
 
-
+  
     <h1 class="title" id="page-title">Umbrim your content.</h1>
     <div id="account-buttons">
       <script>
@@ -35,6 +41,7 @@
       </script>
     </div>
 
+    <!-- Creates a carousel for "New Releases". -->
     <div class="carousels" id="carousels">
 			<div class="carousel-item">
         <h2>New Releases</h2>
@@ -55,6 +62,7 @@
         </cdb-carousel>
       </div>
 
+      <!-- Creates a carousel for "Top Rated". -->
       <div class="carousel-item">
         <h2>Top Rated</h2>
         <cdb-carousel>
@@ -74,6 +82,7 @@
     </div>
 
 		<div class="slideshow">
+      <!-- Only creates a slide component of "New Releases" instead of a carousel if a screen is too small for the carousel. -->
 			<div class="slide-item">
        	<?php
           include '../php/databaseLogin.php';
@@ -93,6 +102,7 @@
         ?>
 			</div>
 
+        <!-- Only creates a slide component of "Top Rated" instead of a carousel if a screen is too small for the carousel. -->
 				<div class="slide-item">
        	<?php
           include '../php/databaseLogin.php';

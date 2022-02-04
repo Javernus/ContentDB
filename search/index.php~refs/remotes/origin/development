@@ -1,11 +1,20 @@
+<!-- Opens a dialog with a search bar, where you can type the name of a movie or keyword for which you're
+     looking in a case-insensitive manner.
+
+     Made by Mario.
+-->
+
 <?php
   include '../importables/html-header.php';
 ?>
 
+<!-- Opens a dialog window. -->
 <cdb-dialog open=true>
 
+    <!-- Sets the search bar. -->
     <cdb-input class="search-input" type="text" placeholder="Search.."></cdb-input>
 
+    <!-- Gives all movies and series where the letter or lettersequence has been found. -->
     <h1>All results for ...</h1>
     <div id='towatchlist' class="list-view list-view--active"></div>
     <script>

@@ -1,8 +1,11 @@
-/**
- * The carousel. Houses carousel items. Allows the rotation to take place.
- *
- * Made by Jake.
+/** 
+ * This is the carousel component on the home page. It will browse through all
+ * movies and series that exist in the database and circle through them again
+ * if you reach the end.
+ * 
+ * Made by Mario.
  */
+
 class Carousel extends HTMLElement {
   constructor() {
     super();
