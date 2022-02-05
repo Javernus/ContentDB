@@ -1,3 +1,11 @@
+/** 
+ * This is the carousel component on the home page. It will browse through all
+ * movies and series that exist in the database and circle through them again
+ * if you reach the end.
+ * 
+ * Made by Mario.
+ */
+
 class Carousel extends HTMLElement {
   constructor() {
     super();
@@ -33,6 +41,7 @@ class Carousel extends HTMLElement {
   setupCarousel() {
     for (const [index, item] of Array.from(this.children).entries()) {
       if (!item.getAttribute("for")) {
+        /* Adds radios to allow for clicking. */
         const input = document.createElement("input");
         input.type = "radio";
         input.id = `item-${index}`;
@@ -40,17 +49,20 @@ class Carousel extends HTMLElement {
         item.addEventListener("click", this.updateCarousel.bind(this));
         item.setAttribute("for", `item-${index}`);
 
+        /* Set this item as current if none are current yet. */
         if (this.currentItem === undefined) {
           item.classList.add("current");
           item.toggleAttribute("link", true);
           this.currentItem = 0;
         }
 
+        /* Adds next if this item is after the current item. */
         if (index === this.currentItem + 1 && !this.nextItem) {
           item.classList.add("next");
           this.nextItem = this.currentItem + 1;
         }
 
+        /* Sets the previous on the item before the current one. */
         if (this.currentItem === 0 && index === this.itemCount) {
           if (this.previousItem) this.children[this.previousItem].classList.remove("previous");
           item.classList.add("previous");
@@ -64,12 +76,20 @@ class Carousel extends HTMLElement {
 
   /* A function to update the slotted cdb-carousel-item's state (previous, current, next). */
   updateCarousel(event) {
+<<<<<<< HEAD
+=======
+    /* Disallow the next and previous carousel items to redirect you to their content pages. */
+>>>>>>> 1d9ad5d0a94ead05e9e16cbaea6b056829b223e1
     if (event.target.classList.contains("next") || event.target.classList.contains("previous")) {
       event.preventDefault();
       event.stopImmediatePropagation();
       event.stopPropagation();
     }
 
+<<<<<<< HEAD
+=======
+    /* A lot of code to keep the carousel up to date on click. */
+>>>>>>> 1d9ad5d0a94ead05e9e16cbaea6b056829b223e1
     if (event.target.classList.contains("next")) {
       this.children[this.previousItem].classList.remove("previous");
       this.previousItem = this.currentItem;

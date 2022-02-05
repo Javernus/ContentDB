@@ -33,7 +33,9 @@ class Rating extends HTMLElement {
 
     this[name] = newValue;
 
-    if (name === "rating" && this.star1Element) {
+    if (name === "rating" && this.star1Element && this.numberElement) {
+      this.numberElement.textContent = this.rating;
+
       for (let i = 0; i < 5; i++) {
         if (i < this.rating) {
           this[`star${i}Element`].setAttribute("src", "../src/star.svg#filled");
@@ -55,6 +57,7 @@ class Rating extends HTMLElement {
   ratingChange(event) {
     if (this.ratable === "true") {
       this.setAttribute("rating", event.target.getAttribute("index"));
+      this.numberElement.textContent = this.rating;
     }
 
     const customEvent = new CustomEvent("ratingchange", {

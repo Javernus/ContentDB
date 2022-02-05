@@ -2,9 +2,13 @@
   const show_stuff =
 <?php
   /* PHP by Jake. */
+<<<<<<< HEAD
   if (!isset($_SESSION)) {
     session_start();
   }
+=======
+  include_once("../php/setSession.php");
+>>>>>>> 1d9ad5d0a94ead05e9e16cbaea6b056829b223e1
 
   if (!isset($_COOKIE["UserID"])) {
     echo ";</script>";
@@ -14,7 +18,15 @@
 
   include("../php/isAdmin.php");
 
+<<<<<<< HEAD
 
+=======
+  if (!$admin) {
+    echo ";</script>";
+    include("../error/404.php");
+    exit();
+  }
+>>>>>>> 1d9ad5d0a94ead05e9e16cbaea6b056829b223e1
 ?>
 ;</script>
 

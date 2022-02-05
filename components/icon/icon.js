@@ -4,6 +4,7 @@
  *  - src: the id to an svg.
  *  - colour: the colour to apply to the svg.
  *  - size: the size of the svg in rem.
+ *  - stroke: determines whether to apply stroke or fill colouring.
  *
  * Made by Jake.
  */
@@ -26,14 +27,12 @@ class Icon extends HTMLElement {
     /* The svg element. */
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttributeNS("null", "viewPort", "0 0 24 24");
-    svg.setAttribute("width", this.size + "rem");
-    svg.setAttribute("height", this.size + "rem");
+    svg.style.width = this.size + "rem";
+    svg.style.height = this.size + "rem";
     this.shadow.appendChild(svg);
-
-    /* Save a reference of the svg for dynamic state change. */
     this.svgElement = svg;
 
-    /* The div holding the icon and label. */
+    /* The use tag that will show the icon. */
     const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
     use.setAttributeNS("http://www.w3.org/1999/xlink", "href", this.src);
     use.setAttribute("width", this.size + "rem");
@@ -41,8 +40,6 @@ class Icon extends HTMLElement {
     !this.stroke && (use.style.fill = this.colour);
     this.stroke && (use.style.stroke = this.colour);
     svg.appendChild(use);
-
-    /* Save a reference of the use for dynamic state change. */
     this.useElement = use;
   }
 
@@ -75,8 +72,8 @@ class Icon extends HTMLElement {
 
       this.setAttribute("width", this.size + "rem");
       this.setAttribute("height", this.size + "rem");
-      this.svgElement.setAttribute("width", this.size + "rem");
-      this.svgElement.setAttribute("height", this.size + "rem");
+      this.svgElement.style.width = this.size + "rem";
+      this.svgElement.style.height = this.size + "rem";
       this.useElement.setAttribute("width", this.size + "rem");
       this.useElement.setAttribute("height", this.size + "rem");
     }

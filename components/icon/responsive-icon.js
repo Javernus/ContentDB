@@ -5,7 +5,7 @@
  *  - colour: the colour to apply to the svg.
  *  - size: the size of the svg in vh.
  *
- * Made by Jake.
+ * Made by Montijn.
  */
 class ResponsiveIcon extends HTMLElement {
   constructor() {

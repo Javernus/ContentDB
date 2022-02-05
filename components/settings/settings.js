@@ -1,5 +1,7 @@
 /**
  * The settings component. An interface item made for the dialog to allow a person to change their password or delete their account.
+ *
+ * - Made by Montijn.
  */
 class Settings extends HTMLElement {
   constructor() {

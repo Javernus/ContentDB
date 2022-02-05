@@ -3,6 +3,9 @@
  * Attributes
  *  - alt: the alternative text for the image.
  *  - src: the image source.
+ *  - href: the page to link to.
+ *
+ *  Made by Mario.
  */
 class CarouselItem extends HTMLElement {
   constructor() {
@@ -11,8 +14,12 @@ class CarouselItem extends HTMLElement {
 
     this.alt = "";
     this.src = "";
+<<<<<<< HEAD
     this.fsid = 0;
     this.link = false;
+=======
+    this.href = "";
+>>>>>>> 1d9ad5d0a94ead05e9e16cbaea6b056829b223e1
   }
 
   connectedCallback() {
@@ -30,7 +37,11 @@ class CarouselItem extends HTMLElement {
 
     /* <a> element containing the link to the corresponding movie page. */
     const imageA = document.createElement("a");
+<<<<<<< HEAD
     this.link && imageA.setAttribute("href", "/content/?FSID=" + this.fsid);
+=======
+    imageA.setAttribute("href", this.href);
+>>>>>>> 1d9ad5d0a94ead05e9e16cbaea6b056829b223e1
     imageA.appendChild(image);
     this.shadow.appendChild(imageA);
     this.imageaElement = imageA;
@@ -38,7 +49,11 @@ class CarouselItem extends HTMLElement {
 
   /* Returns the attributes which should be observed. */
   static get observedAttributes() {
+<<<<<<< HEAD
     return ["alt", "src", "fsid", "link"];
+=======
+    return ["alt", "src", "href"];
+>>>>>>> 1d9ad5d0a94ead05e9e16cbaea6b056829b223e1
   }
 
   /* Handles attributes changing. */
@@ -66,11 +81,23 @@ class CarouselItem extends HTMLElement {
       }
     }
 
+<<<<<<< HEAD
     if (name === "fsid" && this.imageElement) {
+=======
+    if (name === "href" && this.imageElement) {
+>>>>>>> 1d9ad5d0a94ead05e9e16cbaea6b056829b223e1
       if (!!newValue) {
-        this.imageAElement.setAttribute("href", "/contents/?FSID=" + newValue);
+        this.imageAElement.setAttribute("href", newValue);
       } else {
-        this.imageElement.removeAttribute("alt");
+        this.imageElement.removeAttribute("href");
+      }
+    }
+
+    if (name === "link" && this.imageaElement) {
+      if (newValue === "true" || newValue === "") {
+        this.imageaElement.setAttribute("href", "/content/?FSID=" + this.fsid);
+      } else {
+        this.imageaElement.removeAttribute("href");
       }
     }
 

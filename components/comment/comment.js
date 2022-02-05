@@ -6,8 +6,14 @@
  *  - username: the username to be shown.
  *  - timestamp: the timestamp to be shown.
  *  - content: the text to be shown.
+<<<<<<< HEAD
  * 
  * Written by Timo.
+=======
+ *  - cid: the cid of the comment. Shows delete option if given.
+ *
+ * Made by Timo, updated by Jake.
+>>>>>>> 1d9ad5d0a94ead05e9e16cbaea6b056829b223e1
  */
 
 class MovieComment extends HTMLElement {
@@ -20,11 +26,12 @@ class MovieComment extends HTMLElement {
     this.username = "";
     this.timestamp = "";
     this.content = "";
+    this.cid;
   }
 
   /* Returns the attributes which should be observed. */
   static get observedAttributes() {
-    return ["username", "timestamp", "content"];
+    return ["username", "timestamp", "content", "cid"];
   }
 
   /* Handles attributes changing. */
@@ -35,6 +42,7 @@ class MovieComment extends HTMLElement {
 
     this[name] = newValue;
 
+    /* Dynamically update the necessary parts of the component. */
     if (name === "username" && this.nameElement) {
       this.nameElement.innerText = this.username;
       return;
@@ -47,6 +55,15 @@ class MovieComment extends HTMLElement {
 
     if (name === "content" && this.textElement) {
       this.textElement.innerText = this.content;
+      return;
+    }
+
+    if (name === "cid" && this.trashCanElement) {
+      if (this.cid) {
+        this.trashCanElement.classList.remove("delete--hidden");
+      } else {
+        this.trashCanElement.classList.add("delete--hidden");
+      }
       return;
     }
   }
@@ -75,6 +92,7 @@ class MovieComment extends HTMLElement {
     commentHeader.appendChild(headerTime);
     headerName.classList.add("left");
     headerTime.classList.add("right");
+
     /* Put the username and timestamp in the comment header. */
     const name = document.createElement("p");
     const time = document.createElement("p");
@@ -88,12 +106,30 @@ class MovieComment extends HTMLElement {
 
     /* The comment content. */
     const content = document.createElement("div");
-
     content.textContent = this.content;
     this.textElement = content;
     content.classList.add("comment__content");
-
     comment.appendChild(content);
+
+    /* The trash can icon to delete the comment. */
+    const trashCan = document.createElement("cdb-icon");
+    trashCan.setAttribute("src", "/src/trash-can.svg#trash-can");
+    trashCan.setAttribute("size", 1.5);
+    trashCan.setAttribute("colour", "var(--primary-2)");
+    trashCan.classList.add("delete");
+    !this.cid && trashCan.classList.add("delete--hidden");
+    trashCan.addEventListener("click", this.deleteComment.bind(this));
+    content.appendChild(trashCan);
+    this.trashCanElement = trashCan;
+  }
+
+  /* A function to delete the comment. */
+  deleteComment() {
+    postFetch("../php/deleteComment.php", { cid: this.cid }, false, (res) => {
+      if (res) {
+        this.remove();
+      }
+    });
   }
 }
 

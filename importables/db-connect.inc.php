@@ -1,4 +1,11 @@
 <?php
+<<<<<<< HEAD
+=======
+    // Connect to the database using mysqli
+    // Made by Montijn.
+
+
+>>>>>>> 1d9ad5d0a94ead05e9e16cbaea6b056829b223e1
     // Retrive env variable
     $host = $_SERVER['MYSQL_HOST'];
     $username = $_SERVER['MYSQL_USER'];

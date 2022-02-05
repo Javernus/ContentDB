@@ -1,7 +1,9 @@
 /**
  * The Button component. An interface item made for the dialog to allow a person to log in or sign up.
  * Attributes
- *  - signup: determines whether to show the sign in or sign up page.
+ *  - label: the text inside the button.
+ *
+ * Made by Jake.
  */
 class Button extends HTMLElement {
   constructor() {
@@ -19,10 +21,10 @@ class Button extends HTMLElement {
     link.setAttribute("rel", "stylesheet");
     this.shadow.appendChild(link);
 
-    /* The submit button. */
+    /* The button. */
     this.classList.add("button");
 
-    /* The div containing the inputs for sign up. */
+    /* The text inside the button. */
     const label = document.createElement("p");
     label.classList.add("button__label");
     label.textContent = this.label;

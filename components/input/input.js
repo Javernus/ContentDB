@@ -2,9 +2,11 @@
  * The Input component. An interface item to allow users to type.
  * Attributes
  *  - error: determines whether to show a red error outline.
- *  - type: the input type of the input.
+ *  - type: input attribute passthrough.
  *  - value: the value that updates as the user is typing.
- *  - placeholder: the placeholder in the input.
+ *  - placeholder: input attribute passthrough.
+ *  - autocomplete: input attribute passthrough.
+ *  - id: input attribute passthrough.
  *
  * Made by Jake.
  */
@@ -18,6 +20,7 @@ class Input extends HTMLElement {
     this.type = "text";
     this.value = "";
     this.placeholder = "";
+    this.name = "";
   }
 
   connectedCallback() {
@@ -34,6 +37,9 @@ class Input extends HTMLElement {
     input.setAttribute("id", this.id);
     input.setAttribute("type", this.type);
     input.setAttribute("placeholder", this.placeholder);
+    input.setAttribute("name", this.name);
+    input.setAttribute("autocomplete", this.autocomplete);
+    input.setAttribute("value", this.value);
     input.addEventListener("change", this.handleChange.bind(this));
     input.addEventListener("input", this.handleInput.bind(this));
     this.shadow.appendChild(input);
@@ -78,7 +84,7 @@ class Input extends HTMLElement {
 
   /* Returns the attributes which should be observed. */
   static get observedAttributes() {
-    return ["error", "id", "type", "placeholder"];
+    return ["autocomplete", "error", "id", "type", "placeholder", "value", "name"];
   }
 
   /* Handles attributes changing. */
@@ -89,8 +95,8 @@ class Input extends HTMLElement {
 
     this[name] = newValue;
 
-    /* Updates only the necessary parts of the component on update. */
     if (name === "error" && this.inputElement) {
+      /* Updates only the necessary parts of the component on update. */
       if (newValue == "true" || newValue == "") {
         this.inputElement.classList.add("input--error");
       } else {

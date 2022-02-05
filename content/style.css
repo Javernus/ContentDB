@@ -41,6 +41,7 @@
 
 .comment__user cdb-input {
   width: 100%;
+  margin-right: 0.25rem;
 }
 
 .comment__user cdb-button {

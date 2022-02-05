@@ -2,6 +2,8 @@
  * The Login component. An interface item made for the dialog to allow a person to log in or sign up.
  * Attributes
  *  - signup: determines whether to show the sign in or sign up page.
+ *
+ * Made by Jake.
  */
 class Login extends HTMLElement {
   constructor() {
@@ -10,8 +12,9 @@ class Login extends HTMLElement {
 
     /* Setting the defaults of the attributes. */
     this.signup = false;
-    this.open = false;
+  }
 
+  connectedCallback() {
     /* The link component for the css. */
     const link = document.createElement("link");
     link.setAttribute("href", "/components/login/login.css");
@@ -45,11 +48,16 @@ class Login extends HTMLElement {
     /* Save a reference of the signUp tab for dynamic state change. */
     this.signUpElement = signUp;
 
+    /* The form to enable autocomplete. */
+    const form = document.createElement("form");
+    form.setAttribute("autocomplete", "on");
+    this.shadow.appendChild(form);
+
     /* The div containing the inputs for sign in. */
     const signInInputs = document.createElement("div");
     signInInputs.classList.add("login__inputs");
     !this.signup && signInInputs.classList.add("login__inputs--active");
-    this.shadow.appendChild(signInInputs);
+    form.appendChild(signInInputs);
 
     /* Save a reference of the signInInputs container for dynamic state change. */
     this.signInInputsElement = signInInputs;
@@ -64,6 +72,9 @@ class Login extends HTMLElement {
 
     /* The username input. */
     const signInUsernameInput = document.createElement("cdb-input");
+    signInUsernameInput.setAttribute("autocomplete", "username");
+    signInUsernameInput.setAttribute("name", "username");
+    signInUsernameInput.setAttribute("id", "signinusername");
     signInUsernameInput.setAttribute("placeholder", "Enter your username...");
     signInUsernameInput.addEventListener("input", this.handleLoginChange.bind(this));
     signInInputs.appendChild(signInUsernameInput);
@@ -74,7 +85,11 @@ class Login extends HTMLElement {
     /* The password input. */
     const signInPasswordInput = document.createElement("cdb-input");
     signInPasswordInput.setAttribute("type", "password");
+    signInPasswordInput.setAttribute("name", "password");
+    signInPasswordInput.setAttribute("id", "signinpassword");
+    signInPasswordInput.setAttribute("autocomplete", "current-password");
     signInPasswordInput.setAttribute("placeholder", "Enter your password...");
+    signInPasswordInput.addEventListener("keypress", this.signInEnter.bind(this));
     signInPasswordInput.addEventListener("input", this.handleLoginChange.bind(this));
     signInInputs.appendChild(signInPasswordInput);
 
@@ -91,12 +106,12 @@ class Login extends HTMLElement {
     const signUpInputs = document.createElement("div");
     signUpInputs.classList.add("login__inputs");
     this.signup && signUpInputs.classList.add("login__inputs--active");
-    this.shadow.appendChild(signUpInputs);
+    form.appendChild(signUpInputs);
 
     /* Save a reference of the signUpInputs container for dynamic state change. */
     this.signUpInputsElement = signUpInputs;
 
-		/* Placeholder div for status text */
+    /* Placeholder div for status text */
     const signUpStatus = document.createElement("div");
     signUpStatus.classList.add("login__status");
     signUpStatus.textContent = "status";
@@ -106,6 +121,9 @@ class Login extends HTMLElement {
 
     /* The username input. */
     const signUpUsernameInput = document.createElement("cdb-input");
+    signUpUsernameInput.setAttribute("autocomplete", "off");
+    signUpUsernameInput.setAttribute("name", "username");
+    signUpUsernameInput.setAttribute("id", "signupusername");
     signUpUsernameInput.setAttribute("placeholder", "Enter a username...");
     signUpUsernameInput.addEventListener("change", this.handleUsername.bind(this));
     signUpInputs.appendChild(signUpUsernameInput);
@@ -116,6 +134,9 @@ class Login extends HTMLElement {
     /* The passwerd input. */
     const signUpPasswordInput = document.createElement("cdb-input");
     signUpPasswordInput.setAttribute("type", "password");
+    signUpPasswordInput.setAttribute("name", "password");
+    signUpPasswordInput.setAttribute("id", "signuppassword");
+    signUpPasswordInput.setAttribute("autocomplete", "new-password");
     signUpPasswordInput.setAttribute("placeholder", "Enter a password...");
     signUpPasswordInput.addEventListener("input", this.handlePassword.bind(this));
     signUpInputs.appendChild(signUpPasswordInput);
@@ -126,7 +147,11 @@ class Login extends HTMLElement {
     /* The second password input. */
     const signUpPasswordTwoInput = document.createElement("cdb-input");
     signUpPasswordTwoInput.setAttribute("type", "password");
+    signUpPasswordTwoInput.setAttribute("name", "password");
+    signUpPasswordTwoInput.setAttribute("id", "signuppasswordtwo");
+    signUpPasswordTwoInput.setAttribute("autocomplete", "new-password");
     signUpPasswordTwoInput.setAttribute("placeholder", "Enter the password again...");
+    signUpPasswordTwoInput.addEventListener("keypress", this.signUpEnter.bind(this));
     signUpPasswordTwoInput.addEventListener("input", this.handlePassword.bind(this));
     signUpInputs.appendChild(signUpPasswordTwoInput);
 
@@ -166,11 +191,12 @@ class Login extends HTMLElement {
 
     postFetch("../php/usernameExists.php", data, false, (res) => {
       if (res === "true") {
-				this.signUpStatus.style.color = "red";
-				this.signUpStatus.textContent = "Username already exists.";
+        this.signUpStatus.style.color = "var(--signal)";
+        this.signUpStatus.textContent = "Username already exists.";
         this.signUpUsernameElement.setAttribute("error", true);
       } else if (res === "false") {
         this.signUpUsernameElement.removeAttribute("error");
+        this.signUpStatus.style.color = "transparent";
       }
     });
   }
@@ -181,11 +207,17 @@ class Login extends HTMLElement {
 
     if (password !== passwordTwo && passwordTwo !== "") {
       this.signUpPasswordTwoElement.setAttribute("error", true);
-			this.signUpStatus.style.color = "red";
-			this.signUpStatus.textContent = "Passwords do not match.";
+      this.signUpStatus.style.color = "var(--signal)";
+      this.signUpStatus.textContent = "Passwords do not match.";
     } else {
-			this.signUpStatus.style.color = "transparent";
+      this.signUpStatus.style.color = "transparent";
       this.signUpPasswordTwoElement.removeAttribute("error");
+    }
+  }
+
+  signUpEnter(event) {
+    if (event.keyCode == 13) {
+      this.signUp();
     }
   }
 
@@ -206,10 +238,17 @@ class Login extends HTMLElement {
           this.dispatchEvent(new CustomEvent("signup"));
           break;
         case "limitreached":
-          // Add text to indicate waiting
+          this.signUpStatus.textContent = "You reached a sign up limit.";
+          this.signUpStatus.style.color = "var(--signal)";
           break;
       }
     });
+  }
+
+  signInEnter(event) {
+    if (event.keyCode == 13) {
+      this.signIn();
+    }
   }
 
   signIn() {
@@ -224,7 +263,7 @@ class Login extends HTMLElement {
         window.location.href = "/profile";
       } else {
         this.signInStatus.textContent = "Incorrect username or password.";
-        this.signInStatus.style.color = "red";
+        this.signInStatus.style.color = "var(--signal)";
         this.signInUsernameElement.setAttribute("error", true);
         this.signInPasswordElement.setAttribute("error", true);
       }
@@ -245,7 +284,7 @@ class Login extends HTMLElement {
     this[name] = newValue;
 
     /* Updates only the necessary parts of the component on update. */
-    if (name === "signup") {
+    if (name === "signup" && this.signInElement) {
       if (newValue == "true") {
         this.signInElement.classList.remove("login__tab--active");
         this.signUpElement.classList.add("login__tab--active");

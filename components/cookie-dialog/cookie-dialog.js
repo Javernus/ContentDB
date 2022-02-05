@@ -1,9 +1,9 @@
 /**
- * A dialog component. Styles a click-away box in which to show content like a login page.
+ * A Cookie dialog component. Styles a cookie dialog based on the cdb-dialog component that has to be clicked in order to start a php session.
  * Attributes
  *  - open: determines whether the dialog is visible.
  *
- * Made by Jake.
+ * Made by Montijn.
  */
 class CookieDialog extends HTMLElement {
   constructor() {

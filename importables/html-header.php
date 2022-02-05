@@ -13,7 +13,7 @@
     <script type="text/javascript" src="../components/nav-bar/nav-bar.js"></script>
     <script type="text/javascript" src="../components/nav-item/nav-item.js"></script>
     <script type="text/javascript" src="../components/icon/icon.js"></script>
-    <script type="text/javascript" src="../components/item-view/item-view.js"></script>
+    <script type="text/javascript" src="../components/content-card/content-card.js"></script>
     <script type="text/javascript" src="../components/icon/responsive-icon.js"></script>
     <script type="text/javascript" src="../components/carousel/carousel.js"></script>
     <script type="text/javascript" src="../components/carousel-item/carousel-item.js"></script>
@@ -77,11 +77,15 @@
     <?php
         // show cookie dialog if there is no session yet
         if (!isset($_COOKIE['cookie-dialog'])) {
-            echo '<cdb-cookie-dialog open="true"></cdb-cookie-dialog>';
+          echo '<cdb-cookie-dialog open="true"></cdb-cookie-dialog>';
         } else {
+<<<<<<< HEAD
             if (!isset($_SESSION)) {
               session_start();
             }
+=======
+          include_once("../php/setSession.php");
+>>>>>>> 1d9ad5d0a94ead05e9e16cbaea6b056829b223e1
         }
     ?>
 
